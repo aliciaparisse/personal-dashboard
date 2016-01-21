@@ -1,4 +1,4 @@
-System.register(["angular2/core", "../js/highTest.js"], function(exports_1) {
+System.register(["angular2/core", "../js/highDonut.js"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,37 +8,33 @@ System.register(["angular2/core", "../js/highTest.js"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, highTest_js_1;
-    var App;
+    var core_1, highDonut_js_1;
+    var StudentInfo;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (highTest_js_1_1) {
-                highTest_js_1 = highTest_js_1_1;
+            function (highDonut_js_1_1) {
+                highDonut_js_1 = highDonut_js_1_1;
             }],
         execute: function() {
-            App = (function () {
-                function App() {
+            StudentInfo = (function () {
+                function StudentInfo() {
+                    this.name = "John";
+                    highDonut_js_1.donutCourses();
                 }
-                App.prototype.ngOnInit = function () {
-                    console.log(highTest_js_1.default());
-                };
-                App.prototype.onSubmit = function (title) {
-                    highTest_js_1.default(title);
-                };
-                App = __decorate([
+                StudentInfo = __decorate([
                     core_1.Component({
-                        selector: "app",
-                        template: "<form (submit)=\"onSubmit(myInput.value)\">\n\t<input type=\"text\" #myInput>\n\t<div id=\"container\" style=\"height: 400px\">Hey</div>"
+                        selector: "student-info",
+                        template: "\n\t<div> {{name}}\n\t\t<div id=\"donutCoursesTaken\" style=\"height: 400px\"></div>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], App);
-                return App;
+                ], StudentInfo);
+                return StudentInfo;
             })();
-            exports_1("App", App);
+            exports_1("StudentInfo", StudentInfo);
         }
     }
 });
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=student-info.js.map

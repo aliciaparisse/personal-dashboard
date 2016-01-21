@@ -1,5 +1,5 @@
 function createChart(title){
-    $('#container').highcharts({
+    $('#donutCoursesTaken').highcharts({
         chart: {
             type: 'column',
             margin: 75,
@@ -34,4 +34,9 @@ function createChart(title){
             data: [2, 3, null, 4, 0, 5, 1, 4, 6, 3]
         }]
     });
+};
+
+function modifyChart(title){
+    var chart = $('#container').highcharts()
+    chart.setTitle({text: title});    
 };

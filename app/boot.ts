@@ -1,4 +1,4 @@
 import {bootstrap}    from 'angular2/platform/browser'
-import {App} from './main'
+import {PersonalDashboard} from './personal-dashboard'
 
-bootstrap(App);
+bootstrap(PersonalDashboard);
