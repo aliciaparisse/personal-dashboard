@@ -1,8 +1,4 @@
-function createChart(){
-    return "Hello";
-}
-
-$(function () {
+function createChart(title){
     $('#container').highcharts({
         chart: {
             type: 'column',
@@ -15,7 +11,7 @@ $(function () {
             }
         },
         title: {
-            text: '3D chart with null values'
+            text: title
         },
         subtitle: {
             text: 'Notice the difference between a 0 value and a null point'
@@ -38,4 +34,4 @@ $(function () {
             data: [2, 3, null, 4, 0, 5, 1, 4, 6, 3]
         }]
     });
-});
+};
