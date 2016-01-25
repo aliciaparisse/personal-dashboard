@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../js/highDonut.js"], function(exports_1) {
+System.register(["angular2/core", "../js/courseMng.js", './course'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,37 +8,37 @@ System.register(['angular2/core', "../js/highDonut.js"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, highDonut_js_1;
-    var Course;
+    var core_1, courseMng_js_1, course_1;
+    var Courses;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (highDonut_js_1_1) {
-                highDonut_js_1 = highDonut_js_1_1;
+            function (courseMng_js_1_1) {
+                courseMng_js_1 = courseMng_js_1_1;
+            },
+            function (course_1_1) {
+                course_1 = course_1_1;
             }],
         execute: function() {
-            Course = (function () {
-                function Course() {
-                    console.log("Yes");
-                    highDonut_js_1.donutMaths();
+            Courses = (function () {
+                function Courses() {
+                    this.courses = courseMng_js_1.default();
+                    console.log(this.courses);
                 }
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], Course.prototype, "aCourse", void 0);
-                Course = __decorate([
+                Courses = __decorate([
                     core_1.Component({
-                        selector: 'course',
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container'> \n\t\t\t<div class='diagram' id=\"donut{{aCourse.name}}\"></div>\n\t\t</div>\n\t</div>"
+                        selector: "courses",
+                        directives: [course_1.Course],
+                        template: "\n\t<div> I'm a course list\n\t\t<div *ngFor=\"#aCourse of courses\">\n\t\t\t<course\n\t\t\t[aCourse]=\"aCourse\"></course>\n\t\t</div>\t\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], Course);
-                return Course;
+                ], Courses);
+                return Courses;
             })();
-            exports_1("Course", Course);
+            exports_1("Courses", Courses);
         }
     }
 });
-//# sourceMappingURL=course.js.map
+//# sourceMappingURL=courses.js.map

@@ -1,4 +1,4 @@
-System.register(["angular2/core", "./course", "./student-info"], function(exports_1) {
+System.register(["angular2/core", "./courses", "./student-info"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,15 +8,15 @@ System.register(["angular2/core", "./course", "./student-info"], function(export
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, course_1, student_info_1;
+    var core_1, courses_1, student_info_1;
     var PersonalDashboard;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (course_1_1) {
-                course_1 = course_1_1;
+            function (courses_1_1) {
+                courses_1 = courses_1_1;
             },
             function (student_info_1_1) {
                 student_info_1 = student_info_1_1;
@@ -28,8 +28,8 @@ System.register(["angular2/core", "./course", "./student-info"], function(export
                 PersonalDashboard = __decorate([
                     core_1.Component({
                         selector: "personal-dashboard",
-                        directives: [course_1.Course, student_info_1.StudentInfo],
-                        template: "\n\t<div>\n\t\t<student-info></student-info>\n\t\t<course></course>\n\t</div>"
+                        directives: [courses_1.Courses, student_info_1.StudentInfo],
+                        template: "\n\t<div class=\"row\">\n\t\t<student-info class=\"student-info col-xs-4 col-sm-4 col-md-3 col-lg-3\"></student-info>\n\t\t<courses class=\"col-xs-6 col-sm-6 col-md-9 col-lg-9\"></courses>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PersonalDashboard);

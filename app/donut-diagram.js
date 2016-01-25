@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../js/highDonut.js"], function(exports_1) {
+System.register(["angular2/core", "../js/highDonut.js"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,7 +9,7 @@ System.register(['angular2/core', "../js/highDonut.js"], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, highDonut_js_1;
-    var Course;
+    var DonutDiagram;
     return {
         setters:[
             function (core_1_1) {
@@ -19,26 +19,21 @@ System.register(['angular2/core', "../js/highDonut.js"], function(exports_1) {
                 highDonut_js_1 = highDonut_js_1_1;
             }],
         execute: function() {
-            Course = (function () {
-                function Course() {
-                    console.log("Yes");
-                    highDonut_js_1.donutMaths();
+            DonutDiagram = (function () {
+                function DonutDiagram() {
+                    highDonut_js_1.donutCourses();
                 }
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], Course.prototype, "aCourse", void 0);
-                Course = __decorate([
+                DonutDiagram = __decorate([
                     core_1.Component({
-                        selector: 'course',
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container'> \n\t\t\t<div class='diagram' id=\"donut{{aCourse.name}}\"></div>\n\t\t</div>\n\t</div>"
+                        selector: "donut-diagram",
+                        template: "\n\t\t<div class='diag-container'> \n\t\t\t<div class='diagram' id=\"donutCoursesTaken\"></div>\n\t\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], Course);
-                return Course;
+                ], DonutDiagram);
+                return DonutDiagram;
             })();
-            exports_1("Course", Course);
+            exports_1("DonutDiagram", DonutDiagram);
         }
     }
 });
-//# sourceMappingURL=course.js.map
+//# sourceMappingURL=donut-diagram.js.map

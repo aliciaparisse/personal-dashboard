@@ -1,14 +1,14 @@
 import {Component} from "angular2/core";
-import {Course} from "./course";
+import {Courses} from "./courses";
 import {StudentInfo} from "./student-info";
 
 @Component({
 	selector:"personal-dashboard",
-	directives:[Course,StudentInfo],
+	directives:[Courses,StudentInfo],
 	template:`
-	<div>
-		<student-info></student-info>
-		<course></course>
+	<div class="row">
+		<student-info class="student-info col-xs-4 col-sm-4 col-md-3 col-lg-3"></student-info>
+		<courses class="col-xs-6 col-sm-6 col-md-9 col-lg-9"></courses>
 	</div>`
 })
 

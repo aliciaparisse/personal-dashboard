@@ -1,0 +1,64 @@
+.days {
+  width: 12px;
+  height: 12px;
+  margin: 1.5px;
+ }
+
+courses{
+	border-width: 0px;
+    border-style: solid;
+    background-color: #FFAE32;
+	border-radius: 4px 4px 4px 4px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.course{
+	margin-right: 2px;
+	margin-left: 2px;
+    margin-top: 2px;
+	margin-bottom: 2px;
+    border-style: solid;
+    background-color: #D0EDF1;
+	border-width: 0px;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: none;
+	width:50%;
+ }
+
+.student-info {
+ 	margin-right: 0px;
+	margin-left: 0px;
+	background-color: #FFF;
+	border-color: black;
+	border-width: 10px;
+	border-radius: 4px 4px 0px 0px;
+	box-shadow: none;
+ }
+
+
+/*** color-code by activity level ***/ 
+.activity { background: #00CCFF; }
+.activity-two { background: #8cc665; }
+.activity-three { background: #44a340; }
+.activity-four { background: #1e6823; }
+
+
+.diag-container{
+	position: relative;
+	width: 90%;		
+}
+.diag-container:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	
+}
+.diagram{
+	position:  absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}

@@ -1,18 +1,19 @@
 import {Component} from "angular2/core";
-import {donutCourses, addTotalPercentage} from "../js/highDonut.js";
+import {donutCourses} from "../js/highDonut.js";
+import {DonutDiagram} from "./donut-diagram";
 
 @Component({
 	selector:"student-info",
+	directives: [DonutDiagram],
 	template:`
-	<div> {{name}}
-		<div id="donutCoursesTaken" style="height: 400px"></div>
+	<div> <h1>{{name}}</h1>
+		<donut-diagram></donut-diagram>
 	</div>`
 })
 
 export class StudentInfo{
 	constructor(){
 		this.name="John";
-		donutCourses();
 	}
 
 }
