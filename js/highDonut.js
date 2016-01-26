@@ -147,6 +147,7 @@ function donutMaths () {
         data[i].color = colors[i];
     }
     // Create the chart
+    $(document).ready(function(){
     $('#donutMathematics').highcharts({
         chart: {
             type: 'pie'
@@ -186,5 +187,6 @@ function donutMaths () {
         }]
     });
 
+    });
 
 };
