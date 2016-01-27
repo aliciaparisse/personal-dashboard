@@ -17,7 +17,7 @@ import {Course} from './course';
 export class Courses{
 	constructor(){
 		this.courses = getAllCourses();
-		console.log(this.courses)
+		console.log(this.courses);
 	}
 
 

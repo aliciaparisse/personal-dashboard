@@ -17,7 +17,7 @@ course = {
 	],
 	//This might not be useful if there's a logic coded in the API
 	//Useful for the tests
-	donePercentage:21
+	donePercentage:21,
 	//This might not be useful if there's a logic coded in the API
 	//Useful for the tests
 	exercisesDone:24
@@ -34,7 +34,13 @@ lesson ={
 		exercise2,
 		exercise3
 		...
-	]
+	], 
+	//This might not be useful if there's a logic coded in the API
+	//Useful for the tests
+	donePercentage:21,
+	//This might not be useful if there's a logic coded in the API
+	//Useful for the tests
+	exercisesDone:24
 }
 
 //Format of a exercise 

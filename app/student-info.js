@@ -21,8 +21,10 @@ System.register(["angular2/core", "./donut-diagram"], function(exports_1) {
         execute: function() {
             StudentInfo = (function () {
                 function StudentInfo() {
-                    this.name = "John";
                 }
+                StudentInfo.prototype.ngOnInit = function () {
+                    this.name = "John";
+                };
                 StudentInfo = __decorate([
                     core_1.Component({
                         selector: "student-info",

@@ -12,7 +12,7 @@ import {DonutDiagram} from "./donut-diagram";
 })
 
 export class StudentInfo{
-	constructor(){
+	ngOnInit(){
 		this.name="John";
 	}
 

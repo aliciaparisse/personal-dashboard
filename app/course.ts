@@ -1,5 +1,5 @@
 import {Component,Input} from 'angular2/core';
-import {donutMaths} from "../js/highDonut.js";
+import {donutFromCourseCompletion} from "../js/coursesTreatment.js";
 
 @Component({
 	selector: 'course',
@@ -7,7 +7,7 @@ import {donutMaths} from "../js/highDonut.js";
 	<div class="course">
 		<h2>{{aCourse.name}}</h2>
 		<div class='diag-container'> 
-			<div class='diagram' id="donut{{aCourse.name}}"></div>
+			<div class='diagram' id="Completion{{aCourse.name}}">I am a course of {{aCourse.name}}</div>
 		</div>
 	</div>`
 })
@@ -15,8 +15,7 @@ import {donutMaths} from "../js/highDonut.js";
 export class Course{
 	@Input() aCourse;
 
-	constructor(){
-		console.log("Yes");
-		donutMaths();
+	ngOnInit(){
+		donutFromCourseCompletion(this.aCourse.name);
 	}
 }

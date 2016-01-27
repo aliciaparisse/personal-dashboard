@@ -101,7 +101,6 @@ function donutCourses () {
 
 function donutMaths () {
 
-    console.log("But no");
     var colors = Highcharts.getOptions().colors,
         data = [
             {
@@ -146,10 +145,13 @@ function donutMaths () {
     for (i = 0; i < dataLen; i += 1) {
         data[i].color = colors[i];
     }
-    // Create the chart
-    $(document).ready(function(){
+
+ 
+    
+
     $('#donutMathematics').highcharts({
         chart: {
+            backgroundColor: "#D0EDF1",
             type: 'pie'
         },
         title:{
@@ -187,6 +189,6 @@ function donutMaths () {
         }]
     });
 
-    });
+        
 
 };
