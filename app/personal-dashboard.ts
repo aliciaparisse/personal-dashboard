@@ -7,8 +7,8 @@ import {StudentInfo} from "./student-info";
 	directives:[Courses,StudentInfo],
 	template:`
 	<div class="row">
-		<student-info class="student-info col-xs-4 col-sm-4 col-md-3 col-lg-3"></student-info>
-		<courses class="col-xs-6 col-sm-6 col-md-9 col-lg-9"></courses>
+		<student-info class="student-info col-xs-12 col-sm-6 col-md-5 col-lg-4"></student-info>
+		<courses class="col-xs-12 col-sm-6 col-md-7 col-lg-8"></courses>
 	</div>`
 })
 

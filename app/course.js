@@ -22,7 +22,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js"], function(exports
             Course = (function () {
                 function Course() {
                 }
-                Course.prototype.ngOnInit = function () {
+                Course.prototype.ngAfterViewInit = function () {
                     coursesTreatment_js_1.donutFromCourseCompletion(this.aCourse.name);
                 };
                 __decorate([
@@ -32,7 +32,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js"], function(exports
                 Course = __decorate([
                     core_1.Component({
                         selector: 'course',
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container'> \n\t\t\t<div class='diagram' id=\"Completion{{aCourse.name}}\">I am a course of {{aCourse.name}}</div>\n\t\t</div>\n\t</div>"
+                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='diagram col-xs-12 col-sm-6 col-md-6 col-lg-4' id=\"Completion{{aCourse.name}}\">I am a course of {{aCourse.name}}</div>\n\t\t\t<div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-8\">En collones</div>\n\t\t</div>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Course);

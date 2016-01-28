@@ -8,7 +8,7 @@ function getAllCourses(){
                 donePercentage:18, 
                 exercisesDone:5
             },{
-                name : "Computer Science",
+                name : "Computer_Science",
                 id : 44,
                 lessons : [
                 ],

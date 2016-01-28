@@ -5,8 +5,6 @@
  }
 
 courses{
-	display:flex;
-	flex-flow: row;
 	margin-right: 0px;
 	margin-left: 0px;
     margin-top: 2px;
@@ -18,12 +16,11 @@ courses{
 	width:50%;
 }
 
-h1 {
+h1,h2 {
     text-align: center;
 }
 
 .course{
-	flex: 0 1 auto;
 	margin-right: 2px;
 	margin-left: 2px;
     margin-top: 2px;
@@ -33,7 +30,6 @@ h1 {
 	border-width: 0px;
 	border-radius: 8px 8px 8px 8px;
 	box-shadow: none;
-	width:100%;
  }
 
 .student-info {
@@ -53,15 +49,14 @@ h1 {
 .activity-three { background: #44a340; }
 .activity-four { background: #1e6823; }
 
-
+/*
 .diag-container{
 	position: relative;
 	width: 90%;		
 }
 .diag-container:before{
 	content: "";
-	display: block;
-	padding-top: 100%; 	
+	padding-top: 50%; 	
 }
 .diagram{
 	position:  absolute;
@@ -69,4 +64,4 @@ h1 {
 	left: 0;
 	bottom: 0;
 	right: 0;
-}
+}*/

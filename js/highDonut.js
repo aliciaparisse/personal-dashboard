@@ -61,6 +61,16 @@ function donutCourses () {
         chart: {
             type: 'pie'
         },
+        exporting:{
+            buttons:{
+                contextButton:{
+                    enabled:false
+                }
+            }
+        },
+        credits:{
+            enabled:false
+        },       
         title:{
             text:''
         },
@@ -84,7 +94,7 @@ function donutCourses () {
         series: [{
             name: 'Courses',
             data: data,
-            size: '60%',
+            size: '100%',
             innerSize : '40%',
             dataLabels: {
                 formatter: function () {

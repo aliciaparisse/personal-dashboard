@@ -36,19 +36,22 @@ function donutFromCourseCompletion(courseName){
         drillDataLen,
         brightness,
         divName =courseName+"Completion";
-    jQuery.fn.exists = function(){return this.length>0;}
-    console.dir($("#Completion" +courseName));
-    // if ($("#Completion" +courseName).exists()) {
-    //     console.log("Of course !!");
-        
-    // }
-    $("#Completion" +courseName).text("HAHA");
-
+  
     createDisplayableData(courseData, dataToDisplay, neededPercToPass);
-    $("#CompletionMathematics").highcharts({
+    $("#Completion"+ courseName).highcharts({
         chart: {
             type: 'pie'
         },
+        exporting:{
+            buttons:{
+                contextButton:{
+                    enabled:false
+                }
+            }
+        },
+        credits:{
+            enabled:false
+        },       
         title:{
             text:''
         },
@@ -72,8 +75,8 @@ function donutFromCourseCompletion(courseName){
         series: [{
             name: 'Exercises',
             data: dataToDisplay,
-            size: '60%',
-            innerSize : '40%',
+            size: '100%',
+            innerSize : '60%',
             dataLabels: {
                 formatter: function () {
                     return this.y > 10 ? this.point.name : null;
@@ -82,6 +85,22 @@ function donutFromCourseCompletion(courseName){
                 distance: -10
             }
         }]
+    },function (chart) { // on complete
+        var centerPositionW = $("#Completion"+ courseName).width() / 2,
+            centerPositionH = $("#Completion"+ courseName).height() / 2,
+            theText ="20%",
+            myFontSize = 52;
+        chart.renderer.text(theText,centerPositionW-(theText.length*myFontSize/4), centerPositionH+(myFontSize/2))
+            .css({
+                color: '#0000',
+                fontSize: myFontSize+'px',
+                textAlign: 'right'
+            })
+            .attr({
+                zIndex: 999
+            })
+            .add();
+
     });
 
 

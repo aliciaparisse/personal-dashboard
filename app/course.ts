@@ -6,8 +6,9 @@ import {donutFromCourseCompletion} from "../js/coursesTreatment.js";
 	template: `
 	<div class="course">
 		<h2>{{aCourse.name}}</h2>
-		<div class='diag-container'> 
-			<div class='diagram' id="Completion{{aCourse.name}}">I am a course of {{aCourse.name}}</div>
+		<div class='diag-container row'> 
+			<div class='diagram col-xs-12 col-sm-6 col-md-6 col-lg-4' id="Completion{{aCourse.name}}">I am a course of {{aCourse.name}}</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">En collones</div>
 		</div>
 	</div>`
 })
@@ -15,7 +16,8 @@ import {donutFromCourseCompletion} from "../js/coursesTreatment.js";
 export class Course{
 	@Input() aCourse;
 
-	ngOnInit(){
+	ngAfterViewInit(){
 		donutFromCourseCompletion(this.aCourse.name);
 	}
+	
 }

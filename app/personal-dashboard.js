@@ -29,7 +29,7 @@ System.register(["angular2/core", "./courses", "./student-info"], function(expor
                     core_1.Component({
                         selector: "personal-dashboard",
                         directives: [courses_1.Courses, student_info_1.StudentInfo],
-                        template: "\n\t<div class=\"row\">\n\t\t<student-info class=\"student-info col-xs-4 col-sm-4 col-md-3 col-lg-3\"></student-info>\n\t\t<courses class=\"col-xs-6 col-sm-6 col-md-9 col-lg-9\"></courses>\n\t</div>"
+                        template: "\n\t<div class=\"row\">\n\t\t<student-info class=\"student-info col-xs-12 col-sm-6 col-md-5 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-6 col-md-7 col-lg-8\"></courses>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PersonalDashboard);
