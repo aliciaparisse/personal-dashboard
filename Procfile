@@ -1,1 +1,1 @@
-web: concurrently "npm run tsc:w" "npm run lite -- --port $PORT"
+web: concurrent "npm run tsc:w" "npm run lite -- --port $PORT"
