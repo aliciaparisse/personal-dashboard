@@ -1,5 +1,5 @@
-function createDisplayableData(courseD, dispD, needPer){
-	var donePer = courseD.donePercentage;
+function createDisplayableData(courseD, dispD, nbExerToPass, totalNbEx){
+	var donePer = courseD.doneExercises;
 	dispD.push({
 		name:"Done!",
 		color:"#D0EDF1",
@@ -8,36 +8,52 @@ function createDisplayableData(courseD, dispD, needPer){
 	dispD.push({
 		name:"To do",
 		color:"#FFAE32",
-		y: (needPer-donePer)
+		y: (nbExerToPass-donePer)
 	});
 	dispD.push({
 		name:"To get better",
 		color:"#D3D3D3",
-		y: (100 - needPer)
+		y: (totalNbEx - nbExerToPass)
 	});
 }
 
-function donutFromCourseCompletion(courseName){
+// function getData(){
+//     var baseUrl = "http://snapshots.testmycode.net/";
+//     return $.ajax({
+//         headers: {
+//             username: "analysis", 
+//             password: //To replace with password, find a way not to send it to git
 
-    console.log(courseName)
+//             "Access-Control-Allow-Origin": true
+//         },
+//         url: baseUrl,
+//         type: 'GET',
+//         success: function() { console.log('GET completed'); }
+//     });
+
+
+// }
+
+
+function donutFromCourseCompletion(course){
+
 	var colors = Highcharts.getOptions().colors,
         //Here, we get back the exercises informations that we would really need
+        courseName = course.name,
         courseData = {
                 name : courseName,
                 id : 42,
                 lessons : [
 
                 ],
-                donePercentage:18, 
-                exercisesDone:5
+                doneExercises:course.exercises.length
         },
         dataToDisplay = [],
-        neededPercToPass = 80,
+        nbExerToPass = 75,
+        totalNbEx = 90,
         drillDataLen,
-        brightness,
-        divName =courseName+"Completion";
-  
-    createDisplayableData(courseData, dataToDisplay, neededPercToPass);
+        brightness;
+    createDisplayableData(courseData, dataToDisplay, nbExerToPass, totalNbEx);
     $("#Completion"+ courseName).highcharts({
         chart: {
             type: 'pie'

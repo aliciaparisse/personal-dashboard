@@ -4,6 +4,10 @@
   margin: 1.5px;
  }
 
+.parent {
+	display:flex;
+}
+
 courses{
 	margin-right: 0px;
 	margin-left: 0px;

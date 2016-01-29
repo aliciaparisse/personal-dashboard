@@ -24,7 +24,7 @@ System.register(["angular2/core", "../js/courseMng.js", './course'], function(ex
         execute: function() {
             Courses = (function () {
                 function Courses() {
-                    this.courses = courseMng_js_1.default();
+                    this.courses = courseMng_js_1.getSampleCourses();
                 }
                 Courses = __decorate([
                     core_1.Component({

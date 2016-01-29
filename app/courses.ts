@@ -1,5 +1,5 @@
 import {Component} from "angular2/core";
-import getAllCourses from "../js/courseMng.js"
+import {getSampleCourses} from "../js/courseMng.js"
 import {Course} from './course';
 
 @Component({
@@ -16,7 +16,7 @@ import {Course} from './course';
 
 export class Courses{
 	constructor(){
-		this.courses = getAllCourses();
+		this.courses = getSampleCourses();
 	}
 
 
