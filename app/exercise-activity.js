@@ -1,4 +1,4 @@
-System.register(["angular2/core", "../js/courseMng.js", './course'], function(exports_1) {
+System.register(["angular2/core"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,36 +8,33 @@ System.register(["angular2/core", "../js/courseMng.js", './course'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, courseMng_js_1, course_1;
-    var Courses;
+    var core_1;
+    var ExerciseActivity;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (courseMng_js_1_1) {
-                courseMng_js_1 = courseMng_js_1_1;
-            },
-            function (course_1_1) {
-                course_1 = course_1_1;
             }],
         execute: function() {
-            Courses = (function () {
-                function Courses() {
-                    this.courses = courseMng_js_1.getSampleCourses();
+            ExerciseActivity = (function () {
+                function ExerciseActivity() {
                 }
-                Courses = __decorate([
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], ExerciseActivity.prototype, "exo", void 0);
+                ExerciseActivity = __decorate([
                     core_1.Component({
-                        selector: "courses",
-                        directives: [course_1.Course],
-                        template: "\n\t<div> \n\t\t<div *ngFor=\"#aCourse of courses\">\n\t\t\t<course\u00A0\n\t\t\t[aCourse]=\"aCourse\"></course>\n\t\t</div>\t\n\t</div>"
+                        selector: "exercise-activity",
+                        template: "\n\tIn progress..\t\n\t"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], Courses);
-                return Courses;
+                ], ExerciseActivity);
+                return ExerciseActivity;
             })();
-            exports_1("Courses", Courses);
+            exports_1("ExerciseActivity", ExerciseActivity);
         }
     }
 });
-//# sourceMappingURL=courses.js.map
+// <div class="days activity">{{exo.newName}}</div> 
+//# sourceMappingURL=exercise-activity.js.map

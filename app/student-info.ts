@@ -1,5 +1,5 @@
 import {Component} from "angular2/core";
-import {donutCourses} from "../js/highDonut.js";
+import {allStudentCourses} from "../js/coursesTreatment.js";
 import {DonutDiagram} from "./donut-diagram";
 
 @Component({

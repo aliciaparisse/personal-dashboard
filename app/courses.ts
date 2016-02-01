@@ -1,14 +1,14 @@
 import {Component} from "angular2/core";
-import {getSampleCourses} from "../js/courseMng.js"
+import {getSampleCourses} from "../js/courseMng.js";
 import {Course} from './course';
 
 @Component({
 	selector:"courses",
 	directives: [Course],
 	template:`
-	<div> I'm a course list
+	<div> 
 		<div *ngFor="#aCourse of courses">
-			<course
+			<course 
 			[aCourse]="aCourse"></course>
 		</div>	
 	</div>`

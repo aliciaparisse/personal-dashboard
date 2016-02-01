@@ -1,5 +1,5 @@
 import {Component} from "angular2/core";
-import {donutCourses} from "../js/highDonut.js";
+import {allStudentCourses} from "../js/coursesTreatment.js";
 
 @Component({
 	selector:"donut-diagram",
@@ -11,6 +11,6 @@ import {donutCourses} from "../js/highDonut.js";
 
 export class DonutDiagram{
 	constructor(){
-		donutCourses();
+		allStudentCourses();
 	}
 }

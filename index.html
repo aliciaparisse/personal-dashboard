@@ -20,6 +20,7 @@
     <script type="text/javascript" src="./js/highTest.js"></script>
     <script type="text/javascript" src="./js/highDonut.js"></script>
     <script type="text/javascript" src="./js/courseMng.js"></script>
+    <script type="text/javascript" src="./js/coursesTreatment.js"></script>
 
     <link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/exercises.css">
@@ -36,6 +37,11 @@
       });
       System.import('app/boot')
             .then(null, console.error.bind(console));
+    </script>
+    <script>  
+    $(function() {
+      $( document ).tooltip();
+    });
     </script>
 
   </head>

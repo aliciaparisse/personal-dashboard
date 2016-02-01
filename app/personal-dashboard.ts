@@ -1,10 +1,11 @@
 import {Component} from "angular2/core";
 import {Courses} from "./courses";
 import {StudentInfo} from "./student-info";
+import {ExerciseActivity} from "./exercise-activity";
 
 @Component({
 	selector:"personal-dashboard",
-	directives:[Courses,StudentInfo],
+	directives:[Courses,StudentInfo,ExerciseActivity],
 	template:`
 	<div class="row">
 		<student-info class="student-info col-xs-12 col-sm-6 col-md-5 col-lg-4"></student-info>
