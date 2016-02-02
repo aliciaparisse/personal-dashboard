@@ -17,25 +17,26 @@ function createDisplayableData(courseD, dispD, nbExerToPass, totalNbEx){
 	});
 }
 
-// function getData(){
-//     var baseUrl = "http://snapshots.testmycode.net/";
-//     return $.ajax({
-//         headers: {
-//             username: "analysis", 
-//             password: //To replace with password, find a way not to send it to git
+function getData(){
+    var baseUrl = "https://tmc.mooc.fi/org/hy/courses/83.json?api_version=7";
+    return $.ajax({
+        xhrFields: {
+            withCredentials: true
+        },
+        headers: {
+            'Authorization': 'Basic ' + btoa('aparisse:tmcpassword')
+        },
+        url: baseUrl,
+        type: 'GET',
+        success: function() { console.log('GET completed'); }
+    });
 
-//             "Access-Control-Allow-Origin": true
-//         },
-//         url: baseUrl,
-//         type: 'GET',
-//         success: function() { console.log('GET completed'); }
-//     });
 
-
-// }
+}
 
 
 function donutFromCourseCompletion(course){
+    console.log("Haha"+getData().api_version);
 
 	var colors = Highcharts.getOptions().colors,
         //Here, we get back the exercises informations that we would really need
@@ -135,7 +136,6 @@ function addTotalPercentage (data){
 }
 
 function allStudentCourses () {
-
     var colors = Highcharts.getOptions().colors,
         data = [
             {

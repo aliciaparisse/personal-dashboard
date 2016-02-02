@@ -57,10 +57,6 @@ function refactorExercises(course){
         //We pass from camel case to normal syntax with a reg ex
         newName = newName.replace(/([A-Z])/g, function($1){return " "+$1.toLowerCase();}).slice(1);
         newName = newName.charAt(0).toUpperCase() + newName.slice(1); 
-        
- 
-
-        console.log(newName);
 
         course.exercises[i].newName = newName;
     }
