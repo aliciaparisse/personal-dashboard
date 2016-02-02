@@ -10,7 +10,8 @@ import {refactorExercises} from "../js/courseMng.js";
 		<div class='diag-container row'> 
 			<div class='diagram col-xs-12 col-sm-6 col-md-6 col-lg-4' id="Completion{{aCourse.name}}"></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 parent">
- 				
+ 				<div title="{{exo.newName}}" class="days activity" *ngFor="#exo of exercises"></div>
+ 				</div>
 		</div>
 	</div>`
 })
