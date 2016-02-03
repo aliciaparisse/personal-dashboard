@@ -38,7 +38,6 @@ function getSampleCourses(){
     return data;
 }
 
-
 function refactorExercises(course){
     var i,
         newName="Not yet";
