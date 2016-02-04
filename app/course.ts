@@ -1,5 +1,5 @@
 import {Component,Input} from 'angular2/core';
-import {donutFromCourseCompletion} from "../js/coursesTreatment.js";
+import {courseCompDiagram} from "../js/coursesTreatment.js";
 import {refactorExercises} from "../js/courseMng.js";
 
 @Component({
@@ -21,7 +21,7 @@ export class Course{
 
 	ngAfterViewInit(){
 		setTimeout(() => {
-		 	donutFromCourseCompletion(this.aCourse);
+		 	courseCompDiagram(this.aCourse);
 			this.exercises = this.aCourse.exercises;
 
 		}, 1);

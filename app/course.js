@@ -25,7 +25,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js"], function(exports
                 Course.prototype.ngAfterViewInit = function () {
                     var _this = this;
                     setTimeout(function () {
-                        coursesTreatment_js_1.donutFromCourseCompletion(_this.aCourse);
+                        coursesTreatment_js_1.courseCompDiagram(_this.aCourse);
                         _this.exercises = _this.aCourse.exercises;
                     }, 1);
                 };

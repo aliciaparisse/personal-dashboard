@@ -16,4 +16,80 @@ function getColors(nbColors){
 		"#DBDBDB", //13 - First Light Shade of Grey
 		"#E9E9E9", //14 Second Light Shade of Grey
  	]
+
+ 	//Now we assign a table of colors, depending on the number of colors needed
+ 	if (nbColors <=3){
+ 		return [colors[0],
+ 				colors[5],
+ 				colors[10]];
+ 	}
+ 	else if (nbColors <=6){
+ 		return [colors[0],
+ 				colors[1],
+ 				colors[5],
+ 				colors[6],
+ 				colors[10],
+ 				colors[11]];
+ 	}
+ 	else if (nbColors <=9){
+ 		return [colors[4],
+ 				colors[0],
+ 				colors[1],
+ 				colors[9],
+ 				colors[5],
+ 				colors[6],
+ 				colors[14],
+ 				colors[10],
+ 				colors[11]];
+ 	}
+ 	else if (nbColors <=12){
+ 		return [colors[4],
+ 				colors[0],
+ 				colors[1],
+ 				colors[2],
+ 				colors[9],
+ 				colors[5],
+ 				colors[6],
+ 				colors[7],
+ 				colors[14],
+ 				colors[10],
+ 				colors[11],
+ 				colors[12]];
+ 	}
+
+ 	else if (nbColors <=15){
+ 		return [colors[3],
+ 				colors[4],
+ 				colors[0],
+ 				colors[1],
+ 				colors[2],
+ 				colors[8],
+ 				colors[9],
+ 				colors[5],
+ 				colors[6],
+ 				colors[7],
+ 				colors[13],
+ 				colors[14],
+ 				colors[10],
+ 				colors[11],
+ 				colors[12]];
+ 	}
+ 	else if (nbColors > 15){
+ 		//Return highcharts colors ?
+ 		return [colors[3],
+ 				colors[4],
+ 				colors[0],
+ 				colors[1],
+ 				colors[2],
+ 				colors[8],
+ 				colors[9],
+ 				colors[5],
+ 				colors[6],
+ 				colors[7],
+ 				colors[13],
+ 				colors[14],
+ 				colors[10],
+ 				colors[11],
+ 				colors[12]];
+ 	}
 }

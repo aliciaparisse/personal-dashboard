@@ -1,19 +1,20 @@
 function createDisplayableData(courseD, dispD, doneExercises){
+    var colors = getColors(3);
     totalNbEx = courseD.course.points.total_available;
     nbExerToPass = Math.round(totalNbEx * 70 /100);
     dispD.push({
 		name:"Done!",
-		color:"#D0EDF1",
+		color:colors[0],
 		y:doneExercises
 	});
 	dispD.push({
 		name:"To do",
-		color:"#FFAE32",
+		color:colors[1],
 		y: (nbExerToPass-doneExercises)
 	});
 	dispD.push({
 		name:"To get better",
-		color:"#D3D3D3",
+		color:colors[2],
 		y: (totalNbEx - nbExerToPass)
 	});
 }
@@ -30,7 +31,9 @@ function testAjax(){
     username= "analysis";
     password = "FArUK69:<*;MQdUL&^Y&ag,m?~j4fusD";
     tok = username+":"+password;
-    hash = Base64.encode(tok);
+
+    hash = btoa(tok);
+    console.log(hash);
     $.ajax({
         xhrFields: {
             withCredentials: true
@@ -50,7 +53,10 @@ function testAjax(){
     return data;  
 }
 
-function getData(id, api){
+//Here we pass to getData, the function that we want it to execute on success
+//Params is an array of params needed for the syncFunction - can be empty
+//Those parameters are the supplementary params because at least one of the param is the data retrieved by the Ajax call
+function getData(id, api, syncFunc, params){
     //Here we define all the params that we will need for the request
     var baseUrl, 
         username,
@@ -72,11 +78,6 @@ function getData(id, api){
         password = "FArUK69:<*;MQdUL&^Y&ag,m?~j4fusD";  
     }
 
-    // baseUrl = "https://tmc.mooc.fi/org/hy/courses.json?api_version=7&show_unlock_conditions=1&show_points=1";          
-        
-    // username = "aparisse";
-    // password = "tmcpassword";
-
     $.ajax({
         xhrFields: {
             withCredentials: true
@@ -86,48 +87,53 @@ function getData(id, api){
         },
         url: baseUrl,
         type: 'GET',
-        //TODO : replace this
-        async:false,
-        success: function(dataReceived) { 
+        success: function(dataReceived) {
             console.log(dataReceived);
+            if (syncFunc !=null){
+                console.log("My function" + syncFunc);
+                syncFunc(dataReceived, params);
+            }
             data = dataReceived;
         }
     });
     return data;
 }
 
-function getCourseData(courseName){
-    var i,
-        course,
-        resTmc;
-    //Get all the courses with their id and names
-    resTmc = getData("courses", "tmc");
-    
-    for (i = 0 ; i < resTmc.courses.length; i++){
-        if (courseName == resTmc.courses[i].name){
-            console.log(resTmc.courses[i].id);
-            return getData(resTmc.courses[i].id, "tmc");
-        }
-    }
-}
 
+function courseCompDiagram(course){
 
-function donutFromCourseCompletion(course){
-
-	var colors = Highcharts.getOptions().colors,
+	var courseConcerned,
         //Here, we get back the exercises informations that we would really need
         courseName = course.name,
         //This line calls the api 
-        //courseData = getCourseData(courseName),
-        courseConcerned,
         dataToDisplay = [],
         doneEx = 4,
-        drillDataLen,
-        brightness;
-    //testAjax();
-    courseConcerned = getCourseData(courseName);
-    createDisplayableData(courseConcerned, dataToDisplay, doneEx);
+        resTmc,
+        i;
+
+    //Get all the courses with their id and names
+    getData("courses", "tmc", displayCourseById, [courseName,doneEx]);
     
+ }
+
+function displayCourseById(coursesConcerned, complParams){
+    var courseName = complParams[0],
+        doneEx = complParams[1];
+
+    for (i = 0 ; i < coursesConcerned.courses.length; i++){
+        if (courseName == coursesConcerned.courses[i].name){
+            console.log(coursesConcerned.courses[i].id);
+            getData(coursesConcerned.courses[i].id, "tmc", compDiagram, [courseName, doneEx]);
+        }
+    }
+ }
+
+function compDiagram(courseConcerned, complParams){
+    var dataToDisplay = [],
+        courseName = complParams[0],
+        doneEx = complParams[1];
+    createDisplayableData(courseConcerned, dataToDisplay, doneEx);
+
     $("#Completion"+ courseName).highcharts({
         chart: {
             type: 'pie'
@@ -202,8 +208,7 @@ function addTotalPercentage (data){
 }
 
 function allStudentCourses () {
-    var colors = Highcharts.getOptions().colors,
-        data = [
+    var data = [
             {
                 name : "Mathematics",
                 id : 42,
@@ -238,6 +243,7 @@ function allStudentCourses () {
         i,
         j,
         dataLen = data.length,
+        colors = getColors(dataLen),
         drillDataLen,
         brightness;
 
