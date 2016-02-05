@@ -1,4 +1,4 @@
-function createDisplayableData(courseD, dispD, doneExercises){
+var createDisplayableData = function(courseD, dispD, doneExercises){
     var colors = getColors(3);
     totalNbEx = courseD.course.points.total_available;
     nbExerToPass = Math.round(totalNbEx * 70 /100);
@@ -19,7 +19,79 @@ function createDisplayableData(courseD, dispD, doneExercises){
 	});
 }
 
-function testAjax(){
+
+
+var addTotalPercentage = function(data){
+    var totalNbEx = 0;
+    for (i=0; i < data.length; i++){
+        totalNbEx += data[i].exercisesDone;
+    }
+    for (i=0; i < data.length; i++){
+        data[i].y =  parseFloat(data[i].exercisesDone / totalNbEx.toFixed(2));
+    }
+}
+
+var sepExInWeeks = function(exercises){
+    var weeks = [],
+        i,
+        exo,
+        weekNumber,
+        foundWeek0 = false;
+    //We iterate through the exercises to check of what week they're part
+    for (i = 0 ; i < exercises.length ; i++){
+        exo = exercises[i];
+        if (exo.name.indexOf('-') != -1){
+            dashIn = exo.name.indexOf('-');
+            //I check if I have a week number
+            if(!isNaN(exo.name[dashIn -1])){
+                //I check if I have a week number with 2 digits
+                if(!isNaN(exo.name.substring((dashIn-2), (dashIn-1)))){
+                    weekNumber =  parseInt(exo.name.substr((dashIn-2), 2));
+                }
+                else {
+                    weekNumber =  parseInt(exo.name[dashIn-1]); 
+                }
+
+                //Because we assume that if there's a week 0, it will be first
+                if(weekNumber ==0 && !foundWeek0){
+                    foundWeek0 = true;
+                }
+
+                //If I do, I get this number and add it to weeks
+                //1) If it already exists, add it to a week element
+                //a) If there exist a week zero we dont shift the indexes
+                if (foundWeek0 && weeks[weekNumber] != undefined){
+                    weeks[weekNumber].push(exo);
+                }
+                //b) If there is no week zero, we shift the indexes
+                else if (weeks[weekNumber-1] != undefined){
+                    weeks[weekNumber-1].push(exo);
+                }
+                //2) If it doesn't I create a new week and add my exercise in it
+                else{
+                    weeks.push([exo]);
+                }
+ 
+            }
+             
+        }
+        //As the exercises are in order of week number, if I find a non number week, I just treat it in the end
+        else {
+            //I check if there is an Extra Week number
+            if (weeks["Extra"] != undefined){
+                weeks["Extra"].push(exo);
+            }
+            //2) If it doesn't I create a new week and add my exercise in it
+            else{
+                weeks["Extra"] =[exo];
+            }
+        }
+
+    }
+    
+}
+
+var testAjax = function(){
     var baseUrl, 
         username,
         password,
@@ -27,7 +99,7 @@ function testAjax(){
         hash,
         tok;
     
-    baseUrl =  "http://snapshots.testmycode.net";
+    baseUrl =  "http://snapshots.testmycode.net:80";
     username= "analysis";
     password = "FArUK69:<*;MQdUL&^Y&ag,m?~j4fusD";
     tok = username+":"+password;
@@ -38,13 +110,14 @@ function testAjax(){
         xhrFields: {
             withCredentials: true
         },
+        // username : username,
+        // password : password,
         headers: {
-            'Authorization': 'Basic '+hash
+            'Authorization': 'Basic '+hash,
         },
         url: baseUrl,
         type: 'GET',
         //TODO : replace this
-        async:false,
         success: function(dataReceived) { 
             console.log(dataReceived);
             data = dataReceived;
@@ -54,14 +127,18 @@ function testAjax(){
 }
 
 //Here we pass to getData, the function that we want it to execute on success
-//Params is an array of params needed for the syncFunction - can be empty
-//Those parameters are the supplementary params because at least one of the param is the data retrieved by the Ajax call
-function getData(id, api, syncFunc, params){
+var getData = function(id, api, syncFunc){
     //Here we define all the params that we will need for the request
     var baseUrl, 
         username,
         password,
         data;
+
+    //If the function to launch after the success
+    if (syncFunc == null){
+        var syncFunc = function(dataReceived){};
+    }
+
     if (api == "tmc"){
         if(isNaN(id)){
             baseUrl = "https://tmc.mooc.fi/org/hy/courses.json?api_version=7&show_unlock_conditions=1&show_points=1";          
@@ -87,20 +164,13 @@ function getData(id, api, syncFunc, params){
         },
         url: baseUrl,
         type: 'GET',
-        success: function(dataReceived) {
-            console.log(dataReceived);
-            if (syncFunc !=null){
-                console.log("My function" + syncFunc);
-                syncFunc(dataReceived, params);
-            }
-            data = dataReceived;
-        }
+        success: syncFunc
     });
     return data;
 }
 
 
-function courseCompDiagram(course){
+var courseCompDiagram = function(course){
 
 	var courseConcerned,
         //Here, we get back the exercises informations that we would really need
@@ -110,104 +180,91 @@ function courseCompDiagram(course){
         doneEx = 4,
         resTmc,
         i;
+    //testAjax();
+    //Get all the courses with their id and names and call back
+    //to the next function in order to get the id of the concerned course
+    getData("courses", "tmc",
+        function (coursesConcerned){
 
-    //Get all the courses with their id and names
-    getData("courses", "tmc", displayCourseById, [courseName,doneEx]);
+            for (i = 0 ; i < coursesConcerned.courses.length; i++){
+                if (courseName == coursesConcerned.courses[i].name){
+                    //Get the course information and display it using the callback function
+                    getData(coursesConcerned.courses[i].id, "tmc", function (courseConcerned){
+                        createDisplayableData(courseConcerned, dataToDisplay, doneEx);
+                        sepExInWeeks(courseConcerned.course.exercises);
+                        console.log(courseConcerned);
+                        $("#Completion"+ courseName).highcharts({
+                            chart: {
+                                type: 'pie'
+                            },
+                            exporting:{
+                                buttons:{
+                                    contextButton:{
+                                        enabled:false
+                                    }
+                                }
+                            },
+                            credits:{
+                                enabled:false
+                            },       
+                            title:{
+                                text:''
+                            },
+                            subTitle:{
+                                text:''
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Number of exercises done'
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    shadow: false,
+                                    center: ['50%', '50%']
+                                }
+                            },
+                            series: [{
+                                name: 'Exercises',
+                                data: dataToDisplay,
+                                size: '100%',
+                                innerSize : '60%',
+                                dataLabels: {
+                                    formatter: function () {
+                                        return this.y > 10 ? this.point.name : null;
+                                    },
+                                    color: '#ffffff',
+                                    distance: -10
+                                }
+                            }]
+                        },function (chart) { // on complete
+                            var centerPositionW = $("#Completion"+ courseName).width() / 2,
+                                centerPositionH = $("#Completion"+ courseName).height() / 2,
+                                theText ="20%",
+                                myFontSize = 52;
+                            chart.renderer.text(theText,centerPositionW-(theText.length*myFontSize/4), centerPositionH+(myFontSize/2))
+                                .css({
+                                    color: '#0000',
+                                    fontSize: myFontSize+'px',
+                                    textAlign: 'right'
+                                })
+                                .attr({
+                                    zIndex: 999
+                                })
+                                .add();
+
+                        });
+                    });
+                }
+            }
+        });
     
  }
 
-function displayCourseById(coursesConcerned, complParams){
-    var courseName = complParams[0],
-        doneEx = complParams[1];
 
-    for (i = 0 ; i < coursesConcerned.courses.length; i++){
-        if (courseName == coursesConcerned.courses[i].name){
-            console.log(coursesConcerned.courses[i].id);
-            getData(coursesConcerned.courses[i].id, "tmc", compDiagram, [courseName, doneEx]);
-        }
-    }
- }
 
-function compDiagram(courseConcerned, complParams){
-    var dataToDisplay = [],
-        courseName = complParams[0],
-        doneEx = complParams[1];
-    createDisplayableData(courseConcerned, dataToDisplay, doneEx);
 
-    $("#Completion"+ courseName).highcharts({
-        chart: {
-            type: 'pie'
-        },
-        exporting:{
-            buttons:{
-                contextButton:{
-                    enabled:false
-                }
-            }
-        },
-        credits:{
-            enabled:false
-        },       
-        title:{
-            text:''
-        },
-        subTitle:{
-            text:''
-        },
-        yAxis: {
-            title: {
-                text: 'Number of exercises done'
-            }
-        },
-        plotOptions: {
-            pie: {
-                shadow: false,
-                center: ['50%', '50%']
-            }
-        },
-        series: [{
-            name: 'Exercises',
-            data: dataToDisplay,
-            size: '100%',
-            innerSize : '60%',
-            dataLabels: {
-                formatter: function () {
-                    return this.y > 10 ? this.point.name : null;
-                },
-                color: '#ffffff',
-                distance: -10
-            }
-        }]
-    },function (chart) { // on complete
-        var centerPositionW = $("#Completion"+ courseName).width() / 2,
-            centerPositionH = $("#Completion"+ courseName).height() / 2,
-            theText ="20%",
-            myFontSize = 52;
-        chart.renderer.text(theText,centerPositionW-(theText.length*myFontSize/4), centerPositionH+(myFontSize/2))
-            .css({
-                color: '#0000',
-                fontSize: myFontSize+'px',
-                textAlign: 'right'
-            })
-            .attr({
-                zIndex: 999
-            })
-            .add();
-
-    });
-};
-
-function addTotalPercentage (data){
-    var totalNbEx = 0;
-    for (i=0; i < data.length; i++){
-        totalNbEx += data[i].exercisesDone;
-    }
-    for (i=0; i < data.length; i++){
-        data[i].y =  parseFloat(data[i].exercisesDone / totalNbEx.toFixed(2));
-    }
-}
-
-function allStudentCourses () {
+var allStudentCourses = function() {
     var data = [
             {
                 name : "Mathematics",
