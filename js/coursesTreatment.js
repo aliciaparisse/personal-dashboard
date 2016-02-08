@@ -61,15 +61,15 @@ var sepExInWeeks = function(exercises){
                 //1) If it already exists, add it to a week element
                 //a) If there exist a week zero we dont shift the indexes
                 if (foundWeek0 && weeks[weekNumber] != undefined){
-                    weeks[weekNumber].push(exo);
+                    weeks[weekNumber].exercises.push(exo);
                 }
                 //b) If there is no week zero, we shift the indexes
                 else if (weeks[weekNumber-1] != undefined){
-                    weeks[weekNumber-1].push(exo);
+                    weeks[weekNumber-1].exercises.push(exo);
                 }
                 //2) If it doesn't I create a new week and add my exercise in it
                 else{
-                    weeks.push([exo]);
+                    weeks.push({weekNb:weekNumber,exercises:[exo]});
                 }
  
             }
@@ -79,15 +79,16 @@ var sepExInWeeks = function(exercises){
         else {
             //I check if there is an Extra Week number
             if (weeks["Extra"] != undefined){
-                weeks["Extra"].push(exo);
+                weeks["Extra"].exercises.push(exo);
             }
             //2) If it doesn't I create a new week and add my exercise in it
             else{
-                weeks["Extra"] =[exo];
+                weeks["Extra"] ={weekNb:"Extra", exercises:[exo]};
             }
         }
 
     }
+    return weeks;
     
 }
 
@@ -170,7 +171,7 @@ var getData = function(id, api, syncFunc){
 }
 
 
-var courseCompDiagram = function(course){
+var courseCompDiagram = function(course, cbRet){
 
 	var courseConcerned,
         //Here, we get back the exercises informations that we would really need
@@ -190,9 +191,8 @@ var courseCompDiagram = function(course){
                 if (courseName == coursesConcerned.courses[i].name){
                     //Get the course information and display it using the callback function
                     getData(coursesConcerned.courses[i].id, "tmc", function (courseConcerned){
+                        //This is called when we go the course that we requested from the id we got
                         createDisplayableData(courseConcerned, dataToDisplay, doneEx);
-                        sepExInWeeks(courseConcerned.course.exercises);
-                        console.log(courseConcerned);
                         $("#Completion"+ courseName).highcharts({
                             chart: {
                                 type: 'pie'
@@ -254,6 +254,10 @@ var courseCompDiagram = function(course){
                                 .add();
 
                         });
+                        
+                        //This is called with the course we wanted
+                        cbRet(courseConcerned);
+                        
                     });
                 }
             }

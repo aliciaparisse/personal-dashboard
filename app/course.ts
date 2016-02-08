@@ -1,17 +1,22 @@
-import {Component,Input} from 'angular2/core';
-import {courseCompDiagram} from "../js/coursesTreatment.js";
-import {refactorExercises} from "../js/courseMng.js";
+import {Component,Input,NgZone} from 'angular2/core';
+import {courseCompDiagram, sepExInWeeks} from "../js/coursesTreatment.js";
+import {getSampleWeeks} from "../js/courseMng.js";
+import {Exercises} from "./exercises";
 
 @Component({
 	selector: 'course',
+	directives:[Exercises],
 	template: `
 	<div class="course">
 		<h2>{{aCourse.name}}</h2>
 		<div class='diag-container row'> 
 			<div class='diagram col-xs-12 col-sm-4 col-md-4 col-lg-4' id="Completion{{aCourse.name}}"></div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-8 parent">
- 				<div title="{{exo.newName}}" class="days activity" *ngFor="#exo of exercises"></div>
- 				</div>
+	
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 parent" *ngFor="#week of weeks">
+	
+				Week {{week.weekNb}}  <div class="days activity" *ngFor="#exo of week.exercises"></div>
+		
+ 			</div>
 		</div>
 	</div>`
 })
@@ -19,14 +24,21 @@ import {refactorExercises} from "../js/courseMng.js";
 export class Course{
 	@Input() aCourse;
 
+	constructor(private _ngZone: NgZone){}
+
 	ngAfterViewInit(){
-		setTimeout(() => {
-		 	courseCompDiagram(this.aCourse);
-			this.exercises = this.aCourse.exercises;
-			//console.log(this.exercises)
-
-		}, 1);
-
+		this._ngZone.run(
+		 () => {
+		 	courseCompDiagram(this.aCourse, function(concernedCourse){
+			//console.log(concernedCourse);
+		 	this.weeks = JSON.stringify(sepExInWeeks(concernedCourse.course.exercises));
+			});
+		});
+		console.log(this.weeks);
+		this.weeks = getSampleWeeks();
+	}
+	ngOnChanges(){
+		console.log(this.weeks);
 	}
 	
 }
@@ -35,4 +47,6 @@ export class Course{
 
 // <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 parent" *ngFor="#exo of exercises">
 // 				<div class="days activity">
-// 			</div>
+// // 			</div>
+// <div title="{{exo.newName}}" class="days activity" *ngFor="#exo of exercises"></div>
+//  				
