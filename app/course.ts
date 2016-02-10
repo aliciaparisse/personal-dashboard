@@ -3,6 +3,7 @@ import {courseCompDiagram, sepExInWeeks} from "../js/coursesTreatment.js";
 import {getSampleWeeks} from "../js/courseMng.js";
 import {Exercises} from "./exercises";
 
+
 @Component({
 	selector: 'course',
 	directives:[Exercises],
@@ -14,7 +15,7 @@ import {Exercises} from "./exercises";
 	
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 parent" *ngFor="#week of weeks">
 	
-				Week {{week.weekNb}}  <div class="days activity" *ngFor="#exo of week.exercises"></div>
+				Week {{week.weekNb}}  <div class="exerc activity" *ngFor="#exo of week.exercises"></div>
 		
  			</div>
 		</div>
@@ -29,17 +30,15 @@ export class Course{
 	ngAfterViewInit(){
 		this._ngZone.run(
 		 () => {
-		 	courseCompDiagram(this.aCourse, function(concernedCourse){
+		 	courseCompDiagram(this.aCourse,(concernedCourse) => {
 			//console.log(concernedCourse);
-		 	this.weeks = JSON.stringify(sepExInWeeks(concernedCourse.course.exercises));
+		 	this.weeks = sepExInWeeks(concernedCourse.course.exercises);
+			console.log(this.weeks);
 			});
 		});
-		console.log(this.weeks);
-		this.weeks = getSampleWeeks();
+		
 	}
-	ngOnChanges(){
-		console.log(this.weeks);
-	}
+	
 	
 }
 

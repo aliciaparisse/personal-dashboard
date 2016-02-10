@@ -5,7 +5,7 @@ import {getSampleCourses} from "../js/courseMng.js";
 	selector:"exercises",
 	template:`
 	<div *ngFor="#week of weeks">
-
+		Week {{week.weekNb}}  <div class="days activity" *ngFor="#exo of week.exercises"></div>
 	</div>
 		
  	`
@@ -18,4 +18,3 @@ export class Exercises{
 		console.log(weeks);
 	}
 }
-//Week {{week.weekNb}}  <div class="days activity" *ngFor="#exo of week.exercises"></div>

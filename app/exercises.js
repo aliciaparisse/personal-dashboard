@@ -29,7 +29,7 @@ System.register(["angular2/core"], function(exports_1) {
                 Exercises = __decorate([
                     core_1.Component({
                         selector: "exercises",
-                        template: "\n\t<div *ngFor=\"#week of weeks\">\n\n\t</div>\n\t\t\n \t"
+                        template: "\n\t<div *ngFor=\"#week of weeks\">\n\t\tWeek {{week.weekNb}}  <div class=\"days activity\" *ngFor=\"#exo of week.exercises\"></div>\n\t</div>\n\t\t\n \t"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Exercises);
@@ -39,5 +39,4 @@ System.register(["angular2/core"], function(exports_1) {
         }
     }
 });
-//Week {{week.weekNb}}  <div class="days activity" *ngFor="#exo of week.exercises"></div> 
 //# sourceMappingURL=exercises.js.map
