@@ -26,7 +26,7 @@ System.register(["angular2/core", "../js/coursesTreatment.js"], function(exports
                 DonutDiagram = __decorate([
                     core_1.Component({
                         selector: "donut-diagram",
-                        template: "\n\t\t<div class='diag-container'> \n\t\t\t<div class='diagram' id=\"donutCoursesTaken\"></div>\n\t\t</div>"
+                        template: "\n\t\t<div class='diag-container'> \n\t\t\t<div id=\"donutCoursesTaken\"></div>\n\t\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], DonutDiagram);

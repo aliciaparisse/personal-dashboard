@@ -6,7 +6,7 @@ import {DonutDiagram} from "./donut-diagram";
 	selector:"student-info",
 	directives: [DonutDiagram],
 	template:`
-	<div> <h1>{{name}}</h1>
+	<div> <h1>Welcome to your personnal dashboard, {{name}} !</h1>
 		<donut-diagram></donut-diagram>
 	</div>`
 })

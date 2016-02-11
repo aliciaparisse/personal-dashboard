@@ -32,7 +32,7 @@ System.register(["angular2/core", "./courses", "./student-info", "./exercise-act
                     core_1.Component({
                         selector: "personal-dashboard",
                         directives: [courses_1.Courses, student_info_1.StudentInfo, exercise_activity_1.ExerciseActivity],
-                        template: "\n\t<div class=\"row\">\n\t\t<student-info class=\"student-info col-xs-12 col-sm-6 col-md-5 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-6 col-md-7 col-lg-8\"></courses>\n\t</div>"
+                        template: "\n\t<div class=\"row\">\n\t\t<student-info class=\" col-xs-12 col-sm-6 col-md-3 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-6 col-md-9 col-lg-8\"></courses>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PersonalDashboard);
@@ -42,17 +42,4 @@ System.register(["angular2/core", "./courses", "./student-info", "./exercise-act
         }
     }
 });
-//REUSABLE CODE
-// template:`<form (submit)="onSubmit(myInput.value)">
-// 	<input type="text" #myInput>
-// 	<div id="container" style="height: 400px">Hey</div>`
-// })
-// export class PersonalDashboard{
-// 	ngOnInit(){
-// 		console.log(createChart());
-// 	}
-// 	onSubmit(title){
-// 		modifyChart(title);
-// 	}
-// }
 //# sourceMappingURL=personal-dashboard.js.map

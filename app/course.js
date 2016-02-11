@@ -44,7 +44,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
                     core_1.Component({
                         selector: 'course',
                         directives: [exercises_1.Exercises],
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='diagram col-xs-12 col-sm-4 col-md-4 col-lg-4' id=\"Completion{{aCourse.name}}\"></div>\n\t\n\t\t\t<div class=\"col-xs-12 col-sm-8 col-md-8 col-lg-8 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}}  <div class=\"exerc activity\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
+                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3' >\n\t\t\t\t<div class='diagram' id=\"Completion{{aCourse.name}}\"></div>\n\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t<div class=\"col-xs-12 col-sm-6 col-md-9 col-lg-9 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}}\t<div title=\"{{exo.newName}}\" class=\"exerc activity\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [core_1.NgZone])
                 ], Course);
@@ -55,7 +55,8 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
     }
 });
 //To re-add : 
-// <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 parent" *ngFor="#exo of exercises">
+//<div class='diagram col-xs-12 col-sm-4 col-md-4 col-lg-4' id="Completion{{aCourse.name}}"></div>
+//<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 parent" *ngFor="#exo of exercises">
 // 				<div class="days activity">
 // // 			</div>
 // <div title="{{exo.newName}}" class="days activity" *ngFor="#exo of exercises"></div>

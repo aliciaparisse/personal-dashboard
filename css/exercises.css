@@ -8,16 +8,20 @@
 	display:flex;
 }
 
+.diagram{
+    width: 100%;
+  	height: 15vw;	
+}
+
 courses{
 	margin-right: 0px;
 	margin-left: 0px;
-    margin-top: 2px;
-	margin-bottom: 2px;
+    margin-top: 0px;
+	margin-bottom: 0px;
 	border-width: 0px;
     border-style: solid;
     background-color: #FFAE32;
 	border-radius: 8px 8px 8px 8px;
-	width:50%;
 }
 
 h1,h2 {
@@ -36,16 +40,6 @@ h1,h2 {
 	box-shadow: none;
  }
 
-.student-info {
- 	margin-right: 0px;
-	margin-left: 0px;
-	background-color: #FFF;
-	border-color: black;
-	border-width: 10px;
-	border-radius: 4px 4px 0px 0px;
-	box-shadow: none;
- }
-
 
 /*** color-code by activity level ***/ 
 .activity { background: #D0EDF1; }
@@ -53,6 +47,11 @@ h1,h2 {
 .activity-three { background: #44a340; }
 .activity-four { background: #1e6823; }
 
+
+body {
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	/*font-family: Verdana, Geneva, sans-serif;*/
+}
 /*
 .diag-container{
 	position: relative;

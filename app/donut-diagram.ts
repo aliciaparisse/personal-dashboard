@@ -5,7 +5,7 @@ import {allStudentCourses} from "../js/coursesTreatment.js";
 	selector:"donut-diagram",
 	template:`
 		<div class='diag-container'> 
-			<div class='diagram' id="donutCoursesTaken"></div>
+			<div id="donutCoursesTaken"></div>
 		</div>`
 })
 

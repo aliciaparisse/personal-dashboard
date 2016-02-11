@@ -29,7 +29,7 @@ System.register(["angular2/core", "./donut-diagram"], function(exports_1) {
                     core_1.Component({
                         selector: "student-info",
                         directives: [donut_diagram_1.DonutDiagram],
-                        template: "\n\t<div> <h1>{{name}}</h1>\n\t\t<donut-diagram></donut-diagram>\n\t</div>"
+                        template: "\n\t<div> <h1>Welcome to your personnal dashboard, {{name}} !</h1>\n\t\t<donut-diagram></donut-diagram>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StudentInfo);

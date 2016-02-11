@@ -46,7 +46,7 @@ var sepExInWeeks = function(exercises){
             if(!isNaN(exo.name[dashIn -1])){
                 //I check if I have a week number with 2 digits
                 if(!isNaN(exo.name.substring((dashIn-2), (dashIn-1)))){
-                    weekNumber =  parseInt(exo.name.substr((dashIn-2), 2));
+                    weekNumber = parseInt(exo.name.substr((dashIn-2), 2));
                 }
                 else {
                     weekNumber =  parseInt(exo.name[dashIn-1]); 
@@ -60,11 +60,12 @@ var sepExInWeeks = function(exercises){
                 //If I do, I get this number and add it to weeks
                 //1) If it already exists, add it to a week element
                 //a) If there exist a week zero we dont shift the indexes
+                
                 if (foundWeek0 && weeks[weekNumber] != undefined){
                     weeks[weekNumber].exercises.push(exo);
                 }
                 //b) If there is no week zero, we shift the indexes
-                else if (weeks[weekNumber-1] != undefined){
+                else if (!foundWeek0 && weeks[weekNumber-1] != undefined){
                     weeks[weekNumber-1].exercises.push(exo);
                 }
                 //2) If it doesn't I create a new week and add my exercise in it
@@ -90,41 +91,6 @@ var sepExInWeeks = function(exercises){
     }
     return weeks;
     
-}
-
-var testAjax = function(){
-    var baseUrl, 
-        username,
-        password,
-        data,
-        hash,
-        tok;
-    
-    baseUrl =  "http://snapshots.testmycode.net:80";
-    username= "analysis";
-    password = "FArUK69:<*;MQdUL&^Y&ag,m?~j4fusD";
-    tok = username+":"+password;
-
-    hash = btoa(tok);
-    console.log(hash);
-    $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
-        // username : username,
-        // password : password,
-        headers: {
-            'Authorization': 'Basic '+hash,
-        },
-        url: baseUrl,
-        type: 'GET',
-        //TODO : replace this
-        success: function(dataReceived) { 
-            console.log(dataReceived);
-            data = dataReceived;
-        }
-    });
-    return data;  
 }
 
 //Here we pass to getData, the function that we want it to execute on success
@@ -192,68 +158,122 @@ var courseCompDiagram = function(course, cbRet){
                     //Get the course information and display it using the callback function
                     getData(coursesConcerned.courses[i].id, "tmc", function (courseConcerned){
                         //This is called when we go the course that we requested from the id we got
+                        
+                        //This creates an attribute "newName" for each exercise,
+                        //to display in the tooltip
+                        refactorExercises(courseConcerned);
+                        
+                        //This create a dataToDisplay from a courseConcerned
+                        //It contains the series that will be displayed by highcharts
                         createDisplayableData(courseConcerned, dataToDisplay, doneEx);
-                        $("#Completion"+ courseName).highcharts({
-                            chart: {
-                                type: 'pie'
-                            },
-                            exporting:{
-                                buttons:{
-                                    contextButton:{
-                                        enabled:false
-                                    }
-                                }
-                            },
-                            credits:{
-                                enabled:false
-                            },       
-                            title:{
-                                text:''
-                            },
-                            subTitle:{
-                                text:''
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'Number of exercises done'
-                                }
-                            },
-                            plotOptions: {
-                                pie: {
-                                    shadow: false,
-                                    center: ['50%', '50%']
-                                }
-                            },
-                            series: [{
-                                name: 'Exercises',
-                                data: dataToDisplay,
-                                size: '100%',
-                                innerSize : '60%',
-                                dataLabels: {
-                                    formatter: function () {
-                                        return this.y > 10 ? this.point.name : null;
-                                    },
-                                    color: '#ffffff',
-                                    distance: -10
-                                }
-                            }]
-                        },function (chart) { // on complete
-                            var centerPositionW = $("#Completion"+ courseName).width() / 2,
-                                centerPositionH = $("#Completion"+ courseName).height() / 2,
-                                theText ="20%",
-                                myFontSize = 52;
-                            chart.renderer.text(theText,centerPositionW-(theText.length*myFontSize/4), centerPositionH+(myFontSize/2))
-                                .css({
-                                    color: '#0000',
-                                    fontSize: myFontSize+'px',
-                                    textAlign: 'right'
-                                })
-                                .attr({
-                                    zIndex: 999
-                                })
-                                .add();
 
-                        });
+                        //Here we check is the course is completed/finished
+                        if (courseName =="hy-s2015-cee") {
+                             $("#Completion"+ courseName).replaceWith('<img class="diagram" src="resources/compBadge.png" width="100%">');
+                            
+                            // $("#Completion"+ courseName).highcharts({
+                            //     chart: {
+                            //         style : {
+                            //             fontFamily : "Comic Sans MS"
+                            //         },
+                            //         type: 'pie'
+                            //     },
+                            //     exporting:{
+                            //         buttons:{
+                            //             contextButton:{
+                            //                 enabled:false
+                            //             }
+                            //         }
+                            //     },
+                            //     credits:{
+                            //         enabled:false
+                            //     },       
+                            //     title:{
+                            //         text:''
+                            //     },
+                            //     subTitle:{
+                            //         text:''
+                            //     },
+                            //     yAxis: {
+                            //         title: {
+                            //             text: 'Number of exercises done'
+                            //         }
+                            //     },
+                            //     plotOptions: {
+                            //         pie: {
+                            //             shadow: false,
+                            //             center: ['50%', '50%']
+                            //         }
+                            //     },
+                            //     series: [{
+                            //         name: 'Exercises',
+                            //         data: [{name : "Course Completed",
+                            //                 color :"#EDF1D0",
+                            //                 y:100}],
+                            //         size: '100%',
+                            //         innerSize : '0%',
+                            //         dataLabels: {
+                            //             formatter: function () {
+                            //                 return this.y > 10 ? this.point.name : null;
+                            //             },
+                            //             color: '#ffffff',
+                            //             distance: -10
+                            //         }
+                            //     }]
+                            // });
+                        }
+
+                        else
+                        {
+                            $("#Completion"+ courseName).highcharts({
+                                chart: {
+                                    style : {
+                                        fontFamily : "Comic Sans MS"
+                                    },
+                                    type: 'pie'
+                                },
+                                exporting:{
+                                    buttons:{
+                                        contextButton:{
+                                            enabled:false
+                                        }
+                                    }
+                                },
+                                credits:{
+                                    enabled:false
+                                },       
+                                title:{
+                                    text:''
+                                },
+                                subTitle:{
+                                    text:''
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number of exercises done'
+                                    }
+                                },
+                                plotOptions: {
+                                    pie: {
+                                        shadow: false,
+                                        center: ['50%', '50%']
+                                    }
+                                },
+                                series: [{
+                                    name: 'Exercises',
+                                    data: dataToDisplay,
+                                    size: '100%',
+                                    innerSize : '60%',
+                                    dataLabels: {
+                                        formatter: function () {
+                                            return this.y > 10 ? this.point.name : null;
+                                        },
+                                        color: '#ffffff',
+                                        distance: -10
+                                    }
+                                }]
+                            });
+                        }
                         
                         //This is called with the course we wanted
                         cbRet(courseConcerned);
@@ -317,6 +337,9 @@ var allStudentCourses = function() {
     // Create the chart
     $('#donutCoursesTaken').highcharts({
         chart: {
+            style : {
+                fontFamily : "Comic Sans MS"
+            },
             type: 'pie'
         },
         exporting:{

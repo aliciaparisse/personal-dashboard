@@ -46,9 +46,10 @@ function getSampleWeeks(){
 function refactorExercises(course){
     var i,
         newName="Not yet";
+    console.log(course);
 
-    for (i=0; i< course.exercises.length; i++) {
-        exo = course.exercises[i];
+    for (i=0; i< course.course.exercises.length; i++) {
+        exo = course.course.exercises[i];
         if (exo.name.indexOf('_') != -1){
             //We get only the characters that are after the underscore 
             newName = exo.name.slice(exo.name.indexOf('_')+1);
@@ -63,7 +64,7 @@ function refactorExercises(course){
         newName = newName.replace(/([A-Z])/g, function($1){return " "+$1.toLowerCase();}).slice(1);
         newName = newName.charAt(0).toUpperCase() + newName.slice(1); 
 
-        course.exercises[i].newName = newName;
+        course.course.exercises[i].newName = newName;
     }
     return course;
 
