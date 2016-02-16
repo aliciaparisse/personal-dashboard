@@ -21,15 +21,7 @@ var createDisplayableData = function(courseD, dispD, doneExercises){
 
 
 
-var addTotalPercentage = function(data){
-    var totalNbEx = 0;
-    for (i=0; i < data.length; i++){
-        totalNbEx += data[i].exercisesDone;
-    }
-    for (i=0; i < data.length; i++){
-        data[i].y =  parseFloat(data[i].exercisesDone / totalNbEx.toFixed(2));
-    }
-}
+
 
 var sepExInWeeks = function(exercises){
     var weeks = [],
@@ -169,58 +161,7 @@ var courseCompDiagram = function(course, cbRet){
 
                         //Here we check is the course is completed/finished
                         if (courseName =="hy-s2015-cee") {
-                             $("#Completion"+ courseName).replaceWith('<img class="diagram" src="resources/compBadge.png" width="100%">');
-                            
-                            // $("#Completion"+ courseName).highcharts({
-                            //     chart: {
-                            //         style : {
-                            //             fontFamily : "Comic Sans MS"
-                            //         },
-                            //         type: 'pie'
-                            //     },
-                            //     exporting:{
-                            //         buttons:{
-                            //             contextButton:{
-                            //                 enabled:false
-                            //             }
-                            //         }
-                            //     },
-                            //     credits:{
-                            //         enabled:false
-                            //     },       
-                            //     title:{
-                            //         text:''
-                            //     },
-                            //     subTitle:{
-                            //         text:''
-                            //     },
-                            //     yAxis: {
-                            //         title: {
-                            //             text: 'Number of exercises done'
-                            //         }
-                            //     },
-                            //     plotOptions: {
-                            //         pie: {
-                            //             shadow: false,
-                            //             center: ['50%', '50%']
-                            //         }
-                            //     },
-                            //     series: [{
-                            //         name: 'Exercises',
-                            //         data: [{name : "Course Completed",
-                            //                 color :"#EDF1D0",
-                            //                 y:100}],
-                            //         size: '100%',
-                            //         innerSize : '0%',
-                            //         dataLabels: {
-                            //             formatter: function () {
-                            //                 return this.y > 10 ? this.point.name : null;
-                            //             },
-                            //             color: '#ffffff',
-                            //             distance: -10
-                            //         }
-                            //     }]
-                            // });
+                             $("#Completion"+ courseName).replaceWith('<img src="resources/compBadge.png" width="50%" >');
                         }
 
                         else
@@ -285,105 +226,3 @@ var courseCompDiagram = function(course, cbRet){
     
  }
 
-
-
-
-var allStudentCourses = function() {
-    var data = [
-            {
-                name : "Mathematics",
-                id : 42,
-                lessons : [
-                ],
-                donePercentage:18, 
-                exercisesDone:5
-            },{
-                name : "Computer Science",
-                id : 44,
-                lessons : [
-                ],
-                donePercentage:79, 
-                exercisesDone:12
-            },{
-                name : "Chemistry",
-                id : 45,
-                lessons : [
-                ],
-                donePercentage:55, 
-                exercisesDone:7
-            },{
-                name : "English",
-                id : 46,
-                lessons : [
-                ],
-                donePercentage:42, 
-                exercisesDone:2
-            }
-        ],
-        dataToDisplay = [],
-        i,
-        j,
-        dataLen = data.length,
-        colors = getColors(dataLen),
-        drillDataLen,
-        brightness;
-
-    addTotalPercentage(data);
-
-    for (i = 0; i < dataLen; i += 1) {
-        data[i].color = colors[i];
-    }
-
-    // Create the chart
-    $('#donutCoursesTaken').highcharts({
-        chart: {
-            style : {
-                fontFamily : "Comic Sans MS"
-            },
-            type: 'pie'
-        },
-        exporting:{
-            buttons:{
-                contextButton:{
-                    enabled:false
-                }
-            }
-        },
-        credits:{
-            enabled:false
-        },       
-        title:{
-            text:''
-        },
-        subTitle:{
-            text:''
-        },
-        yAxis: {
-            title: {
-                text: 'Percentage of exercises done'
-            }
-        },
-        plotOptions: {
-            pie: {
-                shadow: false,
-                center: ['50%', '50%']
-            }
-        },
-        tooltip: {
-            valueSuffix: '%'
-        },
-        series: [{
-            name: 'Courses',
-            data: data,
-            size: '100%',
-            innerSize : '40%',
-            dataLabels: {
-                formatter: function () {
-                    return this.y > 0.1 ? this.point.name : null;
-                },
-                color: '#ffffff',
-                distance: -30
-            }
-        }]
-    });
-};
