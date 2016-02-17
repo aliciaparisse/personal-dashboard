@@ -20,9 +20,6 @@ var createDisplayableData = function(courseD, dispD, doneExercises){
 }
 
 
-
-
-
 var sepExInWeeks = function(exercises){
     var weeks = [],
         i,
@@ -168,9 +165,6 @@ var courseCompDiagram = function(course, cbRet){
                         {
                             $("#Completion"+ courseName).highcharts({
                                 chart: {
-                                    style : {
-                                        fontFamily : "Comic Sans MS"
-                                    },
                                     type: 'pie'
                                 },
                                 exporting:{

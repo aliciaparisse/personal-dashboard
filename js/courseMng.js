@@ -46,7 +46,6 @@ function getSampleWeeks(){
 function refactorExercises(course){
     var i,
         newName="Not yet";
-    console.log(course);
 
     for (i=0; i< course.course.exercises.length; i++) {
         exo = course.course.exercises[i];

@@ -24,12 +24,12 @@ function getColors(nbColors){
  				colors[10]];
  	}
  	else if (nbColors <=6){
- 		return [colors[0],
- 				colors[1],
+ 		return [colors[4],
+ 				colors[0],
+ 				colors[9],
  				colors[5],
- 				colors[6],
- 				colors[10],
- 				colors[11]];
+ 				colors[14],
+ 				colors[10]];
  	}
  	else if (nbColors <=9){
  		return [colors[4],

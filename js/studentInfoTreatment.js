@@ -1,13 +1,6 @@
 var getAllStudentCourses = function(){
 
-    sendATokenRequest();
-    console.log("Hey ? " +document.cookie);
-    getInformationBasedOnToken();
-    displayInfoReceivedByToken();
-}
-
-var sendATokenRequest = function(){
-
+    //First we ask for the token for OAuth    
     $.ajax({
         url: 'https://hy-canary.testmycode.io/oauth/token',
         method: "post",
@@ -18,80 +11,68 @@ var sendATokenRequest = function(){
                   username : 'aparisse',
                   password : 'tmcpassword'},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        success: function(tokenReceived) { 
-          document.cookie = tokenReceived;
-          
-        }
+        success: getInformationBasedOnToken
 
     });
 }
 
 
-var getInformationBasedOnToken = function (){ 
-
+var getInformationBasedOnToken = function (tokenReceived){ 
+    setCookie("oauth_token", JSON.stringify(tokenReceived));
+    console.log(document.cookie)
+    $.ajax({
+        // TODO : Delete 895 part when it'll be linked to the real connected person
+        url: "https://hy-canary.testmycode.io/api/beta/participant/895/courses",
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(getCookie("oauth_token")).access_token
+        },
+        success : displayInfoReceivedByToken
+    });
 }
 
-var addTotalPercentage = function(data){
-    var totalNbEx = 0;
-    for (i=0; i < data.length; i++){
-        totalNbEx += data[i].exercisesDone;
-    }
-    for (i=0; i < data.length; i++){
-        data[i].y =  parseFloat(data[i].exercisesDone / totalNbEx.toFixed(2));
-    }
-}
-var displayInfoReceivedByToken = function() {
-    var data = [
-            {
-                name : "Mathematics",
-                id : 42,
-                lessons : [
-                ],
-                donePercentage:18, 
-                exercisesDone:5
-            },{
-                name : "Computer Science",
-                id : 44,
-                lessons : [
-                ],
-                donePercentage:79, 
-                exercisesDone:12
-            },{
-                name : "Chemistry",
-                id : 45,
-                lessons : [
-                ],
-                donePercentage:55, 
-                exercisesDone:7
-            },{
-                name : "English",
-                id : 46,
-                lessons : [
-                ],
-                donePercentage:42, 
-                exercisesDone:2
+
+
+var displayInfoReceivedByToken = function(courses) {
+    
+    var i,j,
+        curExs,
+        curExo,
+        dataToDisplay = [], 
+        colors = getColors(courses.length);
+    for (i = 0 ; i < courses.length ; i++){
+        dataToDisplay.push({
+            name : courses[i].title,
+            color : colors[i],
+            y : 0
+        })
+        curExs = courses[i].exercises;
+        for (j = 0 ; j < curExs.length ; j++) {
+            curExo = curExs[j];
+            //If all the exercises were passed and there are available points 
+            if(curExo.all_tests_passed && curExo.available_points != null) {
+                dataToDisplay[i].y += curExo.awarded_points.length;
             }
-        ],
-        dataToDisplay = [],
-        i,
-        j,
-        dataLen = data.length,
-        colors = getColors(dataLen),
-        drillDataLen,
-        brightness;
+            //If all the exercises were passed but there are no points available
+            else if (curExo.all_tests_passed) {
+                //TODO : ???
+            }
+            //If there are awarded points (but not all of them)
+            else if(curExo.awarded_points != undefined){
+                dataToDisplay[i].y += curExo.awarded_points.length;
+            }
 
-    addTotalPercentage(data);
-
-    for (i = 0; i < dataLen; i += 1) {
-        data[i].color = colors[i];
+        }
     }
+    
+    setCookie("coursesData", JSON.stringify(courses)); 
 
+
+    
     // Create the chart
     $('#donutCoursesTaken').highcharts({
         chart: {
-            style : {
-                fontFamily : "Comic Sans MS"
-            },
+            
             type: 'pie'
         },
         exporting:{
@@ -126,12 +107,12 @@ var displayInfoReceivedByToken = function() {
         },
         series: [{
             name: 'Courses',
-            data: data,
+            data: dataToDisplay,
             size: '100%',
             innerSize : '40%',
             dataLabels: {
                 formatter: function () {
-                    return this.y > 0.1 ? this.point.name : null;
+                    return this.y > 5 ? this.point.name : null;
                 },
                 color: '#ffffff',
                 distance: -30

@@ -1,6 +1,7 @@
 import {Component} from "angular2/core";
 import {getSampleCourses} from "../js/courseMng.js";
 import {Course} from './course';
+import {getCookie} from "../js/tools.js";
 
 @Component({
 	selector:"courses",
@@ -16,7 +17,12 @@ import {Course} from './course';
 
 export class Courses{
 	constructor(){
-		this.courses = getSampleCourses();
+		if(getCookie("coursesData") != undefined){
+			//console.log(JSON.parse(getCookie("coursesData")));
+			//this.courses = getCookie("coursesData");
+			this.courses = getSampleCourses();
+		}
+		
 	}
 
 

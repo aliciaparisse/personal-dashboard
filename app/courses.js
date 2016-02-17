@@ -1,4 +1,4 @@
-System.register(["angular2/core", "../js/courseMng.js", './course'], function(exports_1) {
+System.register(["angular2/core", "../js/courseMng.js", './course', "../js/tools.js"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "../js/courseMng.js", './course'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, courseMng_js_1, course_1;
+    var core_1, courseMng_js_1, course_1, tools_js_1;
     var Courses;
     return {
         setters:[
@@ -20,11 +20,18 @@ System.register(["angular2/core", "../js/courseMng.js", './course'], function(ex
             },
             function (course_1_1) {
                 course_1 = course_1_1;
+            },
+            function (tools_js_1_1) {
+                tools_js_1 = tools_js_1_1;
             }],
         execute: function() {
             Courses = (function () {
                 function Courses() {
-                    this.courses = courseMng_js_1.getSampleCourses();
+                    if (tools_js_1.getCookie("coursesData") != undefined) {
+                        //console.log(JSON.parse(getCookie("coursesData")));
+                        //this.courses = getCookie("coursesData");
+                        this.courses = courseMng_js_1.getSampleCourses();
+                    }
                 }
                 Courses = __decorate([
                     core_1.Component({
