@@ -11,6 +11,6 @@ import {getAllStudentCourses} from "../js/studentInfoTreatment.js";
 
 export class DonutDiagram{
 	constructor(){
-		getAllStudentCourses();
+		getAllStudentCourses(false);
 	}
 }

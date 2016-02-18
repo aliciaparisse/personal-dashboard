@@ -21,7 +21,7 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js"], function(exp
         execute: function() {
             DonutDiagram = (function () {
                 function DonutDiagram() {
-                    studentInfoTreatment_js_1.getAllStudentCourses();
+                    studentInfoTreatment_js_1.getAllStudentCourses(false);
                 }
                 DonutDiagram = __decorate([
                     core_1.Component({

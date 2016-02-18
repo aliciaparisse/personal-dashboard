@@ -47,23 +47,23 @@ function refactorExercises(course){
     var i,
         newName="Not yet";
 
-    for (i=0; i< course.course.exercises.length; i++) {
-        exo = course.course.exercises[i];
-        if (exo.name.indexOf('_') != -1){
+    for (i=0; i< course.exercises.length; i++) {
+        exo = course.exercises[i];
+        if (exo.exercise_name.indexOf('_') != -1){
             //We get only the characters that are after the underscore 
-            newName = exo.name.slice(exo.name.indexOf('_')+1);
+            newName = exo.exercise_name.slice(exo.exercise_name.indexOf('_'));
         }
         
-        else if (exo.name.indexOf('-') != -1){
+        else if (exo.exercise_name.indexOf('-') != -1){
             //We get only the characters that are after the dash
-            newName = exo.name.slice(exo.name.indexOf('-'));
+            newName = exo.exercise_name.slice(exo.exercise_name.indexOf('-'));
         }
 
         //We pass from camel case to normal syntax with a reg ex
         newName = newName.replace(/([A-Z])/g, function($1){return " "+$1.toLowerCase();}).slice(1);
         newName = newName.charAt(0).toUpperCase() + newName.slice(1); 
 
-        course.course.exercises[i].newName = newName;
+        course.exercises[i].newName = newName;
     }
     return course;
 

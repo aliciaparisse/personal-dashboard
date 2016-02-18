@@ -42,10 +42,9 @@ h1,h2 {
 
 
 /*** color-code by activity level ***/ 
-.activity { background: #D0EDF1; }
-.activity-two { background: #8cc665; }
-.activity-three { background: #44a340; }
-.activity-four { background: #1e6823; }
+.activity.completed { background: #D0EDF1; }
+.activity.begun { background: #FFBE5A; }
+.activity.todo { background: #D3D3D3; }
 
 
 

@@ -1,6 +1,5 @@
-import {Component,Input,NgZone} from 'angular2/core';
+import {Component,Input, ChangeDetectorRef} from 'angular2/core';
 import {courseCompDiagram, sepExInWeeks} from "../js/coursesTreatment.js";
-import {getSampleWeeks} from "../js/courseMng.js";
 import {Exercises} from "./exercises";
 
 
@@ -9,7 +8,7 @@ import {Exercises} from "./exercises";
 	directives:[Exercises],
 	template: `
 	<div class="course">
-		<h2>{{aCourse.name}}</h2>
+		<h2>{{aCourse.title}}</h2>
 		<div class='diag-container row'> 
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3' >
 				<div class='diagram' id="Completion{{aCourse.name}}"></div>
@@ -18,7 +17,7 @@ import {Exercises} from "./exercises";
 			
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent" *ngFor="#week of weeks">
 	
-				Week {{week.weekNb}}	<div title="{{exo.newName}}" class="exerc activity" *ngFor="#exo of week.exercises"></div>
+				Week {{week.weekNb}} <div title="{{exo.newName}}" class="exerc activity {{exo.state}}" *ngFor="#exo of week.exercises"></div>
 		
  			</div>
 		</div>
@@ -28,22 +27,20 @@ import {Exercises} from "./exercises";
 export class Course{
 	@Input() aCourse;
 
-	constructor(private _ngZone: NgZone){}
+	constructor(cdr: ChangeDetectorRef) {
+	    this.cdr = cdr;
+	  }
 
 	ngAfterViewInit(){
-		this._ngZone.run(
-		 () => {
-		 	courseCompDiagram(this.aCourse,(concernedCourse) => {
-		 		this.weeks = sepExInWeeks(concernedCourse.course.exercises);
-			});
-		});
 		
+		this.weeks = sepExInWeeks(courseCompDiagram(this.aCourse).exercises);
+		this.cdr.detectChanges();	
 	}
 	
 	
 }
 
-//To re-add : 
+//To re-add : <div title="{{exo.newName}}" class="exerc activity" *ngFor="#exo of week.exercises"></div>
 
 //<div class='diagram col-xs-12 col-sm-4 col-md-4 col-lg-4' id="Completion{{aCourse.name}}"></div>
 	 

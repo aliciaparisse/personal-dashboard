@@ -23,16 +23,12 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
             }],
         execute: function() {
             Course = (function () {
-                function Course(_ngZone) {
-                    this._ngZone = _ngZone;
+                function Course(cdr) {
+                    this.cdr = cdr;
                 }
                 Course.prototype.ngAfterViewInit = function () {
-                    var _this = this;
-                    this._ngZone.run(function () {
-                        coursesTreatment_js_1.courseCompDiagram(_this.aCourse, function (concernedCourse) {
-                            _this.weeks = coursesTreatment_js_1.sepExInWeeks(concernedCourse.course.exercises);
-                        });
-                    });
+                    this.weeks = coursesTreatment_js_1.sepExInWeeks(coursesTreatment_js_1.courseCompDiagram(this.aCourse).exercises);
+                    this.cdr.detectChanges();
                 };
                 __decorate([
                     core_1.Input(), 
@@ -42,9 +38,9 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
                     core_1.Component({
                         selector: 'course',
                         directives: [exercises_1.Exercises],
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.name}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3' >\n\t\t\t\t<div class='diagram' id=\"Completion{{aCourse.name}}\"></div>\n\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t<div class=\"col-xs-12 col-sm-12 col-md-9 col-lg-9 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}}\t<div title=\"{{exo.newName}}\" class=\"exerc activity\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
+                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.title}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3' >\n\t\t\t\t<div class='diagram' id=\"Completion{{aCourse.name}}\"></div>\n\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t<div class=\"col-xs-12 col-sm-12 col-md-9 col-lg-9 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}} <div title=\"{{exo.newName}}\" class=\"exerc activity {{exo.state}}\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
                     }), 
-                    __metadata('design:paramtypes', [core_1.NgZone])
+                    __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
                 ], Course);
                 return Course;
             })();
@@ -52,7 +48,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
         }
     }
 });
-//To re-add : 
+//To re-add : <div title="{{exo.newName}}" class="exerc activity" *ngFor="#exo of week.exercises"></div>
 //<div class='diagram col-xs-12 col-sm-4 col-md-4 col-lg-4' id="Completion{{aCourse.name}}"></div>
 //<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 parent" *ngFor="#exo of exercises">
 // 				<div class="days activity">
