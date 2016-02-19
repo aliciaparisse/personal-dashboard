@@ -91,21 +91,6 @@ var sepExInWeeks = function(exercises){
                 }
 
 
-                //If I do, I get this number and add it to weeks
-                //1) If it already exists, add it to a week element
-                //a) If there exist a week zero we dont shift the indexes
-                
-                // if (foundWeek0 && weeks[weekNumber] != undefined){
-                //     weeks[weekNumber].exercises.push(exo);
-                // }
-                // //b) If there is no week zero, we shift the indexes
-                // else if (!foundWeek0 && weeks[weekNumber-1] != undefined){
-                //     weeks[weekNumber-1].exercises.push(exo);
-                // }
-                // //2) If it doesn't I create a new week and add my exercise in it
-                // else{
-                //     weeks.push({weekNb:weekNumber,exercises:[exo]});
-                // }
                 if(weeks[(weekNumber.toString())] != undefined){
                     weeks[(weekNumber.toString())].exercises.push(exo);
                 }
@@ -136,50 +121,6 @@ var sepExInWeeks = function(exercises){
     return weeks;
     
 }
-
-//Here we pass to getData, the function that we want it to execute on success
-var getData = function(id, api, syncFunc){
-    //Here we define all the params that we will need for the request
-    var baseUrl, 
-        username,
-        password,
-        data;
-
-    //If the function to launch after the success
-    if (syncFunc == null){
-        var syncFunc = function(dataReceived){};
-    }
-
-    if (api == "tmc"){
-        if(isNaN(id)){
-            baseUrl = "https://tmc.mooc.fi/org/hy/courses.json?api_version=7&show_unlock_conditions=1&show_points=1";          
-        }
-        else{
-            baseUrl = "https://tmc.mooc.fi/org/hy/courses/"+id+".json?api_version=7&show_unlock_conditions=1&show_points=1";    
-        }
-        username = "aparisse";
-        password = "tmcpassword";
-    }
-    else if (api == "snp"){
-        baseUrl =  "http://snapshots.testmycode.net";
-        username= "analysis";
-        password = "FArUK69:<*;MQdUL&^Y&ag,m?~j4fusD";  
-    }
-
-    $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
-        headers: {
-            'Authorization': 'Basic ' + btoa(username+':'+ password)
-        },
-        url: baseUrl,
-        type: 'GET',
-        success: syncFunc
-    });
-    return data;
-}
-
 
 
 var courseCompDiagram = function(studentCourse){

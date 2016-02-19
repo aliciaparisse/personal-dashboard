@@ -91,10 +91,7 @@ var getAllStudentCourses = function(callb, callbackFunc){
                                     shadow: false,
                                     center: ['50%', '50%']
                                 }
-                            },
-                            tooltip: {
-                                valueSuffix: '%'
-                            },
+                            },      
                             series: [{
                                 name: 'Courses',
                                 data: dataToDisplay,

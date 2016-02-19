@@ -46,7 +46,21 @@ h1,h2 {
 .activity.begun { background: #FFBE5A; }
 .activity.todo { background: #D3D3D3; }
 
+.navbar-default {
+    background-color: #D0EDF1;
+    border-color: #E7E7E7;
+}
 
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #CFE1E3;
+}
+
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    background-color: #CFE1E3;
+}
 
 /*
 .diag-container{
