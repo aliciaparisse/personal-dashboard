@@ -38,7 +38,7 @@ System.register(['angular2/core', "../js/coursesTreatment.js", "./exercises"], f
                     core_1.Component({
                         selector: 'course',
                         directives: [exercises_1.Exercises],
-                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.title}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3' >\n\t\t\t\t<div class='diagram' id=\"Completion{{aCourse.name}}\"></div>\n\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t<div class=\"col-xs-12 col-sm-12 col-md-9 col-lg-9 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}} <div title=\"{{exo.newName}}\" class=\"exerc activity {{exo.state}}\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
+                        template: "\n\t<div class=\"course\">\n\t\t<h2>{{aCourse.title}}</h2>\n\t\t<div class='diag-container row'> \n\t\t\t<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 diagram' id=\"Completion{{aCourse.name}}\">\n\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t<div class=\"col-xs-12 col-sm-12 col-md-9 col-lg-9 parent\" *ngFor=\"#week of weeks\">\n\t\n\t\t\t\tWeek {{week.weekNb}} <div title=\"{{exo.newName}}\" class=\"exerc activity {{exo.state}}\" *ngFor=\"#exo of week.exercises\"></div>\n\t\t\n \t\t\t</div>\n\t\t</div>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
                 ], Course);

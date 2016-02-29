@@ -10,8 +10,7 @@ import {Exercises} from "./exercises";
 	<div class="course">
 		<h2>{{aCourse.title}}</h2>
 		<div class='diag-container row'> 
-			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3' >
-				<div class='diagram' id="Completion{{aCourse.name}}"></div>
+			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 diagram' id="Completion{{aCourse.name}}">
 			</div>
 				
 			

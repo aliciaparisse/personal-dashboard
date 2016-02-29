@@ -3,8 +3,8 @@ function getColors(nbColors){
 		"#D0EDF1", //00 - Normal blue
 		"#8AB7BC", //01 - First Dark shade of Blue
 		"#95AAAC", //02 - Second Dark shade of Blue
-		"#CFE1E3", //03 - First Light Shade of Blue
-		"#DDEAEB", //04 - Second Light Shade of Blue
+		"#E2F4F6", //03 - First Light Shade of Blue
+		"#F0F9FA", //04 - Second Light Shade of Blue
 		"#FFAE32", //05 - Normal Orange
 		"#E59C2D", //06 - First Dark Shade or Orange
 		"#CC8B28", //07 - Second Dark Shade of Orange

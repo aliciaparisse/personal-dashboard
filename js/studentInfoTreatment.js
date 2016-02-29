@@ -25,6 +25,7 @@ var getAllStudentCourses = function(callb, callbackFunc){
                 //Now we display the info based on the received courses
                 success : function(courses) {
                     
+                    console.log(courses)
                     if(callb) {
                         callbackFunc(courses);
                     }
@@ -33,7 +34,8 @@ var getAllStudentCourses = function(callb, callbackFunc){
                             curExs,
                             curExo,
                             dataToDisplay = [], 
-                            colors = getColors(courses.length);
+                            colors = getColors(courses.length), 
+                            totalNbOfExercises = 0;
                         for (i = 0 ; i < courses.length ; i++){
                             dataToDisplay.push({
                                 name : courses[i].title,
@@ -53,10 +55,10 @@ var getAllStudentCourses = function(callb, callbackFunc){
                                 }
 
                             }
+                            totalNbOfExercises += dataToDisplay[i].y;
                         }
                         
                         setCookie("coursesData", JSON.stringify(courses)); 
-
 
                         
                         // Create the chart
@@ -99,7 +101,7 @@ var getAllStudentCourses = function(callb, callbackFunc){
                                 innerSize : '40%',
                                 dataLabels: {
                                     formatter: function () {
-                                        return this.y > 5 ? this.point.name : null;
+                                        return (this.y/totalNbOfExercises) > 0.1 ? this.point.name : null;
                                     },
                                     color: '#ffffff',
                                     distance: -30
