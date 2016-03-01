@@ -1,10 +1,9 @@
 //This function both creates a displayableData table
 //And changes the exercises of the studentCourse so that
 //We can more easily show the state of each exercise
-var createDisplayableData = function(studentC){
+var createDisplayableData = function(studentC, colors){
 
     var dataToDisplay = [],
-        colors = getColors(3), 
         finishedE = 0, 
         begunE = 0,
         //TODO : add a way to find the number of exercises to validate !
@@ -123,7 +122,7 @@ var sepExInWeeks = function(exercises){
 }
 
 
-var courseCompDiagram = function(studentCourse){
+var courseCompDiagram = function(studentCourse, colors){
 
 	var dataToDisplay = [],
         courseName = studentCourse.name;
@@ -135,7 +134,7 @@ var courseCompDiagram = function(studentCourse){
     
     //This create a dataToDisplay from the studentCourse
     //It contains the series that will be displayed by highcharts4
-    dataToDisplay = createDisplayableData(studentCourse)
+    dataToDisplay = createDisplayableData(studentCourse, colors);
 
     
     //Here we check is the course is completed/finished

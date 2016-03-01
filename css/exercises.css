@@ -19,7 +19,7 @@ courses{
 	margin-bottom: 0px;
 	border-width: 0px;
     border-style: solid;
-    background-color: #FFAE32;
+    background-color:  #D0EDF1;
 	border-radius: 8px 8px 8px 8px;
 }
 
@@ -30,10 +30,10 @@ h1,h2 {
 .course{
 	
 	margin-left: 2px;
-    margin-top: 2px;
+  margin-top: 2px;
 	margin-bottom: 2px;
-    border-style: solid;
-    background-color: #FFF;
+  border-style: solid;
+  background-color: #FFF;
 	border-width: 0px;
 	border-radius: 8px 8px 8px 8px;
 	box-shadow: none;
@@ -61,6 +61,40 @@ h1,h2 {
     background-color: #E2F4F6;
 }
 
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="username"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 /*
 .diag-container{
 	position: relative;

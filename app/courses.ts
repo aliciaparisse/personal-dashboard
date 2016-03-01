@@ -1,7 +1,7 @@
 import {Component} from "angular2/core";
 import {getAllStudentCourses} from "../js/studentInfoTreatment.js";
 import {Course} from './course';
-import {getCookie} from "../js/tools.js";
+import {getCookie, getColors} from "../js/tools.js";
 
 @Component({
 	selector:"courses",
@@ -18,6 +18,10 @@ import {getCookie} from "../js/tools.js";
 export class Courses{
 	constructor(){
 		getAllStudentCourses(true,(coursesRev) => {
+			colors = getColors(coursesRev.length);
+			for (var i=0; i < coursesRev.length; i++) {
+				coursesRev[i].color = colors[i];
+			}
 			this.courses = coursesRev;
 		});
 			

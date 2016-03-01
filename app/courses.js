@@ -1,4 +1,4 @@
-System.register(["angular2/core", "../js/studentInfoTreatment.js", './course'], function(exports_1) {
+System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "../js/tools.js"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course'], 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, studentInfoTreatment_js_1, course_1;
+    var core_1, studentInfoTreatment_js_1, course_1, tools_js_1;
     var Courses;
     return {
         setters:[
@@ -20,12 +20,19 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course'], 
             },
             function (course_1_1) {
                 course_1 = course_1_1;
+            },
+            function (tools_js_1_1) {
+                tools_js_1 = tools_js_1_1;
             }],
         execute: function() {
             Courses = (function () {
                 function Courses() {
                     var _this = this;
                     studentInfoTreatment_js_1.getAllStudentCourses(true, function (coursesRev) {
+                        colors = tools_js_1.getColors(coursesRev.length);
+                        for (var i = 0; i < coursesRev.length; i++) {
+                            coursesRev[i].color = colors[i];
+                        }
                         _this.courses = coursesRev;
                     });
                 }
