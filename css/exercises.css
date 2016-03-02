@@ -11,15 +11,13 @@
 .diagram {
   	height: 15vw;	
 }
+.row{
+  width : 100%;
+}
 
 courses{
-	margin-right: 0px;
-	margin-left: 0px;
-    margin-top: 0px;
-	margin-bottom: 0px;
-	border-width: 0px;
-    border-style: solid;
-    background-color:  #D0EDF1;
+	
+  background-color:  #D0EDF1;
 	border-radius: 8px 8px 8px 8px;
 }
 
@@ -39,11 +37,6 @@ h1,h2 {
 	box-shadow: none;
  }
 
-
-/*** color-code by activity level ***/ 
-.activity.completed { background: #D0EDF1; }
-.activity.begun { background: #FFBE5A; }
-.activity.todo { background: #D3D3D3; }
 
 .navbar-default {
     background-color: #D0EDF1;

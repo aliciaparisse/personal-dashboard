@@ -20,34 +20,41 @@ var setCookie = function(key, value){
 }
 
 var getColors = function(nbColors){
-	// colors = [
-	// 	"#D0EDF1", //00 - Normal blue
-	// 	"#8AB7BC", //01 - First Dark shade of Blue
-	// 	"#95AAAC", //02 - Second Dark shade of Blue
-	// 	"#E2F4F6", //03 - First Light Shade of Blue
-	// 	"#F0F9FA", //04 - Second Light Shade of Blue
-	// 	"#FFAE32", //05 - Normal Orange
-	// 	"#E59C2D", //06 - First Dark Shade or Orange
-	// 	"#CC8B28", //07 - Second Dark Shade of Orange
-	// 	"#FFBE5A", //08 - First Light Shade of Orange
-	// 	"#FFD698", //09 - Second Light Shade of Orange 
-	// 	"#D3D3D3", //10 - Normal Grey
-	// 	"#BDBDBD", //11 - First Dark Shade of Grey
-	// 	"#A8A8A8", //12 - Second Dark Shade of Grey
-	// 	"#DBDBDB", //13 - First Light Shade of Grey
-	// 	"#E9E9E9", //14 Second Light Shade of Grey
- // 	]
+	
+ 	var colorsChosen= [
+ 		"#6797FB", //Royal Blue
+ 		"#FFBF48", //Orange
+ 		"#BBEA76", //Green
+ 		"#FF7575", //Red/Pink
+ 		"#9669FE", //Purple
+ 		"#FFFF84" //Yellow
+ 		], 
+ 		colLen = colorsChosen.length;
+ 	//Now we assign a table of colors, depending on the number of colors needed
+ 	var colors = []; 
+ 	//We code the repeating in case there are too few colors
+ 	if(nbColors<=colLen)
+ 	{
+ 		colors = colorsChosen.slice(0,nbColors);
+ 	}
+ 	else {
+ 		for (var i = 0 ; i < Math.floor(nbColors/colLen) ; i++) {
+ 			colors = colors.concat(colorsChosen);
+ 		}
+ 		modu = nbColors%colLen;
+ 		if(modu > 0) {
+ 			colors = colors.concat((colorsChosen.slice(0, modu)));
+ 		}
+ 	}
 
- 	colors= [ "#6797FB", "#FFAE32", "#BBEA76", "#FF7575", "#9669FE","#FFFF84", "#6797FB"]
- 	//Now we assign a table of colors, depending on the number of co,lors needed
- 	return colors.slice(0,(nbColors));
+ 	return colors;
 }
 
 var getCorrColors = function(color){
 	var colors = [
-		colorLuminance(color, -0.2),
 		color,
-		colorLuminance(color, 0.2)
+		colorLuminance(color, -0.3),
+		"#e0e0e0",
 	];
 	return colors;
 }
@@ -72,6 +79,8 @@ var colorLuminance = function(hex, lum) {
 	return rgb;
 }
 
-var changeExercColor= function(courseName){
-	$("."+ courseName).find("div.exerc").css("background", "red");
+var changeExercColor= function(courseName, colors){
+	$("."+ courseName).find("div.exerc.completed").css("background", colors[0]);
+	$("."+ courseName).find("div.exerc.begun").css("background", colors[1]);
+	$("."+ courseName).find("div.exerc.todo").css("background", colors[2]);
 }
