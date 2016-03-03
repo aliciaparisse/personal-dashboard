@@ -1,4 +1,10 @@
-System.register(["angular2/core", "./donut-diagram"], function(exports_1) {
+// Student Information Component
+// Author : Alicia Parisse
+// Description : 
+//		This component is the a component that is meant to stay visible 
+//		all the time, and give general information about the student.
+// Last-comment date : 03/03/16
+System.register(["angular2/core"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,28 +14,22 @@ System.register(["angular2/core", "./donut-diagram"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, donut_diagram_1;
+    var core_1;
     var StudentInfo;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (donut_diagram_1_1) {
-                donut_diagram_1 = donut_diagram_1_1;
             }],
         execute: function() {
             StudentInfo = (function () {
                 function StudentInfo() {
+                    getAllStudentCourses(false);
                 }
-                StudentInfo.prototype.ngOnInit = function () {
-                    this.name = "John";
-                };
                 StudentInfo = __decorate([
                     core_1.Component({
                         selector: "student-info",
-                        directives: [donut_diagram_1.DonutDiagram],
-                        template: "\n\t<div> <h1>Welcome to your personnal dashboard, {{name}} !</h1>\n\t\t<donut-diagram></donut-diagram>\n\t</div>"
+                        template: "\n\t<div> <h1>Welcome to your personnal dashboard !</h1>\n\t\t<div class='diag-container'> \n\t\t\t<div id=\"donutCoursesTaken\"></div>\n\t\t</div>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StudentInfo);

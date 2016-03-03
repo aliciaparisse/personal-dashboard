@@ -1,3 +1,12 @@
+// Personal Dashboard Component
+// Author : Alicia Parisse
+// Description : 
+//  	This component is the principal component of the dashboard website
+// 		It is composed by a login component (only shown when user not connected),
+//		a general student information component and a courses component,
+//		containing all the user's courses.
+// Last-comment date : 02/03/16
+
 import {Component} from "angular2/core";
 import {Courses} from "./courses";
 import {StudentInfo} from "./student-info";
@@ -20,6 +29,8 @@ import {getCookie, setCookie} from "../js/tools.js";
 export class PersonalDashboard{
 	constructor(){
 		var self = this;
+		//We check if a cookie with the authentication token is defined
+		//Setting the loggedIn boolean will automatically change the display
 		if(getCookie("oauth_token") != undefined){
 			self.loggedIn = true;
 		}
@@ -28,8 +39,9 @@ export class PersonalDashboard{
 		}
 	}
 
+	//Function that is called as an output event from the login component,
+	//when the logging was a success
 	logSuccess(event:object){
-		console.log("here");
 		this.loggedIn = true;
 	}
 }

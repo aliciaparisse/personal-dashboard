@@ -1,3 +1,9 @@
+// Boot Component
+// Author : Alicia Parisse
+// Description : 
+//  	This component is the the boot component.
+//		Its only job is to bootstrap the main component (personnal dashboard)
+// Last-comment date : 02/03/16
 System.register(['angular2/platform/browser', './personal-dashboard'], function(exports_1) {
     var browser_1, personal_dashboard_1;
     return {

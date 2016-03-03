@@ -9,14 +9,13 @@
 }
 
 .diagram {
-  	height: 15vw;	
+  	height: 15vw;
 }
 .row{
   width : 100%;
 }
 
-courses{
-	
+courses{	
   background-color:  #D0EDF1;
 	border-radius: 8px 8px 8px 8px;
 }

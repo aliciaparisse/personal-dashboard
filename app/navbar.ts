@@ -1,3 +1,11 @@
+// Navbar Component
+// Author : Alicia Parisse
+// Description : 
+//    This component is the navigation bar of the dashboard component
+//    It is composed of a collapsed version and of a normal version
+//    of the items in the navbar.
+// Last-comment date : 02/03/16
+
 import {Component} from "angular2/core";
 
 @Component({
@@ -18,8 +26,6 @@ import {Component} from "angular2/core";
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Courses<span class="sr-only">(current)</span></a></li>
-          	<li><a href="#">Activity</a></li>
-          	<li><a href="#">Goals</a></li>
           </ul>
         </div>
       </div>

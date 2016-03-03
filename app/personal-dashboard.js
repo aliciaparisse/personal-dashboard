@@ -1,3 +1,11 @@
+// Personal Dashboard Component
+// Author : Alicia Parisse
+// Description : 
+//  	This component is the principal component of the dashboard website
+// 		It is composed by a login component (only shown when user not connected),
+//		a general student information component and a courses component,
+//		containing all the user's courses.
+// Last-comment date : 02/03/16
 System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./login", "../js/tools.js"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -34,6 +42,8 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
             PersonalDashboard = (function () {
                 function PersonalDashboard() {
                     var self = this;
+                    //We check if a cookie with the authentication token is defined
+                    //Setting the loggedIn boolean will automatically change the display
                     if (tools_js_1.getCookie("oauth_token") != undefined) {
                         self.loggedIn = true;
                     }
@@ -41,8 +51,9 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
                         self.loggedIn = false;
                     }
                 }
+                //Function that is called as an output event from the login component,
+                //when the logging was a success
                 PersonalDashboard.prototype.logSuccess = function (event) {
-                    console.log("here");
                     this.loggedIn = true;
                 };
                 PersonalDashboard = __decorate([
