@@ -19,9 +19,17 @@ System.register(["angular2/core"], function(exports_1) {
             Login = (function () {
                 function Login() {
                     this.logSuccess = new core_1.EventEmitter();
+                    this.logError = false;
+                    this.logMessages = [
+                        "There was an error while you were trying to connect to the server, please try again later",
+                        "The username or password is invalid. Please try again",
+                        "An unexpected error occured, please try again later"
+                    ];
+                    this.errorMessage = "";
                 }
                 Login.prototype.onSubmit = function (username, password) {
-                    var self = this;
+                    var self = this, cookieManager = new Cookies();
+                    4;
                     //Here we use the authentication information and we use them to ask the oauth end for a token 
                     $.ajax({
                         url: 'https://hy-canary.testmycode.io/oauth/token',
@@ -35,8 +43,24 @@ System.register(["angular2/core"], function(exports_1) {
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         // Now we can store the token in a cookie
                         success: function (tokenReceived) {
-                            setCookie("oauth_token", JSON.stringify(tokenReceived));
+                            cookieManager.write("oauth_token", JSON.stringify(tokenReceived));
                             self.logSuccess.emit(tokenReceived);
+                            var form = document.getElementById("loginForm");
+                            form.reset();
+                        },
+                        error: function (response) {
+                            self.logError = true;
+                            var form = document.getElementById("loginForm");
+                            form.reset();
+                            if (response.status == 404) {
+                                self.errorMessage = self.logMessages[0];
+                            }
+                            else if (response.status == 401) {
+                                self.errorMessage = self.logMessages[1];
+                            }
+                            else {
+                                self.errorMessage = self.logMessages[2];
+                            }
                         }
                     });
                 };
@@ -47,7 +71,7 @@ System.register(["angular2/core"], function(exports_1) {
                 Login = __decorate([
                     core_1.Component({
                         selector: "login",
-                        template: "\n\t\t<nav class=\"navbar navbar-default\">\n\t\t</nav>\n\t\t<form class=\"form-signin\" (submit)=\"onSubmit(userN.value, passW.value)\">\n\t\t<h2 class=\"form-signin-heading\">Please log in to HY</h2>\n\t\t<label for=\"inputUsername\" class=\"sr-only\">Username</label>\n\t\t<input #userN type=\"text\" id=\"inputUsername\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>\n\t\t<input #passW type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required>\n\t\t<div class=\"checkbox\">\n\t\t  <label>\n\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me\n\t\t  </label>\n\t\t</div>\n\t\t<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n\t  </form>\n\t"
+                        template: "\n\t\t<nav class=\"navbar navbar-default\">\n\t\t</nav>\n\t\t<form id=\"loginForm\" class=\"form-signin\" (submit)=\"onSubmit(userN.value, passW.value)\">\n\t\t\t<h2 class=\"form-signin-heading\">Please log in to HY</h2>\n\t\t\t<label for=\"inputUsername\" class=\"sr-only\">Username</label>\n\t\t\t<input #userN type=\"text\" id=\"inputUsername\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n\t\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>\n\t\t\t<input #passW type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required>\n\t\t\t<span [hidden] = \"!logError\" class=\"error-message\">{{errorMessage}}</span>\n\t\t\t<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n\t  \t</form>\n\t"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Login);

@@ -25,11 +25,22 @@ System.register(["angular2/core"], function(exports_1) {
         execute: function() {
             NavBar = (function () {
                 function NavBar() {
+                    this.loggingOut = new core_1.EventEmitter();
                 }
+                NavBar.prototype.logout = function () {
+                    var cookieManager = new Cookies();
+                    cookieManager.remove("oauth_token");
+                    cookieManager.remove("coursesData");
+                    this.loggingOut.emit(true);
+                };
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], NavBar.prototype, "loggingOut", void 0);
                 NavBar = __decorate([
                     core_1.Component({
                         selector: "navbar",
-                        template: "\n\t<nav class=\"navbar navbar-default\">\n      <div class=\"container-fluid\">\n        <!-- Brand and toggle get grouped for better mobile display -->\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n          <ul class=\"nav navbar-nav\">\n            <li class=\"active\"><a href=\"#\">Courses<span class=\"sr-only\">(current)</span></a></li>\n          </ul>\n        </div>\n      </div>\n    </nav>\n\t"
+                        template: "\n\t<nav class=\"navbar navbar-default\">\n\t  <div class=\"container-fluid\">\n\t\t<!-- Brand and toggle get grouped for better mobile display -->\n\t\t<div class=\"navbar-header\">\n\t\t  <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n\t\t\t<span class=\"sr-only\">Toggle navigation</span>\n\t\t\t<span class=\"icon-bar\"></span>\n\t\t\t<span class=\"icon-bar\"></span>\n\t\t\t<span class=\"icon-bar\"></span>\n\t\t  </button>\n\t\t</div>\n\n\t\t<div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\t\t\t<ul class=\"nav navbar-nav\">\n\t\t\t\t<li class=\"active\"><a href=\"#\">Courses<span class=\"sr-only\">(current)</span></a></li>\n\t\t\t</ul>\n\t\t\t<ul class=\"nav navbar-nav navbar-right\">\n\t\t\t\t<li><a href=# (click)=\"logout()\">Logout</a></li>\n\t\t\t\t\n\t\t  \t</ul>\n\n\t\t</div>\n\t  </div>\n\t</nav>\n\t"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], NavBar);

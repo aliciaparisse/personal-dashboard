@@ -221,7 +221,7 @@ var courseCompDiagram = function(course, colors){
 //			The newName property is created from the existing name for every exercise.
 function refactorExercises(course){
     var i,
-        newName="Not yet";
+        newName="";
 
     //We refactor every exercise name.
     for (i=0; i< course.exercises.length; i++) {

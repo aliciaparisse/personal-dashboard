@@ -15,8 +15,15 @@ var getAllStudentCourses = function(callb, callbackFunc){
 
 	//This is only called if the oauth_token is defined
 	//The goal of this call is to get all the user's courses' information.
-	if(getCookie("coursesData") != undefined){
-		createChart(JSON.parse(getCookie("coursesData")));
+	var cookieM = new Cookies();
+
+	if(cookieM.read("coursesData") != undefined){
+		if(callb) {
+			callbackFunc(JSON.parse(cookieM.read("coursesData")));
+		}
+		else {
+			createChart(JSON.parse(cookieM.read("coursesData")));
+		}
 	}
 	else {
 		$.ajax({
@@ -24,7 +31,7 @@ var getAllStudentCourses = function(callb, callbackFunc){
 			url: "https://hy-canary.testmycode.io/api/beta/participant/895/courses",
 			type: 'GET',
 			headers: {
-				'Authorization': 'Bearer ' + JSON.parse(getCookie("oauth_token")).access_token
+				'Authorization': 'Bearer ' + JSON.parse(cookieM.read("oauth_token")).access_token
 			},
 			//Now we display the info based on the received courses
 			success : function(courses) {
@@ -34,9 +41,12 @@ var getAllStudentCourses = function(callb, callbackFunc){
 					callbackFunc(courses);
 				}
 				else{
-					setCookie("coursesData", JSON.stringify(courses));
+					cookieM.write("coursesData", JSON.stringify(courses));
 					createChart(courses);
 				}	
+			},
+			error : function(response){
+
 			}
 		});
 	}

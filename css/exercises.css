@@ -15,18 +15,23 @@
   width : 100%;
 }
 
-courses{	
-  background-color:  #D0EDF1;
-	border-radius: 8px 8px 8px 8px;
+.error-message{
+  color:red;
 }
 
 h1,h2 {
     text-align: center;
 }
 
+courses{  
+  background-color:  #D0EDF1;
+  border-radius: 8px 8px 8px 8px;
+}
+
 .course{
 	
-	margin-left: 2px;
+  margin-left: 2px;
+	margin-right: 2px;
   margin-top: 2px;
 	margin-bottom: 2px;
   border-style: solid;

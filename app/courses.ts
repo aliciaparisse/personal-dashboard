@@ -8,22 +8,27 @@
 import {Component} from "angular2/core";
 import {getAllStudentCourses} from "../js/studentInfoTreatment.js";
 import {Course} from './course';
-import {getCookie, getColors} from "../js/tools.js";
+import {getColors} from "../js/tools.js";
 
 @Component({
 	selector:"courses",
 	directives: [Course],
 	template:`
-	<div> 
+	<div *ngIf = "!noCourses"> 
 		<div *ngFor="#aCourse of courses">
 			<course 
 			[aCourse]="aCourse"></course>
 		</div>	
+	</div>
+	<div [hidden] = "!noCourses">
+		You currently have no courses you registered in.<br>
+		In order to see information displayed here, please register to at least one course.
 	</div>`
 })
 
 export class Courses{
 	constructor(){
+		this.noCourses = true;
 		//This gets courses from the API and stores it in this.courses
 		getAllStudentCourses(true,(coursesRev) => {
 			colors = getColors(coursesRev.length);
@@ -31,10 +36,14 @@ export class Courses{
 				coursesRev[i].color = colors[i];
 			}
 			this.courses = coursesRev;
+			if (this.courses == undefined || this.courses.length == 0){
+				this.noCourses = true;
+			}
+			else{
+				this.noCourses = false;
+			}
 		});
-			
 		
+				
 	}
-
-
 }

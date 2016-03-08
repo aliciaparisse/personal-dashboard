@@ -6,7 +6,7 @@
 //		a general student information component and a courses component,
 //		containing all the user's courses.
 // Last-comment date : 02/03/16
-System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./login", "../js/tools.js"], function(exports_1) {
+System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./login"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16,7 +16,7 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, courses_1, student_info_1, navbar_1, login_1, tools_js_1;
+    var core_1, courses_1, student_info_1, navbar_1, login_1;
     var PersonalDashboard;
     return {
         setters:[
@@ -34,17 +34,14 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
             },
             function (login_1_1) {
                 login_1 = login_1_1;
-            },
-            function (tools_js_1_1) {
-                tools_js_1 = tools_js_1_1;
             }],
         execute: function() {
             PersonalDashboard = (function () {
                 function PersonalDashboard() {
-                    var self = this;
+                    var self = this, cookieManager = new Cookies();
                     //We check if a cookie with the authentication token is defined
                     //Setting the loggedIn boolean will automatically change the display
-                    if (tools_js_1.getCookie("oauth_token") != undefined) {
+                    if (cookieManager.read("oauth_token") != undefined) {
                         self.loggedIn = true;
                     }
                     else {
@@ -56,11 +53,14 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
                 PersonalDashboard.prototype.logSuccess = function (event) {
                     this.loggedIn = true;
                 };
+                PersonalDashboard.prototype.unlogSuccess = function (event) {
+                    this.loggedIn = false;
+                };
                 PersonalDashboard = __decorate([
                     core_1.Component({
                         selector: "personal-dashboard",
                         directives: [courses_1.Courses, student_info_1.StudentInfo, navbar_1.NavBar, login_1.Login],
-                        template: "\n\t<login *ngIf= \"!loggedIn\" (logSuccess) =\"logSuccess($event)\"></login>\n\t<navbar [hidden]= \"!loggedIn\"></navbar>\n\t<div *ngIf= \"loggedIn\" class=\"row\">\n\t\t<student-info class=\" col-xs-12 col-sm-5 col-md-3 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-7 col-md-9 col-lg-8\"></courses>\n\t</div>"
+                        template: "\n\t<login *ngIf= \"!loggedIn\" (logSuccess) =\"logSuccess($event)\"></login>\n\t<navbar [hidden]= \"!loggedIn\" (loggingOut) =\"unlogSuccess($event)\"></navbar>\n\t<div *ngIf= \"loggedIn\" class=\"row\">\n\t\t<student-info class=\" col-xs-12 col-sm-5 col-md-3 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-7 col-md-9 col-lg-8\"></courses>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PersonalDashboard);

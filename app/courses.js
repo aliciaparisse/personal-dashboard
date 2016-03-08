@@ -34,6 +34,7 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "
             Courses = (function () {
                 function Courses() {
                     var _this = this;
+                    this.noCourses = true;
                     //This gets courses from the API and stores it in this.courses
                     studentInfoTreatment_js_1.getAllStudentCourses(true, function (coursesRev) {
                         colors = tools_js_1.getColors(coursesRev.length);
@@ -41,13 +42,19 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "
                             coursesRev[i].color = colors[i];
                         }
                         _this.courses = coursesRev;
+                        if (_this.courses == undefined || _this.courses.length == 0) {
+                            _this.noCourses = true;
+                        }
+                        else {
+                            _this.noCourses = false;
+                        }
                     });
                 }
                 Courses = __decorate([
                     core_1.Component({
                         selector: "courses",
                         directives: [course_1.Course],
-                        template: "\n\t<div> \n\t\t<div *ngFor=\"#aCourse of courses\">\n\t\t\t<course\u00A0\n\t\t\t[aCourse]=\"aCourse\"></course>\n\t\t</div>\t\n\t</div>"
+                        template: "\n\t<div *ngIf = \"!noCourses\"> \n\t\t<div *ngFor=\"#aCourse of courses\">\n\t\t\t<course\u00A0\n\t\t\t[aCourse]=\"aCourse\"></course>\n\t\t</div>\t\n\t</div>\n\t<div [hidden] = \"!noCourses\">\n\t\tYou currently have no courses you registered in.<br>\n\t\tIn order to see information displayed here, please register to at least one course.\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Courses);

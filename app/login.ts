@@ -11,27 +11,33 @@ import {Component,Output, EventEmitter} from "angular2/core";
 	template:`
 		<nav class="navbar navbar-default">
 		</nav>
-		<form class="form-signin" (submit)="onSubmit(userN.value, passW.value)">
-		<h2 class="form-signin-heading">Please log in to HY</h2>
-		<label for="inputUsername" class="sr-only">Username</label>
-		<input #userN type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input #passW type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-		<div class="checkbox">
-		  <label>
-			<input type="checkbox" value="remember-me"> Remember me
-		  </label>
-		</div>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-	  </form>
+		<form id="loginForm" class="form-signin" (submit)="onSubmit(userN.value, passW.value)">
+			<h2 class="form-signin-heading">Please log in to HY</h2>
+			<label for="inputUsername" class="sr-only">Username</label>
+			<input #userN type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input #passW type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+			<span [hidden] = "!logError" class="error-message">{{errorMessage}}</span>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	  	</form>
 	`
 })
 
 export class Login{
 	@Output() logSuccess = new EventEmitter();
 
+	constructor(){
+		this.logError=false;
+		this.logMessages = [
+			"There was an error while you were trying to connect to the server, please try again later",
+			"The username or password is invalid. Please try again",
+			"An unexpected error occured, please try again later"
+		]
+		this.errorMessage =""
+	}
 	onSubmit(username, password){
-		var self = this;
+		var self = this,
+			cookieManager = new Cookies();4
 		//Here we use the authentication information and we use them to ask the oauth end for a token 
 		$.ajax({
 			url: 'https://hy-canary.testmycode.io/oauth/token',
@@ -43,11 +49,28 @@ export class Login{
 				username : username,
 				password : password},
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-		
+
 			// Now we can store the token in a cookie
 			success: function (tokenReceived){
-				setCookie("oauth_token", JSON.stringify(tokenReceived));
+				cookieManager.write("oauth_token", JSON.stringify(tokenReceived));
 				self.logSuccess.emit(tokenReceived);
+				var form = document.getElementById("loginForm");
+				form.reset();
+
+			},
+			error:function(response){
+				self.logError =true;
+				var form = document.getElementById("loginForm");
+				form.reset();
+				if (response.status == 404) {
+					self.errorMessage = self.logMessages[0];
+				}
+				else if (response.status == 401){
+					self.errorMessage = self.logMessages[1];
+				}
+				else{
+					self.errorMessage = self.logMessages[2];
+				}
 			}
 		}); 
 	}
