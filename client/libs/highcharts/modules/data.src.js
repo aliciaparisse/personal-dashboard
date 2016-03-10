@@ -551,7 +551,7 @@
 				// Fall back to Date.parse		
 				if (!match) {
 					match = Date.parse(val);
-					// External tools like Date.js and MooTools extend Date object and
+					// External tools like Date.libs and MooTools extend Date object and
 					// returns a date.
 					if (typeof match === 'object' && match !== null && match.getTime) {
 						ret = match.getTime() - match.getTimezoneOffset() * 60000;

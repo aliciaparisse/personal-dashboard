@@ -35,7 +35,7 @@
 	// Utilities
 	/*
 	 * Return an intermediate color between two colors, according to pos where 0
-	 * is the from color and 1 is the to color. This method is copied from ColorAxis.js
+	 * is the from color and 1 is the to color. This method is copied from ColorAxis.libs
 	 * and should always be kept updated, until we get AMD support.
 	 */
 	function tweenColors(from, to, pos) {

@@ -8,8 +8,8 @@
 // Last-comment date : 03/03/16
 
 import {Component,Input, ChangeDetectorRef} from 'angular2/core';
-import {courseCompDiagram, sepExInWeeks} from "../js/coursesTreatment.js";
-import {getCorrColors, changeExercColor} from "../js/tools.js";
+import {courseCompDiagram, sepExInWeeks} from "libs/coursesTreatment.js";
+import {getCorrColors, changeExercColor} from "libs/tools.js";
 
 
 @Component({

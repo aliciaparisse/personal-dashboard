@@ -20,7 +20,7 @@
 		nav = win.navigator,
 		doc = win.document;
 
-	// Dummy object so we can reuse our canvas-tools.js without errors
+	// Dummy object so we can reuse our canvas-tools.libs without errors
 	Highcharts.CanVGRenderer = {};
 
 

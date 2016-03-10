@@ -699,7 +699,7 @@ var arrayMin = Highcharts.arrayMin,
         /**
          * Translate a point's plotHigh from the internal angle and radius measures to
          * true plotHigh coordinates. This is an addition of the toXY method found in
-         * Polar.js, because it runs too early for arearanges to be considered (#3419).
+         * Polar.libs, because it runs too early for arearanges to be considered (#3419).
          */
         highToXY: function (point) {
             // Find the polar plotX and plotY
@@ -2219,7 +2219,7 @@ var arrayMin = Highcharts.arrayMin,
 
         /**
          * Extensions for polar charts. Additionally, much of the geometry required for polar charts is
-         * gathered in RadialAxes.js.
+         * gathered in RadialAxes.libs.
          *
          */
 

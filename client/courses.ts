@@ -6,9 +6,9 @@
 // Last-comment date : 03/03/16
 
 import {Component} from "angular2/core";
-import {getAllStudentCourses} from "../js/studentInfoTreatment.js";
+import {getAllStudentCourses} from "libs/studentInfoTreatment.js";
 import {Course} from './course';
-import {getColors} from "../js/tools.js";
+import {getColors} from "libs/tools.js";
 
 @Component({
 	selector:"courses",
