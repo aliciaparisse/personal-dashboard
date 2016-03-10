@@ -27,8 +27,7 @@ var getAllStudentCourses = function(callb, callbackFunc){
 	}
 	else {
 		$.ajax({
-			// TODO : Delete 895 part when it'll be linked to the real connected person
-			url: "https://hy-canary.testmycode.io/api/beta/participant/895/courses",
+			url: "https://hy-canary.testmycode.io/api/beta/participant/courses",
 			type: 'GET',
 			headers: {
 				'Authorization': 'Bearer ' + JSON.parse(cookieM.read("oauth_token")).access_token

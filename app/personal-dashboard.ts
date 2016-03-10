@@ -20,12 +20,15 @@ import {Login} from "./login";
 	<login *ngIf= "!loggedIn" (logSuccess) ="logSuccess($event)"></login>
 	<navbar [hidden]= "!loggedIn" (loggingOut) ="unlogSuccess($event)"></navbar>
 	<div *ngIf= "loggedIn" class="row">
-		<student-info class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"></student-info>
+		<student-info [studentName]="studentName" class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"></student-info>
 		<courses class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
 	</div>`
 })
 
 export class PersonalDashboard{
+	loggedIn;
+	studentName ="";
+
 	constructor(){
 		var self = this,
 			cookieManager = new Cookies();
@@ -33,6 +36,7 @@ export class PersonalDashboard{
 		//Setting the loggedIn boolean will automatically change the display
 		if(cookieManager.read("oauth_token") != undefined){
 			self.loggedIn = true;
+			self.studentName = JSON.parse(cookieManager.read("oauth_token")).username;
 		}
 		else{
 			self.loggedIn = false;
@@ -41,7 +45,8 @@ export class PersonalDashboard{
 
 	//Function that is called as an output event from the login component,
 	//when the logging was a success
-	logSuccess(event:object){
+	logSuccess(event:object) {
+		this.studentName = event.username;
 		this.loggedIn = true;
 	}
 

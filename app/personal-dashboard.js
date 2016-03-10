@@ -38,11 +38,13 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
         execute: function() {
             PersonalDashboard = (function () {
                 function PersonalDashboard() {
+                    this.studentName = "";
                     var self = this, cookieManager = new Cookies();
                     //We check if a cookie with the authentication token is defined
                     //Setting the loggedIn boolean will automatically change the display
                     if (cookieManager.read("oauth_token") != undefined) {
                         self.loggedIn = true;
+                        self.studentName = JSON.parse(cookieManager.read("oauth_token")).username;
                     }
                     else {
                         self.loggedIn = false;
@@ -51,6 +53,7 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
                 //Function that is called as an output event from the login component,
                 //when the logging was a success
                 PersonalDashboard.prototype.logSuccess = function (event) {
+                    this.studentName = event.username;
                     this.loggedIn = true;
                 };
                 PersonalDashboard.prototype.unlogSuccess = function (event) {
@@ -60,7 +63,7 @@ System.register(["angular2/core", "./courses", "./student-info", "./navbar", "./
                     core_1.Component({
                         selector: "personal-dashboard",
                         directives: [courses_1.Courses, student_info_1.StudentInfo, navbar_1.NavBar, login_1.Login],
-                        template: "\n\t<login *ngIf= \"!loggedIn\" (logSuccess) =\"logSuccess($event)\"></login>\n\t<navbar [hidden]= \"!loggedIn\" (loggingOut) =\"unlogSuccess($event)\"></navbar>\n\t<div *ngIf= \"loggedIn\" class=\"row\">\n\t\t<student-info class=\" col-xs-12 col-sm-5 col-md-3 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-7 col-md-9 col-lg-8\"></courses>\n\t</div>"
+                        template: "\n\t<login *ngIf= \"!loggedIn\" (logSuccess) =\"logSuccess($event)\"></login>\n\t<navbar [hidden]= \"!loggedIn\" (loggingOut) =\"unlogSuccess($event)\"></navbar>\n\t<div *ngIf= \"loggedIn\" class=\"row\">\n\t\t<student-info [studentName]=\"studentName\" class=\" col-xs-12 col-sm-5 col-md-3 col-lg-4\"></student-info>\n\t\t<courses class=\"col-xs-12 col-sm-7 col-md-9 col-lg-8\"></courses>\n\t</div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PersonalDashboard);

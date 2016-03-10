@@ -17,6 +17,7 @@ import {Component,Output, EventEmitter} from "angular2/core";
 			<input #userN type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
 			<label for="inputPassword" class="sr-only">Password</label>
 			<input #passW type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+			<span [hidden]="!loading">Loading...</span>
 			<span [hidden] = "!logError" class="error-message">{{errorMessage}}</span>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 	  	</form>
@@ -25,9 +26,14 @@ import {Component,Output, EventEmitter} from "angular2/core";
 
 export class Login{
 	@Output() logSuccess = new EventEmitter();
+	logError;
+	loading;
+	logMessages;
+	errorMessage;
 
 	constructor(){
 		this.logError=false;
+		this.loading=false;
 		this.logMessages = [
 			"There was an error while you were trying to connect to the server, please try again later",
 			"The username or password is invalid. Please try again",
@@ -37,7 +43,8 @@ export class Login{
 	}
 	onSubmit(username, password){
 		var self = this,
-			cookieManager = new Cookies();4
+			cookieManager = new Cookies();
+		this.loading = true;
 		//Here we use the authentication information and we use them to ask the oauth end for a token 
 		$.ajax({
 			url: 'https://hy-canary.testmycode.io/oauth/token',
@@ -52,10 +59,12 @@ export class Login{
 
 			// Now we can store the token in a cookie
 			success: function (tokenReceived){
+				tokenReceived.username = username;
 				cookieManager.write("oauth_token", JSON.stringify(tokenReceived));
 				self.logSuccess.emit(tokenReceived);
 				var form = document.getElementById("loginForm");
 				form.reset();
+				self.loading = false;
 
 			},
 			error:function(response){
@@ -71,6 +80,7 @@ export class Login{
 				else{
 					self.errorMessage = self.logMessages[2];
 				}
+				self.loading = false;
 			}
 		}); 
 	}
