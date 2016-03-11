@@ -5,9 +5,9 @@
 //		all the time, and give general information about the student.
 // Last-comment date : 03/03/16
 
+/// <reference path="libs/personalDashboardModule.d.ts"/>
 
-import {Component} from "angular2/core";
-import {getAllStudentCourses} from "libs/studentInfoTreatment.js";
+import {Component,Input} from "angular2/core";
 
 
 @Component({
@@ -22,8 +22,7 @@ import {getAllStudentCourses} from "libs/studentInfoTreatment.js";
 
 export class StudentInfo{
 	@Input() studentName;
-
 	constructor(){
-		getAllStudentCourses(false);
+		PersonalDashboardModule.StudentInfoTreatment.getAllStudentCourses(false,null);
 	}
 }

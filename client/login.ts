@@ -4,6 +4,9 @@
 //		This component is used for a user to log in
 //		It's composed by an empty nav bar and a log in form
 // Last-comment date : 02/03/16
+
+/// <reference path="libs/personalDashboardModule.d.ts"/>
+
 import {Component,Output, EventEmitter} from "angular2/core";
 
 @Component({
@@ -43,7 +46,7 @@ export class Login{
 	}
 	onSubmit(username, password){
 		var self = this,
-			cookieManager = new Cookies();
+			cookieManager = new PersonalDashboardModule.Cookies.Cookies();
 		this.loading = true;
 		//Here we use the authentication information and we use them to ask the oauth end for a token 
 		$.ajax({

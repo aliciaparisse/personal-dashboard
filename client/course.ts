@@ -7,9 +7,10 @@
 //			- a list of exercises represented in weeks, with their status (completed,begun,todo)
 // Last-comment date : 03/03/16
 
+/// <reference path="libs/personalDashboardModule.d.ts"/>
+
 import {Component,Input, ChangeDetectorRef} from 'angular2/core';
-import {courseCompDiagram, sepExInWeeks} from "libs/coursesTreatment.js";
-import {getCorrColors, changeExercColor} from "libs/tools.js";
+
 
 
 @Component({
@@ -31,6 +32,9 @@ import {getCorrColors, changeExercColor} from "libs/tools.js";
 
 export class Course{
 	@Input() aCourse;
+	cdr;
+	colors;
+	weeks;
 
 	//Here we initialize the change detection so that we trigger it when it's needed
 	constructor(cdr: ChangeDetectorRef) {
@@ -39,13 +43,13 @@ export class Course{
 
 	ngAfterViewInit(){
 		//We get different shades of the colors we need to display it
-		this.colors =  getCorrColors(this.aCourse.color);
+		this.colors =  PersonalDashboardModule.Tools.getCorrColors(this.aCourse.color);
 		//This calls a function that changes the diagram with highcharts
 		//But also returns all the exercises, so we can separate them in weeks
-		this.weeks = sepExInWeeks(courseCompDiagram(this.aCourse, this.colors).exercises);
+		this.weeks = PersonalDashboardModule.CoursesTreatment.sepExInWeeks(PersonalDashboardModule.CoursesTreatment.courseCompDiagram(this.aCourse, this.colors).exercises);
 		//Now that we have all we need is stored, we can trigger the changes
 		this.cdr.detectChanges();
-		changeExercColor(this.aCourse.name, this.colors);
+		PersonalDashboardModule.Tools.changeExercColor(this.aCourse.name, this.colors);
 	}
 	
 	

@@ -7,6 +7,8 @@
 //		containing all the user's courses.
 // Last-comment date : 02/03/16
 
+/// <reference path="libs/personalDashboardModule.d.ts"/>
+
 import {Component} from "angular2/core";
 import {Courses} from "./courses";
 import {StudentInfo} from "./student-info";
@@ -31,7 +33,7 @@ export class PersonalDashboard{
 
 	constructor(){
 		var self = this,
-			cookieManager = new Cookies();
+			cookieManager = new PersonalDashboardModule.Cookies();
 		//We check if a cookie with the authentication token is defined
 		//Setting the loggedIn boolean will automatically change the display
 		if(cookieManager.read("oauth_token") != undefined){
@@ -45,12 +47,12 @@ export class PersonalDashboard{
 
 	//Function that is called as an output event from the login component,
 	//when the logging was a success
-	logSuccess(event:object) {
+	logSuccess(event) {
 		this.studentName = event.username;
 		this.loggedIn = true;
 	}
 
-	unlogSuccess(event:object){
+	unlogSuccess(event){
 		this.loggedIn = false;
 	}
 }

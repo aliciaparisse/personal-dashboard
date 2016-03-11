@@ -5,10 +5,11 @@
 //		The only directive is a course, repeated as many times as there are courses in the list  
 // Last-comment date : 03/03/16
 
+/// <reference path="libs/personalDashboardModule.d.ts"/>
+
 import {Component} from "angular2/core";
-import {getAllStudentCourses} from "libs/studentInfoTreatment.js";
 import {Course} from './course';
-import {getColors} from "libs/tools.js";
+
 
 @Component({
 	selector:"courses",
@@ -27,20 +28,25 @@ import {getColors} from "libs/tools.js";
 })
 
 export class Courses{
+	noCourses;
+	colors;
+	courses;
+
 	constructor(){
-		this.noCourses = true;
+		var self = this;
+		self.noCourses = true;
 		//This gets courses from the API and stores it in this.courses
-		getAllStudentCourses(true,(coursesRev) => {
-			colors = getColors(coursesRev.length);
+		PersonalDashboardModule.StudentInfoTreatment.getAllStudentCourses(true,(coursesRev) => {
+			self.colors = PersonalDashboardModule.Tools.getColors(coursesRev.length);
 			for (var i=0; i < coursesRev.length; i++) {
-				coursesRev[i].color = colors[i];
+				coursesRev[i].color = self.colors[i];
 			}
-			this.courses = coursesRev;
-			if (this.courses == undefined || this.courses.length == 0){
-				this.noCourses = true;
+			self.courses = coursesRev;
+			if (self.courses == undefined || self.courses.length == 0){
+				self.noCourses = true;
 			}
 			else{
-				this.noCourses = false;
+				self.noCourses = false;
 			}
 		});
 		

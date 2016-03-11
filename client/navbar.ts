@@ -6,6 +6,8 @@
 //    of the items in the navbar.
 // Last-comment date : 02/03/16
 
+/// <reference path="libs/personalDashboardModule.d.ts"/>
+
 import {Component, Output, EventEmitter} from "angular2/core";
 
 @Component({
@@ -42,7 +44,7 @@ export class NavBar{
 	@Output() loggingOut = new EventEmitter();
 
 	logout(){
-		var cookieManager = new Cookies();
+		var cookieManager = new PersonalDashboardModule.Cookies();
 		cookieManager.remove("oauth_token");
 		cookieManager.remove("coursesData");
 		this.loggingOut.emit(true);

@@ -14,14 +14,14 @@
 var createDisplayableData = function(course, colors){
 
 	var dataToDisplay = [],
-		finishedE = 0, 
+		finishedE = 0,
 		begunE = 0,
 		//TODO : add a way to find the number of exercises to validate !
 		leftE = 0,
 		totalNbEx = 0,
 		curExo;
 
-	//For each exercise we update the corresponding counter 
+	//For each exercise we update the corresponding counter
 	for (var i = 0 ; i < course.exercises.length ; i++){
 		curExo = course.exercises[i];
 		if(curExo.all_tests_passed && curExo.available_points != null) {
@@ -86,10 +86,10 @@ var sepExInWeeks = function(exercises){
 					weekNumber = parseInt(exo.exercise_name.substr((dashIn-2), 2));
 				}
 				else {
-					weekNumber =  parseInt(exo.exercise_name[dashIn-1]); 
+					weekNumber =  parseInt(exo.exercise_name[dashIn-1]);
 				}
 
-				
+
 				//Because we assume that if there's a week 0, it will be first
 				if(weekNumber ==0 && !foundWeek0){
 					foundWeek0 = true;
@@ -112,7 +112,7 @@ var sepExInWeeks = function(exercises){
 					weeks[(weekNumber.toString())] = {weekNb : (weekNumber.toString()), exercises:[exo]}
 				}
 			}
-			 
+
 		}
 		//As the exercises are in order of week number, if I find a non number week, I just treat it in the end
 		else {
@@ -133,7 +133,7 @@ var sepExInWeeks = function(exercises){
 	}
 
 	return weeks;
-	
+
 }
 
 //Function courseCompDiagram
@@ -146,16 +146,16 @@ var courseCompDiagram = function(course, colors){
 	var dataToDisplay = [],
 		courseName = course.name;
 
-	
+
 	//This creates an attribute "newName" for each exercise,
 	//to display in the tooltip
 	refactorExercises(course);
-	
+
 	//This create a dataToDisplay from the course
 	//It contains the series that will be displayed by highcharts
 	dataToDisplay = createDisplayableData(course, colors);
 
-	
+
 	//Here we check is the course is completed/finished
 	if ((dataToDisplay[2].y == 0) && (dataToDisplay[1].y == 0)) {
 		 $("#Completion"+ courseName).replaceWith('<img src="resources/compBadge.png" width="50%" >');
@@ -176,7 +176,7 @@ var courseCompDiagram = function(course, colors){
 			},
 			credits:{
 				enabled:false
-			},       
+			},
 			title:{
 				text:''
 			},
@@ -209,9 +209,9 @@ var courseCompDiagram = function(course, colors){
 			}]
 		});
 	}
-	
-	return course; 
-	
+
+	return course;
+
  }
 
 //Function refactorExercises
@@ -227,10 +227,10 @@ function refactorExercises(course){
     for (i=0; i< course.exercises.length; i++) {
         exo = course.exercises[i];
         if (exo.exercise_name.indexOf('_') != -1){
-            //We get only the characters that are after the underscore 
+            //We get only the characters that are after the underscore
             newName = exo.exercise_name.slice(exo.exercise_name.indexOf('_'));
         }
-        
+
         else if (exo.exercise_name.indexOf('-') != -1){
             //We get only the characters that are after the dash
             newName = exo.exercise_name.slice(exo.exercise_name.indexOf('-'));
@@ -238,7 +238,7 @@ function refactorExercises(course){
 
         //We pass from camel case to normal syntax with a reg ex
         newName = newName.replace(/([A-Z])/g, function($1){return " "+$1.toLowerCase();}).slice(1);
-        newName = newName.charAt(0).toUpperCase() + newName.slice(1); 
+        newName = newName.charAt(0).toUpperCase() + newName.slice(1);
 
         course.exercises[i].newName = newName;
     }

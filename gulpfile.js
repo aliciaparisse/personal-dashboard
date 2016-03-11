@@ -28,7 +28,7 @@ gulp.task('build:server', function () {
 // CLIENT
 
 /*
- jsNPMDependencies, sometimes order matters here! so becareful!
+ jsNPMDependencies, sometimes order matters here! so be careful!
  */
 var jsNPMDependencies = [
     'angular2/bundles/angular2-polyfills.js',
@@ -59,11 +59,21 @@ gulp.task('build:app', function(){
     return tsResult.js
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'))
+
+});
+var typescript = require('gulp-tsc');
+
+gulp.task('compile', function(){
+    gulp.src(['client/**/*.ts'])
+        .pipe(typescript())
+        .pipe(gulp.dest('dist/'))
 });
 
 gulp.task('build', function(callback){
     runSequence('clean', 'build:server',
-        'build:index', 'build:app',
+        'build:index',
+        //'compile',
+        'build:app',
         callback);
 });
 
