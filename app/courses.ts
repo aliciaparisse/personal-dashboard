@@ -27,20 +27,25 @@ import {getColors} from "../js/tools.js";
 })
 
 export class Courses{
+	noCourses;
+	colors;
+	courses;
+
 	constructor(){
+		var self = this;
 		this.noCourses = true;
 		//This gets courses from the API and stores it in this.courses
 		getAllStudentCourses(true,(coursesRev) => {
-			colors = getColors(coursesRev.length);
+			self.colors = getColors(coursesRev.length);
 			for (var i=0; i < coursesRev.length; i++) {
-				coursesRev[i].color = colors[i];
+				coursesRev[i].color = self.colors[i];
 			}
-			this.courses = coursesRev;
-			if (this.courses == undefined || this.courses.length == 0){
-				this.noCourses = true;
+			self.courses = coursesRev;
+			if (self.courses == undefined || self.courses.length == 0){
+				self.noCourses = true;
 			}
 			else{
-				this.noCourses = false;
+				self.noCourses = false;
 			}
 		});
 		

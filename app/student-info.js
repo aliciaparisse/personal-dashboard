@@ -4,7 +4,9 @@
 //		This component is the a component that is meant to stay visible 
 //		all the time, and give general information about the student.
 // Last-comment date : 03/03/16
-System.register(["angular2/core", "../js/studentInfoTreatment.js"], function(exports_1) {
+System.register(["angular2/core", "../js/studentInfoTreatment.js"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +43,7 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js"], function(exp
                     __metadata('design:paramtypes', [])
                 ], StudentInfo);
                 return StudentInfo;
-            })();
+            }());
             exports_1("StudentInfo", StudentInfo);
         }
     }

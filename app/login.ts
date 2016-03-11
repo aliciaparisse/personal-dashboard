@@ -12,7 +12,7 @@ import {Component,Output, EventEmitter} from "angular2/core";
 		<nav class="navbar navbar-default">
 		</nav>
 		<form id="loginForm" class="form-signin" (submit)="onSubmit(userN.value, passW.value)">
-			<h2 class="form-signin-heading">Please log in to HY</h2>
+			<h2 class="form-signin-heading">Please log in with your TMC username and password</h2>
 			<label for="inputUsername" class="sr-only">Username</label>
 			<input #userN type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
 			<label for="inputPassword" class="sr-only">Password</label>

@@ -17,7 +17,7 @@ var createDisplayableData = function(course, colors){
 		finishedE = 0, 
 		begunE = 0,
 		//TODO : add a way to find the number of exercises to validate !
-		leftE = 0,
+		leftE,
 		totalNbEx = 0,
 		curExo;
 

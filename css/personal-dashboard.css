@@ -4,15 +4,16 @@
   margin: 1.5px;
  }
 
-.parent {
-	display:flex;
-}
-
 .diagram {
   	height: 15vw;
 }
 .row{
   width : 100%;
+}
+
+.weeks {
+    display:flex;
+    vertical-align: middle;
 }
 
 .error-message{

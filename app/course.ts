@@ -21,9 +21,9 @@ import {getCorrColors, changeExercColor} from "../js/tools.js";
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 diagram' id="Completion{{aCourse.name}}">
 			</div>			
 			
-			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent" *ngFor="#week of weeks">
-				Week {{week.weekNb}} 
-				<div title="{{exo.newName}}" class="exerc {{exo.state}}" *ngFor="#exo of week.exercises"></div> 
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent weeks" *ngFor="#week of weeks">
+				Week {{week.weekNb}}
+				<div title="{{exo.newName}}" class="exerc {{exo.state}}" *ngFor="#exo of week.exercises"></div>
 			</div>
 		</div>
 	</div>`
@@ -31,6 +31,9 @@ import {getCorrColors, changeExercColor} from "../js/tools.js";
 
 export class Course{
 	@Input() aCourse;
+	cdr;
+	colors;
+	weeks;
 
 	//Here we initialize the change detection so that we trigger it when it's needed
 	constructor(cdr: ChangeDetectorRef) {

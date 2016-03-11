@@ -45,12 +45,12 @@ export class PersonalDashboard{
 
 	//Function that is called as an output event from the login component,
 	//when the logging was a success
-	logSuccess(event:object) {
+	logSuccess(event) {
 		this.studentName = event.username;
 		this.loggedIn = true;
 	}
 
-	unlogSuccess(event:object){
+	unlogSuccess(event){
 		this.loggedIn = false;
 	}
 }

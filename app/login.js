@@ -1,4 +1,6 @@
-System.register(["angular2/core"], function(exports_1) {
+System.register(["angular2/core"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -75,12 +77,12 @@ System.register(["angular2/core"], function(exports_1) {
                 Login = __decorate([
                     core_1.Component({
                         selector: "login",
-                        template: "\n\t\t<nav class=\"navbar navbar-default\">\n\t\t</nav>\n\t\t<form id=\"loginForm\" class=\"form-signin\" (submit)=\"onSubmit(userN.value, passW.value)\">\n\t\t\t<h2 class=\"form-signin-heading\">Please log in to HY</h2>\n\t\t\t<label for=\"inputUsername\" class=\"sr-only\">Username</label>\n\t\t\t<input #userN type=\"text\" id=\"inputUsername\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n\t\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>\n\t\t\t<input #passW type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required>\n\t\t\t<span [hidden]=\"!loading\">Loading...</span>\n\t\t\t<span [hidden] = \"!logError\" class=\"error-message\">{{errorMessage}}</span>\n\t\t\t<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n\t  \t</form>\n\t"
+                        template: "\n\t\t<nav class=\"navbar navbar-default\">\n\t\t</nav>\n\t\t<form id=\"loginForm\" class=\"form-signin\" (submit)=\"onSubmit(userN.value, passW.value)\">\n\t\t\t<h2 class=\"form-signin-heading\">Please log in with your TMC username and password</h2>\n\t\t\t<label for=\"inputUsername\" class=\"sr-only\">Username</label>\n\t\t\t<input #userN type=\"text\" id=\"inputUsername\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n\t\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>\n\t\t\t<input #passW type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required>\n\t\t\t<span [hidden]=\"!loading\">Loading...</span>\n\t\t\t<span [hidden] = \"!logError\" class=\"error-message\">{{errorMessage}}</span>\n\t\t\t<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n\t  \t</form>\n\t"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Login);
                 return Login;
-            })();
+            }());
             exports_1("Login", Login);
         }
     }

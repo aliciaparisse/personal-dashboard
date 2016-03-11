@@ -4,7 +4,9 @@
 //		This component is a component that's mainly composed of a list of courses
 //		The only directive is a course, repeated as many times as there are courses in the list  
 // Last-comment date : 03/03/16
-System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "../js/tools.js"], function(exports_1) {
+System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "../js/tools.js"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -33,20 +35,20 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "
         execute: function() {
             Courses = (function () {
                 function Courses() {
-                    var _this = this;
+                    var self = this;
                     this.noCourses = true;
                     //This gets courses from the API and stores it in this.courses
                     studentInfoTreatment_js_1.getAllStudentCourses(true, function (coursesRev) {
-                        colors = tools_js_1.getColors(coursesRev.length);
+                        self.colors = tools_js_1.getColors(coursesRev.length);
                         for (var i = 0; i < coursesRev.length; i++) {
-                            coursesRev[i].color = colors[i];
+                            coursesRev[i].color = self.colors[i];
                         }
-                        _this.courses = coursesRev;
-                        if (_this.courses == undefined || _this.courses.length == 0) {
-                            _this.noCourses = true;
+                        self.courses = coursesRev;
+                        if (self.courses == undefined || self.courses.length == 0) {
+                            self.noCourses = true;
                         }
                         else {
-                            _this.noCourses = false;
+                            self.noCourses = false;
                         }
                     });
                 }
@@ -59,7 +61,7 @@ System.register(["angular2/core", "../js/studentInfoTreatment.js", './course', "
                     __metadata('design:paramtypes', [])
                 ], Courses);
                 return Courses;
-            })();
+            }());
             exports_1("Courses", Courses);
         }
     }
