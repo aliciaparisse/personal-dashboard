@@ -88,3 +88,21 @@ var changeExercColor= function(courseName, colors){
     $("."+ courseName).find("div.exerc.begun").css("background", colors[1]);
     $("."+ courseName).find("div.exerc.todo").css("background", colors[2]);
 }
+
+var login = function (username,password,successCb,errorCb){
+    $.ajax({
+        url: 'https://hy-canary.testmycode.io/oauth/token',
+        method: "post",
+        data: {
+            client_id:"228e3c5cfc33605da6919b536b51a4d3b4a84ac06aa6f5db64d0964f66535f20",
+            client_secret:"8136718b825475cb108f2c47889a0e85fcbf6866b4206a606fe2f81af21aea90",
+            grant_type : 'password',
+            username : username,
+            password : password},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+
+        // Now we can store the token in a cookie
+        success: successCb,
+        error:errorCb
+    });
+}

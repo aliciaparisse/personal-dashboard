@@ -6,6 +6,9 @@
 // Last-comment date : 02/03/16
 
 /// <reference path="libs/personalDashboardModule.d.ts"/>
+/// <reference path="libs/js-cookie.d.ts"/>
+// / <reference path="libs/jquery/jquery.d.ts"/>
+
 
 import {Component,Output, EventEmitter} from "angular2/core";
 
@@ -45,34 +48,24 @@ export class Login{
 		this.errorMessage =""
 	}
 	onSubmit(username, password){
-		var self = this,
-			cookieManager = new PersonalDashboardModule.Cookies.Cookies();
+		var self = this;
 		this.loading = true;
-		//Here we use the authentication information and we use them to ask the oauth end for a token 
-		$.ajax({
-			url: 'https://hy-canary.testmycode.io/oauth/token',
-			method: "post",
-			data: {
-				client_id:"228e3c5cfc33605da6919b536b51a4d3b4a84ac06aa6f5db64d0964f66535f20",
-				client_secret:"8136718b825475cb108f2c47889a0e85fcbf6866b4206a606fe2f81af21aea90",
-				grant_type : 'password',
-				username : username,
-				password : password},
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-
-			// Now we can store the token in a cookie
-			success: function (tokenReceived){
+		//Here we use the authentication information and we use them to ask the oauth end for a token
+		PersonalDashboardModule.Tools.login(username,password,
+			(tokenReceived) => {
 				tokenReceived.username = username;
-				cookieManager.write("oauth_token", JSON.stringify(tokenReceived));
+				Cookies.set("oauth_token", JSON.stringify(tokenReceived));
 				self.logSuccess.emit(tokenReceived);
-				var form = document.getElementById("loginForm");
+				var form : HTMLFormElement;
+				form = <HTMLFormElement> document.getElementById("loginForm");
 				form.reset();
 				self.loading = false;
 
 			},
-			error:function(response){
+			(response) => {
 				self.logError =true;
-				var form = document.getElementById("loginForm");
+				var form : HTMLFormElement;
+				form = <HTMLFormElement> document.getElementById("loginForm");
 				form.reset();
 				if (response.status == 404) {
 					self.errorMessage = self.logMessages[0];
@@ -85,6 +78,7 @@ export class Login{
 				}
 				self.loading = false;
 			}
-		}); 
+		)
+
 	}
 }

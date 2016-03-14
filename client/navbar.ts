@@ -7,6 +7,7 @@
 // Last-comment date : 02/03/16
 
 /// <reference path="libs/personalDashboardModule.d.ts"/>
+/// <reference path="libs/js-cookie.d.ts"/>
 
 import {Component, Output, EventEmitter} from "angular2/core";
 
@@ -44,9 +45,8 @@ export class NavBar{
 	@Output() loggingOut = new EventEmitter();
 
 	logout(){
-		var cookieManager = new PersonalDashboardModule.Cookies();
-		cookieManager.remove("oauth_token");
-		cookieManager.remove("coursesData");
+		Cookies.remove("oauth_token");
+		Cookies.remove("coursesData");
 		this.loggingOut.emit(true);
 	}
 

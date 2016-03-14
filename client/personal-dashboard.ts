@@ -8,6 +8,7 @@
 // Last-comment date : 02/03/16
 
 /// <reference path="libs/personalDashboardModule.d.ts"/>
+/// <reference path="libs/js-cookie.d.ts"/>
 
 import {Component} from "angular2/core";
 import {Courses} from "./courses";
@@ -32,13 +33,12 @@ export class PersonalDashboard{
 	studentName ="";
 
 	constructor(){
-		var self = this,
-			cookieManager = new PersonalDashboardModule.Cookies();
+		var self = this;
 		//We check if a cookie with the authentication token is defined
 		//Setting the loggedIn boolean will automatically change the display
-		if(cookieManager.read("oauth_token") != undefined){
+		if(Cookies.get("oauth_token") != undefined){
 			self.loggedIn = true;
-			self.studentName = JSON.parse(cookieManager.read("oauth_token")).username;
+			self.studentName = JSON.parse(Cookies.get("oauth_token")).username;
 		}
 		else{
 			self.loggedIn = false;
