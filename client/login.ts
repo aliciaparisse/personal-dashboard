@@ -5,7 +5,7 @@
 //		It's composed by an empty nav bar and a log in form
 // Last-comment date : 02/03/16
 
-/// <reference path="libs/personalDashboardModule.d.ts"/>
+/// <reference path="libs/tools.d.ts"/>
 /// <reference path="libs/js-cookie.d.ts"/>
 // / <reference path="libs/jquery/jquery.d.ts"/>
 
@@ -51,7 +51,7 @@ export class Login{
 		var self = this;
 		this.loading = true;
 		//Here we use the authentication information and we use them to ask the oauth end for a token
-		PersonalDashboardModule.Tools.login(username,password,
+		Tools.login(username,password,
 			(tokenReceived) => {
 				tokenReceived.username = username;
 				Cookies.set("oauth_token", JSON.stringify(tokenReceived));

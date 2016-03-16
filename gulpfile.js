@@ -14,13 +14,15 @@ gulp.task('clean', function(){
     return del('dist')
 });
 
-gulp.task('build:server', function () {
+gulp.task('build:server', function()
+{
     var tsProject = ts.createProject('server/tsconfig.json');
-    var tsResult = gulp.src('server/**/*.ts')
+
+    var tsResult = tsProject.src()
         .pipe(sourcemaps.init())
-        .pipe(ts(tsProject))
-    return tsResult.js
-        .pipe(concat('server.js'))
+        .pipe(ts(tsProject));
+
+    return tsResult.js.pipe(concat('server.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'))
 });
@@ -31,6 +33,8 @@ gulp.task('build:server', function () {
  jsNPMDependencies, sometimes order matters here! so be careful!
  */
 var jsNPMDependencies = [
+    'angular2/platform/browser.d.ts',
+    'angular2/core.d.ts',
     'angular2/bundles/angular2-polyfills.js',
     'systemjs/dist/system.src.js',
     'rxjs/bundles/Rx.js',
@@ -43,12 +47,21 @@ gulp.task('build:index', function(){
 
     //Let's copy our head dependencies into a dist/libs
     var copyJsNPMDependencies = gulp.src(mappedPaths, {base:'node_modules'})
-        .pipe(gulp.dest('dist/libs'))
+        .pipe(gulp.dest('dist/libs'));
+
+    var copyCss = gulp.src('client/css/**/*.css')
+        .pipe(gulp.dest('dist/css'));
+
+    var copyJs = gulp.src('client/libs/**/*.js')
+        .pipe(gulp.dest('dist/libs'));
+
+    var copyDTs = gulp.src('client/libs/**/*.d.ts')
+        .pipe(gulp.dest('dist/libs'));
 
     //Let's copy our index into dist
     var copyIndex = gulp.src('client/index.html')
-        .pipe(gulp.dest('dist'))
-    return [copyJsNPMDependencies, copyIndex];
+        .pipe(gulp.dest('dist'));
+    return [copyJsNPMDependencies, copyCss, copyJs,copyDTs, copyIndex];
 });
 
 gulp.task('build:app', function(){
@@ -58,21 +71,14 @@ gulp.task('build:app', function(){
         .pipe(ts(tsProject))
     return tsResult.js
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist/app/'))
 
 });
 var typescript = require('gulp-tsc');
 
-gulp.task('compile', function(){
-    gulp.src(['client/**/*.ts'])
-        .pipe(typescript())
-        .pipe(gulp.dest('dist/'))
-});
-
 gulp.task('build', function(callback){
     runSequence('clean', 'build:server',
         'build:index',
-        //'compile',
         'build:app',
         callback);
 });

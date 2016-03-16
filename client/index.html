@@ -4,10 +4,10 @@
 		<title>Angular 2 QuickStart</title>
 
 		<!-- 1. Load libraries -->
-		<script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
-		<script src="../node_modules/systemjs/dist/system.src.js"></script>
-		<script src="../node_modules/rxjs/bundles/Rx.js"></script>
-		<script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
+		<script src="/libs/angular2/bundles/angular2-polyfills.js"></script>
+		<script src="/libs/systemjs/dist/system.src.js"></script>
+		<script src="/libs/rxjs/bundles/Rx.js"></script>
+		<script src="/libs/angular2/bundles/angular2.dev.js"></script>
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -16,16 +16,15 @@
 		<script type="text/javascript" src="libs/highcharts/modules/exporting.js"></script>
 
 		<script type="text/javascript" src="libs/bootstrap/bootstrap.min.js"></script>
-		
-		<script type="text/javascript" src="libs/cookies.core.1.3.min.js"></script>
+
 		<script type="text/javascript" src="libs/coursesTreatment.js"></script>
 		<script type="text/javascript" src="libs/studentInfoTreatment.js"></script>
 
 		<script type="text/javascript" src="libs/js.cookie.js"></script>
 		<script type="text/javascript" src="libs/tools.js"></script>
 
-		<link rel="stylesheet" type="text/css" href="../css/bootstrap/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../css/exercises.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/exercises.css">
 		
 		<!-- 2. Configure SystemJS -->
 		<script>
@@ -37,7 +36,7 @@
 					}
 				}
 			});
-			System.import('boot')
+			System.import('/app/boot')
 						.then(null, console.error.bind(console));
 		</script>
 		

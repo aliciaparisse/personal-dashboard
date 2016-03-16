@@ -1,16 +1,16 @@
-/**
- * Created by alicia on 10/03/2016.
- */
-
 var express = require('express');
 var path = require('path');
 var port = process.env.PORT || 3000;
 var app = express();
 
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'index.html'));
-});
+app.use(express.static('dist'));
+
+var renderIndex = (req, res) => {
+    res.sendFile('/index.html');
+}
+
+app.get('/*', renderIndex);
 
 var server = app.listen(port, function() {
     var host = server.address().address;

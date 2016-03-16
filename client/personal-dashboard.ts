@@ -23,7 +23,6 @@ import {Login} from "./login";
 	<login *ngIf= "!loggedIn" (logSuccess) ="logSuccess($event)"></login>
 	<navbar [hidden]= "!loggedIn" (loggingOut) ="unlogSuccess($event)"></navbar>
 	<div *ngIf= "loggedIn" class="row">
-		<student-info [studentName]="studentName" class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"></student-info>
 		<courses class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
 	</div>`
 })
