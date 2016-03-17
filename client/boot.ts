@@ -6,6 +6,6 @@
 // Last-comment date : 02/03/16
 
 import {bootstrap}    from 'angular2/platform/browser';
-import {PersonalDashboard} from './personal-dashboard';
+import {PersonalDashboard} from './global/personal-dashboard';
 
 bootstrap(PersonalDashboard);

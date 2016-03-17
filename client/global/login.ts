@@ -5,12 +5,11 @@
 //		It's composed by an empty nav bar and a log in form
 // Last-comment date : 02/03/16
 
-/// <reference path="libs/tools.d.ts"/>
-/// <reference path="libs/js-cookie.d.ts"/>
-// / <reference path="libs/jquery/jquery.d.ts"/>
+/// <reference path="../libs/js-cookie.d.ts"/>
 
 
 import {Component,Output, EventEmitter} from "angular2/core";
+import {Tools} from "./tools";
 
 @Component({
 	selector:"login",

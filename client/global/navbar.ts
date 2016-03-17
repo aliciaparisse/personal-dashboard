@@ -6,8 +6,7 @@
 //    of the items in the navbar.
 // Last-comment date : 02/03/16
 
-/// <reference path="libs/personalDashboardModule.d.ts"/>
-/// <reference path="libs/js-cookie.d.ts"/>
+/// <reference path="../libs/js-cookie.d.ts"/>
 
 import {Component, Output, EventEmitter} from "angular2/core";
 

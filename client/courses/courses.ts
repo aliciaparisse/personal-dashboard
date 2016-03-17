@@ -5,11 +5,11 @@
 //		The only directive is a course, repeated as many times as there are courses in the list  
 // Last-comment date : 03/03/16
 
-/// <reference path="libs/studentInfoTreatment.d.ts"/>
-/// <reference path="libs/tools.d.ts"/>
-
 import {Component} from "angular2/core";
 import {Course} from './course';
+import {Tools} from "./../global/tools";
+import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
+
 
 
 @Component({

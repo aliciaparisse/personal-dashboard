@@ -5,9 +5,8 @@
 //		all the time, and give general information about the student.
 // Last-comment date : 03/03/16
 
-/// <reference path="libs/studentInfoTreatment.d.ts"/>
-
 import {Component,Input} from "angular2/core";
+import {StudentInfoTreatment} from "./student-info-treatment";
 
 
 @Component({

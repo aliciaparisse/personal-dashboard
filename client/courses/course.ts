@@ -7,11 +7,10 @@
 //			- a list of exercises represented in weeks, with their status (completed,begun,todo)
 // Last-comment date : 03/03/16
 
-/// <reference path="libs/tools.d.ts"/>
-/// <reference path="libs/coursesTreatment.d.ts"/>
 
 import {Component,Input, ChangeDetectorRef} from 'angular2/core';
-
+import {Tools} from "./../global/tools";
+import {CoursesTreatment} from "./courses-treatment";
 
 
 @Component({
