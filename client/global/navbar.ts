@@ -6,9 +6,11 @@
 //    of the items in the navbar.
 // Last-comment date : 02/03/16
 
+/// <reference path="../libs/jquery/jquery.d.ts"/>
 /// <reference path="../libs/js-cookie.d.ts"/>
 
 import {Component, Output, EventEmitter} from "angular2/core";
+import {runInThisContext} from "vm";
 
 @Component({
 	selector:"navbar",
@@ -27,7 +29,8 @@ import {Component, Output, EventEmitter} from "angular2/core";
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Courses<span class="sr-only">(current)</span></a></li>
+				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li>
+				<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href=# (click)="logout()">Logout</a></li>
@@ -42,6 +45,7 @@ import {Component, Output, EventEmitter} from "angular2/core";
 
 export class NavBar{
 	@Output() loggingOut = new EventEmitter();
+	@Output() changedTab = new EventEmitter();
 
 	logout(){
 		Cookies.remove("oauth_token");
@@ -49,4 +53,14 @@ export class NavBar{
 		this.loggingOut.emit(true);
 	}
 
+	changingTab(tabName){
+		(<any>$("li.principal-navbar")).each(function(index){
+			if ((<any>$(this)).attr('id') == tabName){
+				(<any>$(this)).addClass("active");
+			}
+			else{
+				(<any>$(this)).removeClass("active");
+			}
+		});
+	}
 }
