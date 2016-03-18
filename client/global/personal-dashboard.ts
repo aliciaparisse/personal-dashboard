@@ -14,22 +14,26 @@ import {Courses} from "./../courses/courses";
 import {StudentInfo} from "./../student-info/student-info";
 import {NavBar} from "./navbar";
 import {Login} from "./login";
+import {Activities} from "./../activities/activities";
 
 @Component({
 	selector:"personal-dashboard",
-	directives:[Courses,StudentInfo, NavBar, Login],
+	directives:[Courses,StudentInfo, NavBar, Login, Activities],
 	template:`
 	<login *ngIf= "!loggedIn" (logSuccess) ="logSuccess($event)"></login>
-	<navbar [hidden]= "!loggedIn" (loggingOut) ="unlogSuccess($event)"></navbar>
+	<navbar [hidden]= "!loggedIn" (loggingOut) ="unlogSuccess($event)" (changedTab)="changingTab($event)"></navbar>
 	<div *ngIf= "loggedIn" class="row">
 		<student-info [studentName]="studentName" class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"></student-info>
-		<courses class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
+		<courses *ngIf="tabNumber == 0" class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
+		<activities *ngIf="tabNumber == 1" class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></activities>
+
 	</div>`
 })
 
 export class PersonalDashboard{
 	loggedIn;
 	studentName ="";
+	tabNumber:number =0; //0 is for the default Courses tab
 
 	constructor(){
 		var self = this;
@@ -53,6 +57,15 @@ export class PersonalDashboard{
 
 	unlogSuccess(event){
 		this.loggedIn = false;
+	}
+
+	changingTab(event){
+		if(event == 'courses-tab'){
+			this.tabNumber = 0;
+		}
+		else if (event == 'activities-tab'){
+			this.tabNumber = 1;
+		}
 	}
 }
 
