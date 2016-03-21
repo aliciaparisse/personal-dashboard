@@ -54,10 +54,11 @@ export class NavBar{
 	}
 
 	changingTab(tabName){
+		var self = this;
 		(<any>$("li.principal-navbar")).each(function(index){
 			if ((<any>$(this)).attr('id') == tabName){
 				(<any>$(this)).addClass("active");
-				this.changedTab.emit(tabName);
+				self.changedTab.emit(tabName);
 			}
 			else{
 				(<any>$(this)).removeClass("active");

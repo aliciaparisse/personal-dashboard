@@ -32,7 +32,7 @@ export class StudentInfoTreatment{
         else {
             (<any>$).ajax({
                 // TODO : Delete 895 part when it'll be linked to the real connected person
-                url: "https://hy-canary.testmycode.io/api/beta/participant/courses",
+                url: "https://hy-canary.testmycode.io/api/beta/participant/895/courses",
                 type: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + JSON.parse(Cookies.get("oauth_token")).access_token

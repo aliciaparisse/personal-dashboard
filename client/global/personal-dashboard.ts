@@ -33,7 +33,7 @@ import {Activities} from "./../activities/activities";
 export class PersonalDashboard{
 	loggedIn;
 	studentName ="";
-	tabNumber:number =0; //0 is for the default Courses tab
+	tabNumber:number = 0; //0 is for the default Courses tab
 
 	constructor(){
 		var self = this;
@@ -63,7 +63,7 @@ export class PersonalDashboard{
 		if(event == 'courses-tab'){
 			this.tabNumber = 0;
 		}
-		else if (event == 'activities-tab'){
+		else if (event == 'activity-tab'){
 			this.tabNumber = 1;
 		}
 	}
