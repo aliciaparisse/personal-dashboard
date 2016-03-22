@@ -23,7 +23,7 @@ import {CoursesTreatment} from "./courses-treatment";
 			</div>			
 			
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent" *ngFor="#week of weeks">
-				Week {{week.weekNb}} 
+				<span class="week-name">Week {{week.weekNb}}</span>
 				<div title="{{exo.newName}}" class="exerc {{exo.state}}" *ngFor="#exo of week.exercises"></div> 
 			</div>
 		</div>
