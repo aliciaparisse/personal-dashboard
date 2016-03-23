@@ -17,8 +17,16 @@ import {CoursesTreatment} from "./courses-treatment";
 	selector: 'course',
 	template: `
 	<div class="course {{aCourse.name}}">
-		<h2>{{aCourse.title}}</h2>
-		<div class='diag-container row'> 
+		<div class="course-title">
+			<span class="course-name">{{aCourse.title}}</span>
+			<button class="btn btn-default">
+				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+			</button>
+
+		</div>
+
+
+		<div class='diag-container row'>
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 diagram' id="Completion{{aCourse.name}}">
 			</div>			
 			
@@ -54,4 +62,14 @@ export class Course{
 	
 	
 }
+
+/*
+<div class="course-title">
+<span class="course-name">{{aCourse.title}}</span>
+
+</div>
+<button class="btn btn-default">
+<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+	</button>
+*/
 

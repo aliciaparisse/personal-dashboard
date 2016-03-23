@@ -19,8 +19,17 @@
   color:red;
 }
 
-h1,h2 {
+h1, .course-title {
     text-align: center;
+}
+
+button{
+    float:right;
+}
+
+.course-name{
+    font-size: xx-large;
+    font-weight: bold;
 }
 
 courses{  

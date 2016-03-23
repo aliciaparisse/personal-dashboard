@@ -31,23 +31,9 @@ app.get('/mongo/hiddenCourses', function(req,res){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        getHiddenCourses(db, function(){
+        getHiddenCourses(db, 2, (result) => {
             db.close();
-            res.send("And is send");
-        })
-    });
-})
-
-app.get('/mongo/hiddenCourses', function(req,res){
-    // Connection URL
-    var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
-    // Use connect method to connect to the Server
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        console.log("Connected correctly to server");
-        getHiddenCourses(db, 2, function(){
-            db.close();
-            res.send("And is send");
+            res.send(result);
         })
     });
 })
@@ -59,9 +45,28 @@ var getHiddenCourses = function(db, _user_id, callback)
         //Selection
         {user_id : {$eq : _user_id}},
         //Projection
-        {hiddenCourses:1, _id:0});
-    callback();
+        {hiddenCourses:1, _id:0}
+    ).toArray(function(err,res){
+        callback(res);
+    });
 }
+
+
+app.put('/mongo/addHiddenCourses', function(req,res){
+    // Connection URL
+    var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
+    // Use connect method to connect to the Server
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        console.log("Connected correctly to server");
+        insertDocuments(db, (result) =>{
+            db.close();
+            res.send(result);
+        })
+    });
+})
+
+
 
 var insertDocuments = function(db, callback) {
     // Get the documents collection

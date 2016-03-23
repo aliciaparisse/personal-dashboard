@@ -49,6 +49,7 @@ gulp.task('build:index', function(){
     var copyJsNPMDependencies = gulp.src(mappedPaths, {base:'node_modules'})
         .pipe(gulp.dest('dist/libs'));
 
+    //And do this to css, js .d.ts and fonts files
     var copyCss = gulp.src('client/css/**/*.css')
         .pipe(gulp.dest('dist/css'));
 
@@ -58,10 +59,14 @@ gulp.task('build:index', function(){
     var copyDTs = gulp.src('client/libs/**/*.d.ts')
         .pipe(gulp.dest('dist/libs'));
 
+    var copyFonts = gulp.src('client/**/fonts/*')
+        .pipe(gulp.dest('dist/'));
+
     //Let's copy our index into dist
     var copyIndex = gulp.src('client/index.html')
         .pipe(gulp.dest('dist'));
-    return [copyJsNPMDependencies, copyCss, copyJs,copyDTs, copyIndex];
+
+    return [copyJsNPMDependencies, copyCss, copyJs, copyDTs, copyFonts, copyIndex];
 });
 
 gulp.task('build:app', function(){
