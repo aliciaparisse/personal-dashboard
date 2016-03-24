@@ -8,7 +8,7 @@
 // Last-comment date : 03/03/16
 
 
-import {Component,Input, ChangeDetectorRef} from 'angular2/core';
+import {Component,Input, ChangeDetectorRef, Output, EventEmitter} from 'angular2/core';
 import {Tools} from "./../global/tools";
 import {CoursesTreatment} from "./courses-treatment";
 
@@ -19,7 +19,7 @@ import {CoursesTreatment} from "./courses-treatment";
 	<div class="course {{aCourse.name}}">
 		<div class="course-title">
 			<span class="course-name">{{aCourse.title}}</span>
-			<button class="btn btn-default">
+			<button class="btn btn-default" (click)="deleteCourse()">
 				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 			</button>
 
@@ -40,6 +40,7 @@ import {CoursesTreatment} from "./courses-treatment";
 
 export class Course{
 	@Input() aCourse;
+	@Output() deletingCourse = new EventEmitter();
 	cdr;
 	colors;
 	weeks;
@@ -59,17 +60,9 @@ export class Course{
 		this.cdr.detectChanges();
 		Tools.changeExercColor(this.aCourse.name, this.colors);
 	}
-	
+
+	deleteCourse(){
+		this.deletingCourse.emit(this.aCourse);
+	}
 	
 }
-
-/*
-<div class="course-title">
-<span class="course-name">{{aCourse.title}}</span>
-
-</div>
-<button class="btn btn-default">
-<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	</button>
-*/
-

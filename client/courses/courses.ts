@@ -5,7 +5,10 @@
 //		The only directive is a course, repeated as many times as there are courses in the list  
 // Last-comment date : 03/03/16
 
-import {Component} from "angular2/core";
+
+/// <reference path="../libs/jquery/jquery.d.ts"/>
+
+import {Component, Input} from "angular2/core";
 import {Course} from './course';
 import {Tools} from "./../global/tools";
 import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
@@ -19,7 +22,8 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 	<div *ngIf = "!noCourses"> 
 		<div *ngFor="#aCourse of courses">
 			<course 
-			[aCourse]="aCourse"></course>
+			[aCourse]="aCourse"
+			(deletingCourse)= "addHiddenCourse($event)"></course>
 		</div>	
 	</div>
 	<div [hidden] = "!noCourses">
@@ -32,6 +36,7 @@ export class Courses{
 	noCourses;
 	colors;
 	courses;
+	@Input() user_id;
 
 	constructor(){
 		var self = this;
@@ -52,5 +57,16 @@ export class Courses{
 		});
 		
 				
+	}
+
+	addHiddenCourse(event){
+		var self = this;
+		(<any>$).ajax({
+			url: 'http://localhost:3000/mongo/addHiddenCourse',
+			method: "put",
+			data: {user_id : self.user_id,
+				hiddenCourse : event.id
+				}
+		});
 	}
 }

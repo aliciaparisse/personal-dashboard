@@ -24,7 +24,7 @@ import {Activities} from "./../activities/activities";
 	<navbar [hidden]= "!loggedIn" (loggingOut) ="unlogSuccess($event)" (changedTab)="changingTab($event)"></navbar>
 	<div *ngIf= "loggedIn" class="row">
 		<student-info [studentName]="studentName" class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"></student-info>
-		<courses *ngIf="tabNumber == 0" class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
+		<courses [user_id]="studentName" *ngIf="tabNumber == 0" class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
 		<activities *ngIf="tabNumber == 1" class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></activities>
 
 	</div>`
