@@ -19,9 +19,16 @@ import {CoursesTreatment} from "./courses-treatment";
 	<div class="course {{aCourse.name}}">
 		<div class="course-title">
 			<span class="course-name">{{aCourse.title}}</span>
-			<button class="btn btn-default" (click)="deleteCourse()">
+
+			<div class="btn-group">
+			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-			</button>
+			  </button>
+			  <ul class="dropdown-menu">
+				<li><a (click)="deleteCourse()" href="#">Hide this course</a></li>
+
+			  </ul>
+			</div>
 
 		</div>
 

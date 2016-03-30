@@ -11,9 +11,15 @@
 .diagram {
   	height: 15vw;
 }
-.row{
+.row, button.add-course{
   width : 100%;
 }
+
+/*
+button.add-course:hover{
+    background-color : #6797FB;
+}
+*/
 
 .error-message{
   color:red;
@@ -23,9 +29,7 @@ h1, .course-title {
     text-align: center;
 }
 
-button{
-    float:right;
-}
+
 
 .course-name{
     font-size: xx-large;

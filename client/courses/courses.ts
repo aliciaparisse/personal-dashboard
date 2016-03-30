@@ -23,19 +23,22 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 		<div *ngFor="#aCourse of courses">
 			<course 
 			[aCourse]="aCourse"
-			(deletingCourse)= "addHiddenCourse($event)"></course>
+			(deletingCourse)= "hideCourse($event)"></course>
 		</div>	
 	</div>
 	<div [hidden] = "!noCourses">
 		You currently have no courses you registered in.<br>
 		In order to see information displayed here, please register to at least one course.
-	</div>`
+	</div>
+	<button class="btn btn-default add-course" (click)="addACourse()">Add a course</button>
+	`
 })
 
 export class Courses{
 	noCourses;
 	colors;
 	courses;
+	hiddenCourses = [];
 	@Input() user_id;
 
 	constructor(){
@@ -43,6 +46,20 @@ export class Courses{
 		self.noCourses = true;
 		//This gets courses from the API and stores it in this.courses
 		StudentInfoTreatment.getAllStudentCourses(true,(coursesRev) => {
+			//Before assigning the colors to the course, we first check the courses that are hidden
+			(<any>$).ajax({
+				url: 'http://localhost:3000/mongo/hiddenCourses',
+				method: "get",
+				success : function(hiddenCourses){
+					for(var i = 0; i < hiddenCourses.length; i++){
+						self.addHiddenCourseById(self.courses, hiddenCourses[i].course_id);
+					}
+					console.log(self.hiddenCourses);
+
+				}
+			});
+
+
 			self.colors = Tools.getColors(coursesRev.length);
 			for (var i=0; i < coursesRev.length; i++) {
 				coursesRev[i].color = self.colors[i];
@@ -55,18 +72,41 @@ export class Courses{
 				self.noCourses = false;
 			}
 		});
-		
-				
+
 	}
 
-	addHiddenCourse(event){
+	hideCourse(event){
 		var self = this;
+		var body = {"user_id" : self.user_id,"course_id": event.id, "hidden":true};
+		console.log(JSON.stringify(body));
 		(<any>$).ajax({
 			url: 'http://localhost:3000/mongo/addHiddenCourse',
 			method: "put",
-			data: {user_id : self.user_id,
-				hiddenCourse : event.id
-				}
+			contentType: "application/json",
+			data: JSON.stringify(body)
 		});
+		self.addHiddenCourseById(self.courses, event.id);
+		console.log(self.courses);
+		if(this.courses.length == 0){
+			self.noCourses = true;
+		}
 	}
+
+	addCourse(){
+
+	}
+
+	addHiddenCourseById(array, id){
+		var i,
+			self=this;
+		for (i =0; i< array.length; i++){
+			if(array[i].id == id){
+				break;
+			}
+		}
+		self.hiddenCourses.push(array[i]);
+		array.splice(i,1);
+	}
+
+
 }

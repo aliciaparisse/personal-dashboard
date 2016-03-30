@@ -1,13 +1,14 @@
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 var port = process.env.PORT || 3000;
 var app = express();
-
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 
 
 app.use(express.static('dist'));
+app.use(bodyParser.json());
 
 var renderIndex = (req, res) => {
     res.sendFile('/index.html');
@@ -31,21 +32,22 @@ app.get('/mongo/hiddenCourses', function(req,res){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        getHiddenCourses(db, 2, (result) => {
+        getHiddenCourses(db, "aparisse", (result) => {
             db.close();
+            console.log(result);
             res.send(result);
         })
     });
 })
 
-var getHiddenCourses = function(db, _user_id, callback)
+var getHiddenCourses = function(db, user_id, callback)
 {
     var collection = db.collection("prefs");
     collection.find(
         //Selection
-        {user_id : {$eq : _user_id}},
+        {user_id : {$eq : user_id}},
         //Projection
-        {hiddenCourses:1, _id:0}
+        {course_id:1, _id:0}
     ).toArray(function(err,res){
         callback(res);
     });
@@ -88,13 +90,63 @@ app.put('/mongo/addHiddenCourse', function(req,res){
     // Connection URL
     var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
     // Use connect method to connect to the Server
-    console.log(req);
-    /*MongoClient.connect(url, function(err, db) {
+    console.log(req.body);
+    MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        insertDocuments(db, (result) =>{
+        upsertHiddenCourse(db, req.body, (result) =>{
             db.close();
+            console.log("database closed");
             res.send(result);
         })
-    });*/
+    });
 })
+
+var upsertHiddenCourse = function(db, doc, callback) {
+    // Get the documents collection
+    var collection = db.collection('prefs');
+    collection.update(
+        //Update criteria
+        {course_id:doc.course_id, user_id:doc.user_id},
+        //Update
+        doc,
+        //Upserting
+        {upsert:true},
+        //Function to execute after the update/upsert
+        function(err, result) {
+            console.log("Updated course to true to to collection");
+            callback(result);
+        }
+    );
+}
+
+app.put('/mongo/removeHiddenCourse', function(req, res){
+    // Connection URL
+    var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
+    // Use connect method to connect to the Server
+    console.log(req.body);
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        console.log("Connected correctly to server");
+        removeHiddenCourse(db, req.body, (result) =>{
+            db.close();
+            console.log("database closed");
+            res.send(result);
+        })
+    });
+})
+
+var removeHiddenCourse = function(db, doc, callback){
+    var collection = db.collection('prefs');
+    collection.update(
+        //Update criteria
+        {user_id:doc.user_id, course_id:doc.course_id},
+        //Update
+        doc,
+        {upsert:true},
+        function(err, result){
+            console.log("Updated course to false to collection");
+            callback(result);
+        }
+    );
+}

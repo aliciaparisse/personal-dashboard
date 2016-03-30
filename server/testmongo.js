@@ -1,0 +1,43 @@
+/**
+ * Created by parisse on 29.3.2016.
+ */
+var express = require('express');
+var MongoClient = require('mongodb').MongoClient
+    , assert = require('assert');
+
+var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
+MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
+    test(db, {"user_id" : "alicia","course_id": 22, "hidden":true}, (result) => {
+        //console.log(result);
+    })
+    test2(db, "aparisse", (result)=>{
+        console.log(result);
+    })
+});
+
+var test = function(db, body, callback){
+    var collection = db.collection("prefs");
+    collection.update(
+        {user_id:"alicia"},
+        {"user_id" : "alicia","course_id": 22, "hidden":true},
+        {upsert:true},
+        function(err, result){
+            callback(result);
+        }
+    )
+}
+
+var test2 = function(db, user_id, callback){
+    var collection = db.collection("prefs");
+    collection.find(
+        //Selection
+        {user_id : user_id},
+        //Projection
+        {course_id:1, _id:0}
+    ).toArray(function(err,res){
+        callback(res);
+    })
+}
+
