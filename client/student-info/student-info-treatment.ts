@@ -21,39 +21,27 @@ export class StudentInfoTreatment{
         //This is only called if the oauth_token is defined
         //The goal of this call is to get all the user's courses' information.
 
-        if (Cookies.get("coursesData") != undefined) {
-            if (callb) {
-                callbackFunc(JSON.parse(Cookies.get("coursesData")));
-            }
-            else {
-                self.createChart(JSON.parse(Cookies.get("coursesData")));
-            }
-        }
-        else {
-            (<any>$).ajax({
-                // TODO : Delete 895 part when it'll be linked to the real connected person
-                url: "https://hy-canary.testmycode.io/api/beta/participant/895/courses",
-                type: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + JSON.parse(Cookies.get("oauth_token")).access_token
-                },
-                //Now we display the info based on the received courses
-                success: function (courses) {
+        (<any>$).ajax({
+            url: "https://tmc.mooc.fi/api/beta/participant/courses",
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + JSON.parse(Cookies.get("oauth_token")).access_token
+            },
+            //Now we display the info based on the received courses
+            success: function (courses) {
 
-                    console.log(courses)
-                    if (callb) {
-                        callbackFunc(courses);
-                    }
-                    else {
-                        Cookies.set("coursesData", JSON.stringify(courses));
-                        self.createChart(courses);
-                    }
-                },
-                error: function (response) {
-                    //TODO : Do something here
+                if (callb) {
+                    callbackFunc(courses);
                 }
-            });
-        }
+                else {
+                    self.createChart(courses);
+                }
+            },
+            error: function (response) {
+                //TODO : Do something here
+            }
+        });
+
     }
 
     //Function createChart

@@ -24,15 +24,15 @@ var server = app.listen(port, function() {
 
 // Mongo DB Part -- Connecting to DB and handling the requests
 
-//Route to get the hiddenCourses of a user
-app.get('/mongo/hiddenCourses', function(req,res){
+//Route to get the archivedCourses of a user
+app.get('/mongo/archivedCourses', function(req,res){
     // Connection URL
     var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
     // Use connect method to connect to the Server
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        getHiddenCourses(db, "aparisse", (result) => {
+        getArchivedCourses(db, "aparisse", (result) => {
             db.close();
             console.log(result);
             res.send(result);
@@ -40,7 +40,7 @@ app.get('/mongo/hiddenCourses', function(req,res){
     });
 })
 
-var getHiddenCourses = function(db, user_id, callback)
+var getArchivedCourses = function(db, user_id, callback)
 {
     var collection = db.collection("prefs");
     collection.find(
@@ -54,7 +54,7 @@ var getHiddenCourses = function(db, user_id, callback)
 }
 
 
-app.put('/mongo/addHiddenCourses', function(req,res){
+/*app.put('/mongo/addArchivedCourses', function(req,res){
     // Connection URL
     var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
     // Use connect method to connect to the Server
@@ -74,9 +74,9 @@ var insertDocuments = function(db, callback) {
     var collection = db.collection('prefs');
     // Insert some documents
     collection.insertMany([
-        {user_id : 1, hiddenCourses : [25,45]},
-        {user_id : 2, hiddenCourses : [12,24]},
-        {user_id : 3, hiddenCourses : [7,85]}
+        {user_id : 1, archivedCourses : [25,45]},
+        {user_id : 2, archivedCourses : [12,24]},
+        {user_id : 3, archivedCourses : [7,85]}
     ], function(err, result) {
         assert.equal(err, null);
         assert.equal(3, result.result.n);
@@ -84,9 +84,9 @@ var insertDocuments = function(db, callback) {
         console.log("Inserted 3 documents into the document collection");
         callback(result);
     });
-}
+}*/
 
-app.put('/mongo/addHiddenCourse', function(req,res){
+app.put('/mongo/addArchivedCourse', function(req,res){
     // Connection URL
     var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
     // Use connect method to connect to the Server
@@ -94,7 +94,7 @@ app.put('/mongo/addHiddenCourse', function(req,res){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        upsertHiddenCourse(db, req.body, (result) =>{
+        upsertArchivedCourse(db, req.body, (result) =>{
             db.close();
             console.log("database closed");
             res.send(result);
@@ -102,7 +102,7 @@ app.put('/mongo/addHiddenCourse', function(req,res){
     });
 })
 
-var upsertHiddenCourse = function(db, doc, callback) {
+var upsertArchivedCourse = function(db, doc, callback) {
     // Get the documents collection
     var collection = db.collection('prefs');
     collection.update(
@@ -120,7 +120,7 @@ var upsertHiddenCourse = function(db, doc, callback) {
     );
 }
 
-app.put('/mongo/removeHiddenCourse', function(req, res){
+app.put('/mongo/removeArchivedCourse', function(req, res){
     // Connection URL
     var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
     // Use connect method to connect to the Server
@@ -128,7 +128,7 @@ app.put('/mongo/removeHiddenCourse', function(req, res){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to server");
-        removeHiddenCourse(db, req.body, (result) =>{
+        removeArchivedCourse(db, req.body, (result) =>{
             db.close();
             console.log("database closed");
             res.send(result);
@@ -136,14 +136,11 @@ app.put('/mongo/removeHiddenCourse', function(req, res){
     });
 })
 
-var removeHiddenCourse = function(db, doc, callback){
+var removeArchivedCourse = function(db, doc, callback){
     var collection = db.collection('prefs');
-    collection.update(
+    collection.remove(
         //Update criteria
         {user_id:doc.user_id, course_id:doc.course_id},
-        //Update
-        doc,
-        {upsert:true},
         function(err, result){
             console.log("Updated course to false to collection");
             callback(result);

@@ -25,7 +25,7 @@ import {CoursesTreatment} from "./courses-treatment";
 				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 			  </button>
 			  <ul class="dropdown-menu">
-				<li><a (click)="deleteCourse()" href="#">Hide this course</a></li>
+				<li><a (click)="deleteCourse()" href="#">Archive this course</a></li>
 
 			  </ul>
 			</div>

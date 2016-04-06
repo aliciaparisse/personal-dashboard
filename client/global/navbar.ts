@@ -29,8 +29,9 @@ import {runInThisContext} from "vm";
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li>
-				<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>
+				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li><!--
+				<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>-->
+				<li id="options-tab" class="principal-navbar"><a href="#" (click)="changingTab('options-tab')">Options</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href=# (click)="logout()">Logout</a></li>
@@ -49,7 +50,6 @@ export class NavBar{
 
 	logout(){
 		Cookies.remove("oauth_token");
-		Cookies.remove("coursesData");
 		this.loggingOut.emit(true);
 	}
 

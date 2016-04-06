@@ -12,7 +12,7 @@ MongoClient.connect(url, function(err, db) {
     test(db, {"user_id" : "alicia","course_id": 22, "hidden":true}, (result) => {
         //console.log(result);
     })
-    test2(db, "aparisse", (result)=>{
+    test3(db, "aparisse", 22, (result)=>{
         console.log(result);
     })
 });
@@ -29,15 +29,26 @@ var test = function(db, body, callback){
     )
 }
 
-var test2 = function(db, user_id, callback){
+var test2 = function(db, user_id, course_id, callback){
     var collection = db.collection("prefs");
     collection.find(
         //Selection
-        {user_id : user_id},
-        //Projection
-        {course_id:1, _id:0}
-    ).toArray(function(err,res){
-        callback(res);
-    })
+        {$and : [{user_id : {$eq : user_id}},
+            {course_id : {$eq : course_id}}]}/*,
+         //Projection
+         {course_id:1, _id:0}
+         ).toArray(function(err,res){
+         callback(res);
+         }*/)
+}
+
+var test3 = function(db, user_id, course_id, callback){
+    var collection = db.collection("prefs");
+    collection.remove(
+        {user_id:user_id, course_id:course_id},
+        function(err, result){
+            console.log("Updated course to false to collection");
+            callback(result);
+        })
 }
 

@@ -23,14 +23,14 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 		<div *ngFor="#aCourse of courses">
 			<course 
 			[aCourse]="aCourse"
-			(deletingCourse)= "hideCourse($event)"></course>
+			(deletingCourse)= "archiveCourse($event)"></course>
 		</div>	
 	</div>
 	<div [hidden] = "!noCourses">
-		You currently have no courses you registered in.<br>
-		In order to see information displayed here, please register to at least one course.
+		You currently have no courses you registered in, or that are not archived.<br/>
+		In order to see information displayed here, please register to at least one course, or unarchive at least one course.<br/>
+		To unarchive a course, go to the Options Tab and select the course to unarchive.
 	</div>
-	<button class="btn btn-default add-course" (click)="addACourse()">Add a course</button>
 	`
 })
 
@@ -38,7 +38,7 @@ export class Courses{
 	noCourses;
 	colors;
 	courses;
-	hiddenCourses = [];
+	archivedCourses = [];
 	@Input() user_id;
 
 	constructor(){
@@ -48,55 +48,52 @@ export class Courses{
 		StudentInfoTreatment.getAllStudentCourses(true,(coursesRev) => {
 			//Before assigning the colors to the course, we first check the courses that are hidden
 			(<any>$).ajax({
-				url: 'http://localhost:3000/mongo/hiddenCourses',
+				url: 'http://localhost:3000/mongo/archivedCourses',
 				method: "get",
-				success : function(hiddenCourses){
-					for(var i = 0; i < hiddenCourses.length; i++){
-						self.addHiddenCourseById(self.courses, hiddenCourses[i].course_id);
+				success : function(archivedCourses){
+
+					self.colors = Tools.getColors(coursesRev.length);
+					for (var i=0; i < coursesRev.length; i++) {
+						coursesRev[i].color = self.colors[i];
 					}
-					console.log(self.hiddenCourses);
+
+					self.courses = coursesRev;
+					for(var i = 0; i < archivedCourses.length; i++){
+						self.addArchivedCourseById(self.courses, archivedCourses[i].course_id);
+					}
+
+					if (self.courses == undefined || self.courses.length == 0){
+						self.noCourses = true;
+					}
+					else{
+						self.noCourses = false;
+					}
 
 				}
 			});
 
 
-			self.colors = Tools.getColors(coursesRev.length);
-			for (var i=0; i < coursesRev.length; i++) {
-				coursesRev[i].color = self.colors[i];
-			}
-			self.courses = coursesRev;
-			if (self.courses == undefined || self.courses.length == 0){
-				self.noCourses = true;
-			}
-			else{
-				self.noCourses = false;
-			}
+
 		});
 
 	}
 
-	hideCourse(event){
+	archiveCourse(event){
 		var self = this;
-		var body = {"user_id" : self.user_id,"course_id": event.id, "hidden":true};
-		console.log(JSON.stringify(body));
+		var body = {"user_id" : self.user_id,"course_id": event.id};
 		(<any>$).ajax({
-			url: 'http://localhost:3000/mongo/addHiddenCourse',
+			url: 'http://localhost:3000/mongo/addArchivedCourse',
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify(body)
 		});
-		self.addHiddenCourseById(self.courses, event.id);
-		console.log(self.courses);
+		self.addArchivedCourseById(self.courses, event.id);
 		if(this.courses.length == 0){
 			self.noCourses = true;
 		}
 	}
 
-	addCourse(){
-
-	}
-
-	addHiddenCourseById(array, id){
+	addArchivedCourseById(array, id){
 		var i,
 			self=this;
 		for (i =0; i< array.length; i++){
@@ -104,7 +101,7 @@ export class Courses{
 				break;
 			}
 		}
-		self.hiddenCourses.push(array[i]);
+		self.archivedCourses.push(array[i]);
 		array.splice(i,1);
 	}
 
