@@ -8,6 +8,11 @@
 	display:flex;
 }
 
+.weeks{
+    display:flex;
+    vertical-align:middle;
+}
+
 .diagram {
   	height: 15vw;
 }

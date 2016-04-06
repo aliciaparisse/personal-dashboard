@@ -86,6 +86,10 @@ export class Options{
             self.archivedCourses.splice(delIndexes[i],1);
         }
 
+        if(self.archivedCourses.length == 0){
+            self.noArchivedCourses = true;
+        }
+
         for (var i =0; i < unarchivedCourses.length ; i++){
 
             (<any>$).ajax({

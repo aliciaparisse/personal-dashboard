@@ -37,7 +37,7 @@ import {CoursesTreatment} from "./courses-treatment";
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 diagram' id="Completion{{aCourse.name}}">
 			</div>			
 			
-			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent" *ngFor="#week of weeks">
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 parent weeks" *ngFor="#week of weeks">
 				<span class="week-name">Week {{week.weekNb}}</span>
 				<div title="{{exo.newName}}" class="exerc {{exo.state}}" *ngFor="#exo of week.exercises"></div> 
 			</div>
