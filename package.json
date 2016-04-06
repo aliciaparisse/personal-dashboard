@@ -24,11 +24,8 @@
     "gulp-concat": "2.6.0",
     "gulp-sourcemaps": "1.6.0",
     "gulp-typescript": "2.10.0",
-    "body-parser":"1.15.0"
-  },
-  "devDependencies": {
+    "body-parser":"1.15.0",
     "del": "2.2.0",
-
     "run-sequence": "1.1.5"
   }
 }
