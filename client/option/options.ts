@@ -5,6 +5,7 @@
 /// <reference path="../libs/jquery/jquery.d.ts"/>
 /// <reference path="../libs/js-cookie.d.ts"/>
 
+import {Tools} from "./../global/tools";
 import {Component} from 'angular2/core';
 import {StudentInfoTreatment} from '../student-info/student-info-treatment';
 
@@ -37,8 +38,9 @@ export class Options{
     constructor(){
         var self = this;
         self.loading = true;
+        var url_base = window.location.origin;
         (<any>$).ajax({
-            url: 'http://localhost:3000/mongo/archivedCourses',
+            url: url_base + '/mongo/archivedCourses',
             method: "get",
             success : function(recArchivedCourses){
                 StudentInfoTreatment.getAllStudentCourses(true,(courses) => {
@@ -73,7 +75,8 @@ export class Options{
         var self = this,
             delIndexes = [],
             userId = JSON.parse(Cookies.get("oauth_token")).username,
-            unarchivedCourses = [];
+            unarchivedCourses = [],
+            url_base = window.location.origin;;
         for(var i =0; i<self.archivedCourses.length; i++){
             var courseId = self.archivedCourses[i].id;
             if ((<any>$)('#arcCourse'+self.archivedCourses[i].id).is(':checked')){
@@ -93,7 +96,7 @@ export class Options{
         for (var i =0; i < unarchivedCourses.length ; i++){
 
             (<any>$).ajax({
-                url: 'http://localhost:3000/mongo/removeArchivedCourse',
+                url: url_base + '/mongo/removeArchivedCourse',
                 method: "put",
                 contentType: "application/json",
                 data: JSON.stringify(unarchivedCourses[i])

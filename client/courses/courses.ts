@@ -79,10 +79,11 @@ export class Courses{
 	}
 
 	archiveCourse(event){
-		var self = this;
-		var body = {"user_id" : self.user_id,"course_id": event.id};
+		var self = this,
+			body = {"user_id" : self.user_id,"course_id": event.id},
+			url_base = window.location.origin;
 		(<any>$).ajax({
-			url: 'http://localhost:3000/mongo/addArchivedCourse',
+			url: url_base + '/mongo/addArchivedCourse',
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify(body)
