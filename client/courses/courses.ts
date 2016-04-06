@@ -44,11 +44,12 @@ export class Courses{
 	constructor(){
 		var self = this;
 		self.noCourses = true;
+		var url_base = window.location.origin;
 		//This gets courses from the API and stores it in this.courses
 		StudentInfoTreatment.getAllStudentCourses(true,(coursesRev) => {
 			//Before assigning the colors to the course, we first check the courses that are hidden
 			(<any>$).ajax({
-				url: 'http://localhost:3000/mongo/archivedCourses',
+				url: url_base + '/mongo/archivedCourses',
 				method: "get",
 				success : function(archivedCourses){
 
