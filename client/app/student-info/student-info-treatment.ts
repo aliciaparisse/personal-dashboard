@@ -3,11 +3,11 @@
  */
 
 
-/// <reference path="../libs/js-cookie.d.ts"/>
-/// <reference path="../libs/jquery/jquery.d.ts"/>
-/// <reference path="../libs/highcharts/highcharts.d.ts"/>
+/// <reference path="../../libs/js-cookie.d.ts"/>
+/// <reference path="../../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/highcharts/highcharts.d.ts"/>
 
-import {Tools} from "./../global/tools";
+import {Tools} from "../global/tools";
 
 export class StudentInfoTreatment{
     //Function getAllStudentCourses
@@ -22,7 +22,7 @@ export class StudentInfoTreatment{
         //The goal of this call is to get all the user's courses' information.
 
         (<any>$).ajax({
-            url: "https://tmc.mooc.fi/api/beta/participant/courses",
+            url: "https://tmc.mooc.fi/api/beta/participant/895/courses",
             type: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + JSON.parse(Cookies.get("oauth_token")).access_token

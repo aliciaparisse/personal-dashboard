@@ -6,11 +6,10 @@
 //    of the items in the navbar.
 // Last-comment date : 02/03/16
 
-/// <reference path="../libs/jquery/jquery.d.ts"/>
-/// <reference path="../libs/js-cookie.d.ts"/>
+/// <reference path="../../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/js-cookie.d.ts"/>
 
 import {Component, Output, EventEmitter} from "angular2/core";
-import {runInThisContext} from "vm";
 
 @Component({
 	selector:"navbar",
@@ -29,9 +28,9 @@ import {runInThisContext} from "vm";
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li><!--
-				<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>-->
-				<li id="options-tab" class="principal-navbar"><a href="#" (click)="changingTab('options-tab')">Options</a></li>
+				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li>
+				<!--<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>
+				--><li id="options-tab" class="principal-navbar"><a href="#" (click)="changingTab('options-tab')">Options</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href=# (click)="logout()">Logout</a></li>

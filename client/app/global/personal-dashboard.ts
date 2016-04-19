@@ -7,15 +7,15 @@
 //		containing all the user's courses.
 // Last-comment date : 02/03/16
 
-/// <reference path="../libs/js-cookie.d.ts"/>
+/// <reference path="../../libs/js-cookie.d.ts"/>
 
 import {Component} from "angular2/core";
-import {Courses} from "./../courses/courses";
+import {Courses} from "../courses/courses";
 import {StudentInfo} from "./../student-info/student-info";
 import {NavBar} from "./navbar";
 import {Login} from "./login";
 import {Options} from "../option/options";
-import {Activities} from "./../activities/activities";
+import {Activities} from "../activities/activities";
 
 @Component({
 	selector:"personal-dashboard",
@@ -30,7 +30,8 @@ import {Activities} from "./../activities/activities";
 		<courses [user_id]="studentName" *ngIf="tabNumber == 0"
 		 	class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
 		<!--<activities *ngIf="tabNumber == 1"
-			class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></activities>-->
+			class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></activities>
+		-->
 		<options *ngIf="tabNumber == 2"
 			class="col-xs-12 col-sm-6 col-md-4 col-lg-4"></options>
 	</div>`

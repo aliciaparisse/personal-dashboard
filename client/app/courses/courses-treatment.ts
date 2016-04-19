@@ -3,8 +3,8 @@
  */
 
 
-/// <reference path="../libs/jquery/jquery.d.ts"/>
-/// <reference path="../libs/highcharts/highcharts.d.ts"/>
+/// <reference path="../../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/highcharts/highcharts.d.ts"/>
 
 export class CoursesTreatment {
 
@@ -135,7 +135,7 @@ export class CoursesTreatment {
         for (var i = 0 ; i<shiftValue; i++){
             weeks.shift();
         }
-
+        console.log(weeks);
         return weeks;
 
     }

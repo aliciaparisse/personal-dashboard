@@ -6,7 +6,7 @@
 // Last-comment date : 03/03/16
 
 
-/// <reference path="../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/jquery/jquery.d.ts"/>
 
 import {Component, Input} from "angular2/core";
 import {Course} from './course';
@@ -24,7 +24,7 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 			<course 
 			[aCourse]="aCourse"
 			(deletingCourse)= "archiveCourse($event)"></course>
-		</div>	
+		</div>
 	</div>
 	<div [hidden] = "!noCourses">
 		You currently have no courses you registered in, or that are not archived.<br/>
@@ -51,6 +51,7 @@ export class Courses{
 			(<any>$).ajax({
 				url: url_base + '/mongo/archivedCourses',
 				method: "get",
+				data: {userId : self.user_id},
 				success : function(archivedCourses){
 
 					self.colors = Tools.getColors(coursesRev.length);

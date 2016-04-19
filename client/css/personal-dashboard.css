@@ -38,19 +38,19 @@ h1, .course-title {
     font-weight: bold;
 }
 
-courses{  
+courses, activities{
   background-color:  #D0EDF1;
   border-radius: 8px 8px 8px 8px;
 }
 
 .course{
 	
-  margin-left: 2px;
-	margin-right: 2px;
-  margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
 	margin-bottom: 2px;
-  border-style: solid;
-  background-color: #FFF;
+    border-style: solid;
+    background-color: #FFF;
 	border-width: 0px;
 	border-radius: 8px 8px 8px 8px;
 	box-shadow: none;

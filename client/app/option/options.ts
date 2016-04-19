@@ -2,10 +2,10 @@
  * Created by parisse on 31.3.2016.
  */
 
-/// <reference path="../libs/jquery/jquery.d.ts"/>
-/// <reference path="../libs/js-cookie.d.ts"/>
+/// <reference path="../../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/js-cookie.d.ts"/>
 
-import {Tools} from "./../global/tools";
+import {Tools} from "../../app/global/tools";
 import {Component} from 'angular2/core';
 import {StudentInfoTreatment} from '../student-info/student-info-treatment';
 
@@ -36,12 +36,14 @@ export class Options{
     loading:boolean;
 
     constructor(){
-        var self = this;
+        var self = this,
+            userId = JSON.parse(Cookies.get("oauth_token")).username;
         self.loading = true;
         var url_base = window.location.origin;
         (<any>$).ajax({
             url: url_base + '/mongo/archivedCourses',
             method: "get",
+            data: {userId : userId},
             success : function(recArchivedCourses){
                 StudentInfoTreatment.getAllStudentCourses(true,(courses) => {
 
