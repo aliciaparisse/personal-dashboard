@@ -7,6 +7,7 @@
 
 
 /// <reference path="../../libs/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/js-cookie.d.ts"/>
 
 import {Component, Input} from "angular2/core";
 import {Course} from './course';
@@ -39,12 +40,14 @@ export class Courses{
 	colors;
 	courses;
 	archivedCourses = [];
-	@Input() user_id;
+	user_id;
 
 	constructor(){
 		var self = this;
 		self.noCourses = true;
+		self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
 		var url_base = window.location.origin;
+		console.log(self.user_id);
 		//This gets courses from the API and stores it in this.courses
 		StudentInfoTreatment.getAllStudentCourses(true,(coursesRev) => {
 			//Before assigning the colors to the course, we first check the courses that are hidden

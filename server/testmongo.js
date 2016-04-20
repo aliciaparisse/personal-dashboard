@@ -9,10 +9,7 @@ var url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboa
 MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     console.log("Connected correctly to server");
-    test(db, {"user_id" : "alicia","course_id": 22, "hidden":true}, (result) => {
-        //console.log(result);
-    })
-    test3(db, "aparisse", 22, (result)=>{
+    test4(db, "bertron", (result)=>{
         console.log(result);
     })
 });
@@ -50,5 +47,16 @@ var test3 = function(db, user_id, course_id, callback){
             console.log("Updated course to false to collection");
             callback(result);
         })
+}
+var test4 = function (db, user_id, callback){
+    var collection = db.collection("activity");
+    collection.find(
+        //Selection
+        {userId : {$eq : user_id}},
+        //Projection
+        {date:1, nbEx:1, _id:0})
+        .toArray(function(err,res){
+            callback(res);
+        });
 }
 

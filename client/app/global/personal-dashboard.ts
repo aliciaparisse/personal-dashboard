@@ -27,11 +27,10 @@ import {Activities} from "../activities/activities";
 		<student-info [studentName]="studentName"
 			class=" col-xs-12 col-sm-5 col-md-3 col-lg-4"
 			*ngIf="studInfo"></student-info>
-		<courses [user_id]="studentName" *ngIf="tabNumber == 0"
+		<courses *ngIf="tabNumber == 0"
 		 	class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></courses>
-		<!--<activities *ngIf="tabNumber == 1"
+		<activities *ngIf="tabNumber == 1"
 			class="col-xs-12 col-sm-7 col-md-9 col-lg-8"></activities>
-		-->
 		<options *ngIf="tabNumber == 2"
 			class="col-xs-12 col-sm-6 col-md-4 col-lg-4"></options>
 	</div>`

@@ -29,7 +29,6 @@ var mergeResults = function(results){
         }
 
     }
-
     return result;
 }
 
@@ -131,31 +130,6 @@ module.exports = {
                         for (var user_id in result) {
                             mongoResults.push(mongoFormat(user_id, result[user_id]));
                         }
-                        /*mongoResults.map((mongoResult)=> {
-                            return new Promise((resolve, reject) => {
-
-                                /!*request
-                                    .put('http://localhost:3000/mongo/activity/upsertMultiple')
-                                    .set('Content-Type', 'application/json')
-                                    .send(JSON.stringify(mongoResult))
-                                    .end(function (err, res) {
-                                        console.log("here")
-                                        if(err){
-                                            console.log(err);
-                                            reject(err);
-                                        }
-                                        else{
-                                            console.log(res);
-                                            resolve(res);
-                                        }
-                                    })*!/
-                                setTimeout(() => {resolve(mongoResult[0].userId)},2000)
-
-                            })
-                            .then((userId) => {
-                                console.log(userId);
-                            })
-                        })*/
                         mongoResults.reduce((previousPromise, mongoResult) =>{
                             return previousPromise
                                 .then(()=> {
@@ -165,13 +139,10 @@ module.exports = {
                                             .set('Content-Type', 'application/json')
                                             .send(JSON.stringify(mongoResult))
                                             .end(function (err, res) {
-                                                console.log("here")
                                                 if (err) {
-                                                    console.log(err);
                                                     reject(err);
                                                 }
                                                 else {
-                                                    console.log(res);
                                                     resolve(res);
                                                 }
                                             });

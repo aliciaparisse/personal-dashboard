@@ -47,7 +47,7 @@ var getArchivedCourses = function(db, user_id, callback) {
         //Selection
         {user_id : {$eq : user_id}},
         //Projection
-        {course_id:1, _id:0}
+        {course_id:14, _id:0}
     ).toArray(function(err,res){
         callback(res);
     });
@@ -73,6 +73,7 @@ var getUserActivity = function (db, user_id, callback){
         {userId : {$eq : user_id}},
         //Projection
         {date:1, nbEx:1, _id:0})
+        .sort({date : -1})
     .toArray(function(err,res){
         callback(res);
     });
@@ -139,13 +140,13 @@ var removeArchivedCourse = function(db, doc, callback){
 
 app.put('/mongo/activity/upsertMultiple', function (req, res){
     // Use connect method to connect to the Server
-    console.log(req.body);
+    //console.log(req.body);
     MongoClient.connect(mongodb_url, function(err, db) {
         assert.equal(null, err);
-        console.log("Connected correctly to server");
+        //console.log("Connected correctly to server");
         upsertActivities(db, req.body, (result) =>{
             db.close();
-            console.log("database closed");
+            //console.log("database closed");
             res.send(result);
         })
     });
@@ -154,11 +155,13 @@ app.put('/mongo/activity/upsertMultiple', function (req, res){
 var upsertActivities = function (db, docs, callback){
     var collection = db.collection("activity");
     var error, result;
+    //console.log(JSON.stringify(docs));
+    //console.log("user_id " + docs[0].userId);
     for (var i = 0 ; i < docs.length ; i++){
         var doc = docs[i];
         collection.update(
             //Update criteria
-            {user_id:doc.user_id, date:doc.date},
+            {user_id:doc.userId, date:doc.date},
             //Update
             doc,
             //Upserting

@@ -29,8 +29,8 @@ import {Component, Output, EventEmitter} from "angular2/core";
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li id="courses-tab" class="principal-navbar active"><a href="#" (click)="changingTab('courses-tab')">Courses</a></li>
-				<!--<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>
-				--><li id="options-tab" class="principal-navbar"><a href="#" (click)="changingTab('options-tab')">Options</a></li>
+				<li id="activity-tab" class="principal-navbar"><a href="#" (click)="changingTab('activity-tab')">Activity</a></li>
+				<li id="options-tab" class="principal-navbar"><a href="#" (click)="changingTab('options-tab')">Options</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href=# (click)="logout()">Logout</a></li>
