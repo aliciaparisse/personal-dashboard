@@ -22,7 +22,7 @@ import {Tools} from "./tools";
 			<input #userN type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
 			<label for="inputPassword" class="sr-only">Password</label>
 			<input #passW type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-			<span [hidden]="!loading">Loading...</span>
+			<span [hidden]="!loading" class="loading-message">Loading...</span>
 			<span [hidden] = "!logError" class="error-message">{{errorMessage}}</span>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 	  	</form>

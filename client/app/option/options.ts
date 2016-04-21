@@ -24,7 +24,7 @@ import {StudentInfoTreatment} from '../student-info/student-info-treatment';
     <div *ngIf="noArchivedCourses && !loading">
         You currently have no archived courses.
     </div>
-    <div *ngIf="loading">
+    <div *ngIf="loading" class="loading-message">
         Currently loading the courses information...
     </div>
     `

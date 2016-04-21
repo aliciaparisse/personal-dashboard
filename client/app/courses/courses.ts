@@ -27,6 +27,9 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 			(deletingCourse)= "archiveCourse($event)"></course>
 		</div>
 	</div>
+	<div [hidden]="!loading" class="loading-message">
+		Please wait while the courses are being loaded...
+	</div>
 	<div [hidden] = "!noCourses">
 		You currently have no courses you registered in, or that are not archived.<br/>
 		In order to see information displayed here, please register to at least one course, or unarchive at least one course.<br/>
@@ -37,6 +40,7 @@ import {StudentInfoTreatment} from "./../student-info/student-info-treatment";
 
 export class Courses{
 	noCourses;
+	loading;
 	colors;
 	courses;
 	archivedCourses = [];
@@ -44,7 +48,8 @@ export class Courses{
 
 	constructor(){
 		var self = this;
-		self.noCourses = true;
+		self.loading = true;
+		self.noCourses = false;
 		self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
 		var url_base = window.location.origin;
 		console.log(self.user_id);
@@ -68,9 +73,11 @@ export class Courses{
 					}
 
 					if (self.courses == undefined || self.courses.length == 0){
+						self.loading=false;
 						self.noCourses = true;
 					}
 					else{
+						self.loading=false;
 						self.noCourses = false;
 					}
 

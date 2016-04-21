@@ -10,7 +10,11 @@ import {ActivityTreatment} from "./activity-treatment";
 
 @Component({
     selector:'exercises-activity',
-    template: `<div class="diagram" id="weekExerciseActivity"></div>`
+    template: `
+    <div>
+        <div class="activity" id="weekExerciseActivity"></div>
+        <div class="activity" id="zoomExerciseActivity"></div>
+    </div>`
 })
 
 export class ExercisesActivity{
