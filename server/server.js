@@ -5,7 +5,7 @@ var port = process.env.PORT || 3000;
 var app = express();
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
-var test = require('./pointsActivityTreatment')
+var activityTreatment = require('./pointsActivityTreatment')
 
 app.use(express.static('dist'));
 app.use(bodyParser.json());
@@ -181,4 +181,4 @@ var upsertActivities = function (db, docs, callback){
 }
 
 
-//test.mainfunc();
+activityTreatment.mainfunc();

@@ -32,36 +32,7 @@ var mergeResults = function(results){
     return result;
 }
 
-var format = function(weekPoints){
 
-    var points = weekPoints.users_to_points,
-        exoPerDay = {};
-
-    for (var user_id in points){
-
-        for (var j = 0 ; j < points[user_id].length ; j++){
-            var user_point = points[user_id][j];
-            var submitTime = user_point.time.substring(0,10);
-
-            if(exoPerDay[user_id] != undefined){
-                if(exoPerDay[user_id][submitTime] != undefined){
-                    exoPerDay[user_id][submitTime] += 1;
-                }
-                else{
-                    exoPerDay[user_id][submitTime] = 1;
-                }
-            }
-            else{
-                exoPerDay[user_id] = {};
-                exoPerDay[user_id][submitTime] = 1;
-            }
-        }
-    }
-
-    return exoPerDay;
-
-
-}
 
 var mongoFormat = function (user_id, user_result){
     var mongoResult = [];
@@ -107,6 +78,8 @@ module.exports = {
                 tmcCall(courseListUrl,oauthToken, (error) =>{
                     console.log(error);
                 }, (courseList) => {
+                    console.log("courseList");
+                    console.log(courseList);
                     Promise.all(courseList.map(courseId => {
                         return new Promise((resolve, reject) => {
                             tmcCall(`https://tmc.mooc.fi/org/hy/courses/${courseId}/points.json?api_version=7`,oauthToken, reject, (course) => {
@@ -154,5 +127,36 @@ module.exports = {
                     })
                 });
             });
+    },
+
+    format : function(weekPoints){
+
+        var points = weekPoints.users_to_points,
+            exoPerDay = {};
+
+        for (var user_id in points){
+
+            for (var j = 0 ; j < points[user_id].length ; j++){
+                var user_point = points[user_id][j];
+                var submitTime = user_point.time.substring(0,10);
+
+                if(exoPerDay[user_id] != undefined){
+                    if(exoPerDay[user_id][submitTime] != undefined){
+                        exoPerDay[user_id][submitTime] += 1;
+                    }
+                    else{
+                        exoPerDay[user_id][submitTime] = 1;
+                    }
+                }
+                else{
+                    exoPerDay[user_id] = {};
+                    exoPerDay[user_id][submitTime] = 1;
+                }
+            }
+        }
+
+        return exoPerDay;
+
+
     }
 };

@@ -6,7 +6,8 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
-    "start": "concurrent \"npm run tsc:w \" \"npm run lite -- --port 8080\" "
+    "start": "concurrent \"npm run tsc:w \" \"npm run lite -- --port 8080\" ",
+    "test" : "mocha --reporter spec server/tests"
   },
   "license": "ISC",
   "dependencies": {
@@ -29,5 +30,9 @@
     "del": "2.2.0",
     "run-sequence": "1.1.5",
     "superagent" : "1.8.3"
+  },
+  "devDependencies" : {
+    "mocha" : "2.4.5",
+    "chai" : "3.5.0"
   }
 }
