@@ -4,51 +4,6 @@
 var request = require("superagent");
 
 
-var mergeResults = function(results){
-    var result = {};
-    for (var i = 0 ; i < results.length ; i++){
-        for (var j = 0 ; j < results[i].length ; j++){
-            var users_points = results[i][j];
-            for(var user_id in users_points){
-                var dateEntry = users_points[user_id];
-                for (var date in dateEntry){
-                    if(result[user_id] != undefined){
-                        if (result[user_id][date] != undefined){
-                            result[user_id][date] += dateEntry[date];
-                        }
-                        else{
-                            result[user_id][date] = dateEntry[date];
-                        }
-                    }
-                    else{
-                        result[user_id]={};
-                        result[user_id][date] = dateEntry[date];
-                    }
-                }
-            }
-        }
-
-    }
-    return result;
-}
-
-
-
-var mongoFormat = function (user_id, user_result){
-    var mongoResult = [];
-
-    for(var date in user_result){
-
-        mongoResult.push({
-            userId: user_id,
-            date : date,
-            nbEx : user_result[date]
-        });
-    }
-    return mongoResult;
-
-}
-
 var tmcCall= function(url, oauthToken, callbackReject, callback){
 
     request
@@ -61,7 +16,7 @@ var tmcCall= function(url, oauthToken, callbackReject, callback){
 
 module.exports = {
     mainfunc: function (){
-
+        var self = this;
         var courseListUrl = 'https://tmc.mooc.fi/api/beta/course_id_information';
         request
             .post('https://hy-canary.testmycode.io/oauth/token')
@@ -86,7 +41,7 @@ module.exports = {
                                 Promise.all(course.sheets.map((week) => {
                                     return new Promise((resolve, reject) => {
                                         tmcCall("https://tmc.mooc.fi/org/hy/courses/" + courseId + "/points/" + week.name + ".json?api_version=7&timestamps=1",oauthToken, reject,(weekPoints) => {
-                                            resolve(format(weekPoints));
+                                            resolve(self.format(weekPoints));
                                         })
                                     })
                                 }))
@@ -98,12 +53,15 @@ module.exports = {
                         })
                     }))
                     .then((datas) => {
-                        result = mergeResults(datas);
+                        console.log(datas);
+                        result = self.mergeResults(datas);
                         var mongoResults = []
                         for (var user_id in result) {
-                            mongoResults.push(mongoFormat(user_id, result[user_id]));
+                            mongoResults.push(self.mongoFormat(user_id, result[user_id]));
                         }
-                        mongoResults.reduce((previousPromise, mongoResult) =>{
+                        self.meanUser(mongoResults);
+
+                        /*mongoResults.reduce((previousPromise, mongoResult) =>{
                             return previousPromise
                                 .then(()=> {
                                     return new Promise ((resolve, reject) => {
@@ -122,8 +80,12 @@ module.exports = {
                                     });
                                 });
                         }, Promise.resolve())
-                        .then(()=>console.log("finished"))
+                            /!*.then((mongoResults)=> {
+                                self.meanUser(mongoResults);
 
+                            })*!/
+                        .then(()=>console.log("finished"))
+*/
                     })
                 });
             });
@@ -158,5 +120,50 @@ module.exports = {
         return exoPerDay;
 
 
+    },
+    mergeResults : function(dataToMerge){
+        var result = {};
+        for (var i = 0 ; i < dataToMerge.length ; i++){
+            for (var user in dataToMerge[i]){
+                var users_points = dataToMerge[i][user];
+                for(var user_id in users_points){
+                    var dateEntry = users_points[user_id];
+                    for (var date in dateEntry){
+                        if(result[user_id] != undefined){
+                            if (result[user_id][date] != undefined){
+                                result[user_id][date] += dateEntry[date];
+                            }
+                            else{
+                                result[user_id][date] = dateEntry[date];
+                            }
+                        }
+                        else{
+                            result[user_id]={};
+                            result[user_id][date] = dateEntry[date];
+                        }
+                    }
+                }
+            }
+
+        }
+        return result;
+    },
+
+    mongoFormat : function (user_id, user_result){
+        var mongoResult = [];
+
+        for(var date in user_result){
+
+            mongoResult.push({
+                userId: user_id,
+                date : date,
+                nbEx : user_result[date]
+            });
+        }
+        return mongoResult;
+
+    },
+    meanUser : function(mongoResult){
+        console.log(mongoResult);
     }
 };
