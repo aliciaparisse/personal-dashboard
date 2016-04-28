@@ -10,13 +10,19 @@ var tmcCall= function(url, oauthToken, callbackReject, callback){
         .get(url)
         .set('Authorization', 'Bearer ' + oauthToken.access_token)
         .end(function(err, res){
-            callback(res.body);
+            if(err){
+                callbackReject(err)
+            }
+            else {
+                callback(res.body);
+            }
     });
 }
 
 module.exports = {
     mainfunc: function (){
         var self = this;
+        var noError = false;
         var courseListUrl = 'https://tmc.mooc.fi/api/beta/course_id_information';
         request
             .post('https://hy-canary.testmycode.io/oauth/token')
@@ -30,9 +36,7 @@ module.exports = {
             .end(function(err,res){
 
                 var oauthToken = res.body;
-                tmcCall(courseListUrl,oauthToken, (error) =>{
-                    console.log(error);
-                }, (courseList) => {
+                var noErrorFunction = function(courseList){
                     console.log("courseList");
                     console.log(courseList);
                     Promise.all(courseList.map(courseId => {
@@ -61,7 +65,7 @@ module.exports = {
                         }
                         self.meanUser(mongoResults);
 
-                        /*mongoResults.reduce((previousPromise, mongoResult) =>{
+                        mongoResults.reduce((previousPromise, mongoResult) =>{
                             return previousPromise
                                 .then(()=> {
                                     return new Promise ((resolve, reject) => {
@@ -80,14 +84,27 @@ module.exports = {
                                     });
                                 });
                         }, Promise.resolve())
-                            /!*.then((mongoResults)=> {
+                            /*.then((mongoResults)=> {
                                 self.meanUser(mongoResults);
 
-                            })*!/
+                            })*/
                         .then(()=>console.log("finished"))
-*/
                     })
-                });
+                }
+
+                tmcCall(courseListUrl,oauthToken, (error, courseListUrl, oauthToken) =>{
+                    //console.log(error);
+                    var i = 0;
+                    while(noError = false && i < 100){
+                        tmcCall(courseListUrl, oauthToken, (err)=>{
+                            i++;
+                        }, (courseList) =>{
+                            noError = true;
+                            noErrorFunction(courseList);
+                        })
+
+                    }
+                },noErrorFunction);
             });
     },
 

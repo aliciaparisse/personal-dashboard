@@ -9,15 +9,18 @@
 /// <reference path="../../libs/moment/moment.d.ts"/>
 /// <reference path="../../libs/highcharts/highcharts.d.ts"/>
 
+
 export class ActivityTreatment {
+
     static createDisplayableWeekData(userId, callback) {
 
+        var today = new Date();
+        //var today = new Date(2016,2,1);
+        //userId = "bertron";
+
         var self = this,
-            today = new Date(2016,2,1),
             dates = self.getLastNDates(today,365).reverse();
 
-        console.log(dates);
-        userId = "bertron";
         var url_base = window.location.origin;
         (<any>$).ajax({
             url: url_base + '/mongo/activity/userActivity',
@@ -57,7 +60,7 @@ export class ActivityTreatment {
 
     }
 
-    static displayExerciseActivity(userId){
+    static displayExerciseActivity(userId, callback){
         var self = this;
 
         self.createDisplayableWeekData(userId, (dataToDisplay, dates) => {
@@ -128,6 +131,8 @@ export class ActivityTreatment {
                 }]
             });
         });
+
+        callback();
 
     }
 

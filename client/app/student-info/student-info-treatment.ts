@@ -22,7 +22,7 @@ export class StudentInfoTreatment{
         //The goal of this call is to get all the user's courses' information.
 
         (<any>$).ajax({
-            url: "https://tmc.mooc.fi/api/beta/participant/895/courses",
+            url: "https://tmc.mooc.fi/api/beta/participant/courses",
             type: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + JSON.parse(Cookies.get("oauth_token")).access_token

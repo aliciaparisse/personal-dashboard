@@ -182,4 +182,3 @@ var upsertActivities = function (db, docs, callback){
 
 setInterval(()=>{activityTreatment.mainfunc()}, 3600000);
 
-//activityTreatment.mainfunc();

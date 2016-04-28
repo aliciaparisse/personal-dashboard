@@ -5,7 +5,7 @@
 /// <reference path="../../libs/jquery/jquery.d.ts"/>
 /// <reference path="../../libs/js-cookie.d.ts"/>
 
-import {Component} from "angular2/core";
+import {Component, Output, EventEmitter} from "angular2/core";
 import {ActivityTreatment} from "./activity-treatment";
 
 @Component({
@@ -20,9 +20,14 @@ import {ActivityTreatment} from "./activity-treatment";
 export class ExercisesActivity{
     user_id;
 
+    @Output() loaded = new EventEmitter();
+
     constructor() {
         var self = this;
         self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
-        ActivityTreatment.displayExerciseActivity(this.user_id);
+        ActivityTreatment.displayExerciseActivity(this.user_id, () => {
+            console.log("and there ?")
+            self.loaded.emit(true);
+        });
     }
 }
