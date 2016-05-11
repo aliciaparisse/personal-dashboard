@@ -41,6 +41,7 @@ module.exports = {
                     console.log(courseList);
                     Promise.all(courseList.map(courseId => {
                         return new Promise((resolve, reject) => {
+                            console.log("here");
                             tmcCall(`https://tmc.mooc.fi/org/hy/courses/${courseId}/points.json?api_version=7`,oauthToken, reject, (course) => {
                                 Promise.all(course.sheets.map((week) => {
                                     return new Promise((resolve, reject) => {
@@ -57,13 +58,13 @@ module.exports = {
                         })
                     }))
                     .then((datas) => {
-                        console.log(datas);
-                        result = self.mergeResults(datas);
+                        console.log("more like here ");
+                        mergedResults = self.mergeResults(datas);
                         var mongoResults = []
                         for (var user_id in result) {
                             mongoResults.push(self.mongoFormat(user_id, result[user_id]));
                         }
-                        self.meanUser(mongoResults);
+
 
                         mongoResults.reduce((previousPromise, mongoResult) =>{
                             return previousPromise
@@ -84,10 +85,10 @@ module.exports = {
                                     });
                                 });
                         }, Promise.resolve())
-                            /*.then((mongoResults)=> {
-                                self.meanUser(mongoResults);
+                            .then((mongoResults)=> {
+                                meanUser = self.meanUser(mongoResults);
 
-                            })*/
+                            })
                         .then(()=>console.log("finished"))
                     })
                 }
@@ -106,6 +107,42 @@ module.exports = {
                     }
                 },noErrorFunction);
             });
+    },
+    meanUser : function(mergedResults){
+        var meanResult = {},
+            nbUsersPerDate = {};
+        //console.log(mergedResults);
+        for (var user_id in results){
+            var user_result = results[user_id];
+            for (date in user_result){
+                if(meanResult[date] !=undefined){
+                    meanResult[date] += user_result[user_id][date];
+                }
+                else{
+                    meanResult[date] = user_result[user_id][date];
+            }
+
+
+
+                if(nbUsersPerDate[date] != undefined){
+                    nbUsersPerDate[date] +=1;
+                }
+                else{
+                    nbUsersPerDate[date] =1;
+                }
+            }
+        }
+        console.log("meanResult");
+        console.log(meanResult);
+        console.log("nbUserPerDate")
+        console.log(nbUsersPerDate);
+
+        for (var date in meanResult){
+            meanResult[date] /= nbUsersPerDate[date];
+        }
+        console.log("Final mean result");
+        console.log(meanResult);
+        return meanResult;
     },
 
     format : function(weekPoints){
