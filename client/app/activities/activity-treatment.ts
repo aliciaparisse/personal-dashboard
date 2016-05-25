@@ -53,7 +53,7 @@ export class ActivityTreatment {
 
                 }
 
-                callback(dataToDisplay, dates)
+                callback(dataToDisplay)
             }
         });
 
@@ -63,73 +63,83 @@ export class ActivityTreatment {
     static displayExerciseActivity(userId, callback){
         var self = this;
 
-        self.createDisplayableWeekData(userId, (dataToDisplay, dates) => {
-            (<any>$)('#weekExerciseActivity').highcharts({
-                title: {
-                    text: 'Week Activity',
-                    x: -20 //center
-                },
-                xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: { // don't display the dummy year
-                        month: '%e. %b',
-                        year: '%b'
-                    },
-                    title: {
-                        text: 'Date'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Number of points per day'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                series: [{
-                    name: 'Points per day',
-                    data: dataToDisplay.slice(-7)
-                }]
-            });
+        self.createDisplayableWeekData(userId, (dataToDisplay) => {
+            self.createDisplayableWeekData("averageUser", (averageDataToDisplay) => {
 
-            (<any>$)("#zoomExerciseActivity").highcharts({
-                chart: {
-                    zoomType: 'x'
-                },
-                title: {
-                    text: 'Yearly Activity'
-                },
-                subtitle: {
-                    //Responsive design
-                    text: document.ontouchstart === undefined ?
-                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-                },
-                xAxis: {
-                    type: 'datetime'
-                },
-                yAxis: {
+                (<any>$)('#weekExerciseActivity').highcharts({
                     title: {
-                        text: 'Number of points'
+                        text: 'Week Activity',
+                        x: -20 //center
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: { // don't display the dummy year
+                            month: '%e. %b',
+                            year: '%b'
+                        },
+                        title: {
+                            text: 'Date'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of points per day'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: [{
+                        name: 'Your number of points',
+                        data: dataToDisplay.slice(-7)
+                    },  {
+                        name: 'Average number of points',
+                        data: averageDataToDisplay.slice(-7)
+                    }]
+                });
+
+                (<any>$)("#zoomExerciseActivity").highcharts({
+                    chart: {
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: 'Yearly Activity'
+                    },
+                    subtitle: {
+                        //Responsive design
+                        text: document.ontouchstart === undefined ?
+                            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of points per day'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: [{
+                        type:'area',
+                        name: 'Your number of points',
+                        data: dataToDisplay
+                        }, {
+                        name: 'Average number of points',
+                        data: averageDataToDisplay
                     }
-                },
-                legend: {
-                    enabled: false
-                },
-                series: [{
-                    type:'area',
-                    name: 'Points per day',
-                    data: dataToDisplay
-                }]
-            });
+                    ]
+                });
+            })
         });
 
         callback();

@@ -16,11 +16,11 @@ describe("Test Points Activity Treatment", () => {
         return new Promise((resolve, reject) =>
         {
             request
-                .post('https://hy-canary.testmycode.io/oauth/token')
+                .post('https://tmc.mooc.fi/oauth/token')
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .send({
-                    client_id: "228e3c5cfc33605da6919b536b51a4d3b4a84ac06aa6f5db64d0964f66535f20",
-                    client_secret: "8136718b825475cb108f2c47889a0e85fcbf6866b4206a606fe2f81af21aea90",
+                    client_id: "ffb9fccb2a873a9eaa56ef3d2624ddce9dff60d51cf423f52af5db020c51c580",
+                    client_secret: "f33e39d88736beb471048f56bc86a6f8f7ede82382383cef1283fc21ab633705",
                     grant_type: 'password',
                     username: "aparisse",
                     password: "tmcpassword"
@@ -91,5 +91,12 @@ describe("Test Points Activity Treatment", () => {
             expect(mongoResults).to.eql(expectedRes);
             done();
         });
+
+        it("Testing the formatting into average user", (done) => {
+            var unmergedData = JSON.parse(fs.readFileSync('./server/tests/input/unmergedResult.json'));
+            var expectedResult = JSON.parse(fs.readFileSync('./server/tests/results/averageUser.json'));
+            expect(activityTreatment.meanUser(unmergedData)).to.eql(expectedResult);
+            done();
+        })
     });
 });

@@ -2,7 +2,7 @@
  * Created by parisse on 8.4.2016.
  */
 var request = require("superagent");
-
+var fs = require('fs');
 
 var tmcCall= function(url, oauthToken, callbackReject, callback){
 
@@ -25,7 +25,7 @@ module.exports = {
         var noError = false;
         var courseListUrl = 'https://tmc.mooc.fi/api/beta/course_id_information';
         request
-            .post('https://hy-canary.testmycode.io/oauth/token')
+            .post('https://tmc.mooc.fi/oauth/token')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send({
                 client_id:"228e3c5cfc33605da6919b536b51a4d3b4a84ac06aa6f5db64d0964f66535f20",
@@ -34,114 +34,178 @@ module.exports = {
                 username : "aparisse",
                 password : "tmcpassword"})
             .end(function(err,res){
-
-                var oauthToken = res.body;
-                var noErrorFunction = function(courseList){
-                    console.log("courseList");
-                    console.log(courseList);
-                    Promise.all(courseList.map(courseId => {
-                        return new Promise((resolve, reject) => {
-                            console.log("here");
-                            tmcCall(`https://tmc.mooc.fi/org/hy/courses/${courseId}/points.json?api_version=7`,oauthToken, reject, (course) => {
-                                Promise.all(course.sheets.map((week) => {
-                                    return new Promise((resolve, reject) => {
-                                        tmcCall("https://tmc.mooc.fi/org/hy/courses/" + courseId + "/points/" + week.name + ".json?api_version=7&timestamps=1",oauthToken, reject,(weekPoints) => {
-                                            resolve(self.format(weekPoints));
-                                        })
-                                    })
-                                }))
-                                .then((allWeeksPerDay) => {
-                                    resolve(allWeeksPerDay);
-                                });
-
-                            });
-                        })
-                    }))
-                    .then((datas) => {
-                        console.log("more like here ");
-                        mergedResults = self.mergeResults(datas);
-                        var mongoResults = []
-                        for (var user_id in result) {
-                            mongoResults.push(self.mongoFormat(user_id, result[user_id]));
-                        }
-
-
-                        mongoResults.reduce((previousPromise, mongoResult) =>{
-                            return previousPromise
-                                .then(()=> {
-                                    return new Promise ((resolve, reject) => {
-                                        request
-                                            .put('http://localhost:3000/mongo/activity/upsertMultiple')
-                                            .set('Content-Type', 'application/json')
-                                            .send(JSON.stringify(mongoResult))
-                                            .end(function (err, res) {
-                                                if (err) {
-                                                    reject(err);
-                                                }
-                                                else {
-                                                    resolve(res);
-                                                }
+                if(res != undefined) {
+                    var oauthToken = res.body;
+                    var noErrorFunction = function (courseList) {
+                        console.log("courseList");
+                        console.log(courseList);
+                        Promise.all(courseList.map(courseId => {
+                                return new Promise((resolve, reject) => {
+                                    console.log("here");
+                                    tmcCall(`https://tmc.mooc.fi/org/hy/courses/${courseId}/points.json?api_version=7`, oauthToken, reject, (course) => {
+                                        Promise.all(course.sheets.map((week) => {
+                                                console.log("then alleeksPerday")
+                                                return new Promise((resolve, reject) => {
+                                                    tmcCall("https://tmc.mooc.fi/org/hy/courses/" + courseId + "/points/" + week.name + ".json?api_version=7&timestamps=1", oauthToken, reject, (weekPoints) => {
+                                                        console.log("then alleeksPerdayAGAIN !")
+                                                        resolve(self.format(weekPoints));
+                                                    })
+                                                })
+                                            }))
+                                            .then((allWeeksPerDay) => {
+                                                resolve(allWeeksPerDay);
                                             });
+
                                     });
-                                });
-                        }, Promise.resolve())
-                            .then((mongoResults)=> {
-                                meanUser = self.meanUser(mongoResults);
+                                })
+                            }))
+                            .then((datas) => {
+                                console.log("more like here ");
+                                var averageUser = self.meanUser(datas);
+                                mergedResults = self.mergeResults(datas);
 
+                                mongoAverageUser = self.mongoFormat("averageUser", averageUser);
+                                request
+                                    .put('http://localhost:3000/mongo/activity/upsertMultiple')
+                                    .set('Content-Type', 'application/json')
+                                    .send(JSON.stringify(mongoAverageUser))
+                                    .end(function (err, res) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        else {
+                                            console.log(res.statusCode);
+                                        }
+                                    });
+                                console.log("averageUser sent")
+                                var mongoResults = []
+                                for (var user_id in result) {
+                                    mongoResults.push(self.mongoFormat(user_id, result[user_id]));
+                                }
+
+
+                                mongoResults.reduce((previousPromise, mongoResult) => {
+                                        return previousPromise
+                                            .then(()=> {
+                                                return new Promise((resolve, reject) => {
+                                                    request
+                                                        .put('http://localhost:3000/mongo/activity/upsertMultiple')
+                                                        .set('Content-Type', 'application/json')
+                                                        .send(JSON.stringify(mongoResult))
+                                                        .end(function (err, res) {
+                                                            if (err) {
+                                                                reject(err);
+                                                            }
+                                                            else {
+                                                                resolve(res);
+                                                            }
+                                                         });
+                                                });
+                                            });
+                                    }, Promise.resolve())
+                                    .then(()=>console.log("finished"))
                             })
-                        .then(()=>console.log("finished"))
-                    })
-                }
-
-                tmcCall(courseListUrl,oauthToken, (error, courseListUrl, oauthToken) =>{
-                    //console.log(error);
-                    var i = 0;
-                    while(noError = false && i < 100){
-                        tmcCall(courseListUrl, oauthToken, (err)=>{
-                            i++;
-                        }, (courseList) =>{
-                            noError = true;
-                            noErrorFunction(courseList);
-                        })
-
                     }
-                },noErrorFunction);
+
+                    tmcCall(courseListUrl, oauthToken, (error, courseListUrl, oauthToken) => {
+                        var i = 0;
+                        while (noError = false && i < 2) {
+                            tmcCall(courseListUrl, oauthToken, (err)=> {
+                                i++;
+                            }, (courseList) => {
+                                noError = true;
+                                noErrorFunction(courseList);
+                            })
+
+                        }
+                    }, noErrorFunction);
+                }
             });
     },
-    meanUser : function(mergedResults){
+    meanUser : function(datas){
+        console.log("Here?")
+
+        var addedResults =  {},
+            nbUsersPerCourse = {};
+        for (var i = 0 ; i < datas.length ; i++){
+            var course = datas[i];
+            if(course[0] == undefined){
+                console.log("yep");
+                console.log(course);
+            }
+            else {
+                nbUsersPerCourse[i] = Object.keys(course[0]).length;
+                //console.log(course);
+                for (var j = 0 ; j < course.length ; j++){
+                    var week = course[j];
+                    for (var user_id in week){
+                        //console.log(user_id)
+                        var user_result = week[user_id]
+                        /*console.log("user_result");
+                        console.log(user_result);*/
+                        for (date in user_result){
+                            if (addedResults[i] != undefined){
+                                if(addedResults[i][date] !=undefined){
+                                    addedResults[i][date] += user_result[date];
+                                }
+                                else{
+                                   addedResults[i][date] = user_result[date];
+                                }
+
+                            }
+                            else{
+                                addedResults[i] = {};
+                                addedResults[i][date] = user_result[date];
+                            }
+
+
+
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        console.log("addedResults");
+        console.log(addedResults);
+
+
         var meanResult = {},
             nbUsersPerDate = {};
-        //console.log(mergedResults);
-        for (var user_id in results){
-            var user_result = results[user_id];
-            for (date in user_result){
-                if(meanResult[date] !=undefined){
-                    meanResult[date] += user_result[user_id][date];
+        for (var courseId in addedResults){
+            console.log("Does it enter here ?")
+
+
+            var course = addedResults[courseId];
+            console.log("course");
+            console.log(course);
+            for (var date in course){
+                if(meanResult[date] != undefined){
+                    meanResult[date] += course[date];
                 }
-                else{
-                    meanResult[date] = user_result[user_id][date];
-            }
-
-
+                else {
+                    meanResult[date] = course[date];
+                }
 
                 if(nbUsersPerDate[date] != undefined){
-                    nbUsersPerDate[date] +=1;
+                    nbUsersPerDate[date] += nbUsersPerCourse[courseId];
                 }
                 else{
-                    nbUsersPerDate[date] =1;
+                    nbUsersPerDate[date] = nbUsersPerCourse[courseId];
                 }
+
             }
         }
+
         console.log("meanResult");
         console.log(meanResult);
-        console.log("nbUserPerDate")
-        console.log(nbUsersPerDate);
 
         for (var date in meanResult){
-            meanResult[date] /= nbUsersPerDate[date];
+            meanResult[date] = Math.round(10 * meanResult[date] / nbUsersPerDate[date]) / 10;
         }
-        console.log("Final mean result");
-        console.log(meanResult);
+
         return meanResult;
     },
 
@@ -216,8 +280,5 @@ module.exports = {
         }
         return mongoResult;
 
-    },
-    meanUser : function(mongoResult){
-        console.log(mongoResult);
     }
 };

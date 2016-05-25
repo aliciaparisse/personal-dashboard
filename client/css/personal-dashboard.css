@@ -35,6 +35,9 @@ h1, .course-title {
     font-size :140%;
 }
 
+options {
+    margin-left : 15px;
+}
 
 .course-name{
     font-size: xx-large;

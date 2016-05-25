@@ -144,40 +144,50 @@ app.put('/mongo/activity/upsertMultiple', function (req, res){
     MongoClient.connect(mongodb_url, function(err, db) {
         assert.equal(null, err);
         //console.log("Connected correctly to server");
-        upsertActivities(db, req.body, (result) =>{
-            db.close();
-            //console.log("database closed");
-            res.send(result);
+        removeUserActivity(db, req.body, (result) => {
+            upsertActivities(db, req.body, (result) =>{
+                db.close();
+            })
         })
     });
 })
+var removeUserActivity = function(db, docs, callback){
+    var collection = db.collection("activity");
+    collection.remove(
+        {userId : docs[0].userId},
+        (err,res) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log("res")
+                console.log(res.result);
+                callback(res);
+            }
 
-var upsertActivities = function (db, docs, callback){
+        })
+
+}
+
+var upsertActivities =  function (db, docs, callback){
     var collection = db.collection("activity");
     var error, result;
-    //console.log(JSON.stringify(docs));
-    //console.log("user_id " + docs[0].userId);
-    for (var i = 0 ; i < docs.length ; i++){
-        var doc = docs[i];
-        collection.update(
-            //Update criteria
-            {user_id:doc.userId, date:doc.date},
-            //Update
-            doc,
-            //Upserting
-            {upsert:true},
-            function(err, res){
-                if(err){
-                    error = err
-                }
-                else{
-                    result = res;
-                }
+    collection.insert(
+        docs,
+        function(err, res){
+            if(err){
+                console.log("err")
+                console.log(err);
+                error = err
             }
-        )
-    }
+            else{
+                result = res;
+                console.log("NO ERR");
+                callback(result);
+            }
+        }
+    )
 
-    callback(result);
 }
 
 //setInterval(()=>{activityTreatment.mainfunc()}, 3600000);

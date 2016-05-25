@@ -6,10 +6,12 @@ import {ExercisesActivity} from "./exercises-activity";
 @Component({
     selector:'activities',
     directives:[ExercisesActivity],
-    template:`<exercises-activity (loaded) ="activitiesLoaded($event)"></exercises-activity>
+    template:`
+    <exercises-activity (loading) ="activitiesLoaded($event)"></exercises-activity>
     <!--<div [hidden]="!loading" class="loading-message">
 		Please wait while the activities are being loaded...
-	</div>-->`
+	</div>-->
+	`
 
 })
 
@@ -25,7 +27,7 @@ export class Activities{
     }
 
     activitiesLoaded(event){
-        console.log("comingHere ?")
+        console.log("coming Here ?")
         this.loading = false;
 
     }

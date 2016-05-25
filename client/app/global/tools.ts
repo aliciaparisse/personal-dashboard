@@ -90,7 +90,7 @@ export class Tools {
 
     static login(username,password,successCb,errorCb){
         (<any>$).ajax({
-            url: 'https://hy-canary.testmycode.io/oauth/token',
+            url: 'https://tmc.mooc.fi/oauth/token',
             method: "post",
             data: {
                 client_id:"228e3c5cfc33605da6919b536b51a4d3b4a84ac06aa6f5db64d0964f66535f20",

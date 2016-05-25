@@ -12,7 +12,9 @@ import {ActivityTreatment} from "./activity-treatment";
     selector:'exercises-activity',
     template: `
     <div>
-        <div class="activity" id="weekExerciseActivity"></div>
+        <div class="activity" id="weekExerciseActivity">
+            <span class="loading-message">Please wait while the activities are being loaded...</span>
+        </div>
         <div class="activity" id="zoomExerciseActivity"></div>
     </div>`
 })
@@ -27,7 +29,8 @@ export class ExercisesActivity{
         self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
         ActivityTreatment.displayExerciseActivity(this.user_id, () => {
             console.log("and there ?")
-            self.loaded.emit(true);
+            this.loaded.emit(true);
+            console.log("Event was sent!")
         });
     }
 }
