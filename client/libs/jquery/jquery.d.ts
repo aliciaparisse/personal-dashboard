@@ -2529,7 +2529,7 @@ interface JQuery {
     /**
      * Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.
      *
-     * @param selector A selector which will be used to filter the event results.
+     * @param selector A selector which will be used to filter the event output.
      * @param eventType A string containing a JavaScript event type, such as "click" or "keydown"
      * @param handler A function to execute at the time the event is triggered.
      */
@@ -2537,7 +2537,7 @@ interface JQuery {
     /**
      * Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.
      *
-     * @param selector A selector which will be used to filter the event results.
+     * @param selector A selector which will be used to filter the event output.
      * @param events An object of one or more event types and previously bound functions to unbind from them.
      */
     undelegate(selector: string, events: Object): JQuery;

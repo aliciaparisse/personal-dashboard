@@ -61,7 +61,7 @@ describe("Test Points Activity Treatment", () => {
         });
 
         it("Testing the formating of a single course", (done) => {
-            var expectedRes = JSON.parse(fs.readFileSync('./server/tests/results/formatSingleCourse.json'));
+            var expectedRes = JSON.parse(fs.readFileSync('./server/tests/output/formatSingleCourse.json'));
             expect(activityTreatment.format(course1)).to.eql(expectedRes);
             done();
         });
@@ -75,7 +75,7 @@ describe("Test Points Activity Treatment", () => {
                     course2 = res.body;
                     courses.push(activityTreatment.format(course1));
                     courses.push(activityTreatment.format(course2));
-                    var expectedRes = JSON.parse(fs.readFileSync('./server/tests/results/mergedTwoCourses.json'));
+                    var expectedRes = JSON.parse(fs.readFileSync('./server/tests/output/mergedTwoCourses.json'));
                     mergedResult = activityTreatment.mergeResults([courses]);
                     expect(mergedResult).to.eql(expectedRes);
                     done();
@@ -87,14 +87,14 @@ describe("Test Points Activity Treatment", () => {
             for (var user_id in mergedResult) {
                 mongoResults.push(activityTreatment.mongoFormat(user_id, mergedResult[user_id]));
             }
-            var expectedRes = JSON.parse(fs.readFileSync('./server/tests/results/formatMongoDb.json'));
+            var expectedRes = JSON.parse(fs.readFileSync('./server/tests/output/formatMongoDb.json'));
             expect(mongoResults).to.eql(expectedRes);
             done();
         });
 
         it("Testing the formatting into average user", (done) => {
             var unmergedData = JSON.parse(fs.readFileSync('./server/tests/input/unmergedResult.json'));
-            var expectedResult = JSON.parse(fs.readFileSync('./server/tests/results/averageUser.json'));
+            var expectedResult = JSON.parse(fs.readFileSync('./server/tests/output/averageUser.json'));
             expect(activityTreatment.meanUser(unmergedData)).to.eql(expectedResult);
             done();
         })

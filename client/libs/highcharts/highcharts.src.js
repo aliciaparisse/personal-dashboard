@@ -2920,7 +2920,7 @@
 
         /**
          * Removes a child either by removeChild or move to garbageBin.
-         * Issue 490; in VML removeChild results in Orphaned nodes according to sIEve, discardElement does not.
+         * Issue 490; in VML removeChild output in Orphaned nodes according to sIEve, discardElement does not.
          */
         safeRemoveChild: function (element) {
             var parentNode = element.parentNode;
@@ -5223,7 +5223,7 @@
 
         /**
          * Removes a child either by removeChild or move to garbageBin.
-         * Issue 490; in VML removeChild results in Orphaned nodes according to sIEve, discardElement does not.
+         * Issue 490; in VML removeChild output in Orphaned nodes according to sIEve, discardElement does not.
          */
         safeRemoveChild: function (element) {
             // discardElement will detach the node from its parent before attaching it

@@ -62,7 +62,7 @@
 				chart.exportChart(options);
 			},
 			// Get data:URL from image URL
-			// Pass in callbacks to handle results. finallyCallback is always called at the end of the process. Supplying this callback is optional.
+			// Pass in callbacks to handle output. finallyCallback is always called at the end of the process. Supplying this callback is optional.
 			// All callbacks receive two arguments: imageURL, and callbackArgs. callbackArgs is used only by callbacks and can contain whatever.
 			imageToDataUrl = function (imageURL, callbackArgs, successCallback, taintedCallback, noCanvasSupportCallback, failedLoadCallback, finallyCallback) {
 				var img = new win.Image();

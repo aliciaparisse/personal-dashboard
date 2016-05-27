@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "lite": "lite-server",
-    "start": "concurrent \"npm run tsc:w \" \"npm run lite -- --port 8080\" ",
     "test" : "mocha --reporter spec server/tests"
   },
   "license": "ISC",

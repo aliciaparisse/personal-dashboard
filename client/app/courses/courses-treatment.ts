@@ -44,7 +44,7 @@ export class CoursesTreatment {
         }
         leftE = totalNbEx - finishedE - begunE;
 
-        //Now that all the numbers are calculated, we push the results into displayableData
+        //Now that all the numbers are calculated, we push the output into displayableData
         dataToDisplay.push({
             name:"Done exercises",
             color : colors[0],
