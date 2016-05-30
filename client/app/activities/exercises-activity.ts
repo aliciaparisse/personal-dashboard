@@ -1,6 +1,11 @@
-/**
- * Created by parisse on 21.3.2016.
- */
+// Exercise Activity Component
+// Author : Alicia Parisse
+// Description :
+//		This component is representing the exercises activities. E.g. the activity of the students concerning the number of exercises he's done
+//		It's composed of two things :
+//			- a week exercise activity, showing only last week
+//			- a year exercise activity, showing last year and that's zoomable
+// Last-comment date : 30/05/16
 
 /// <reference path="../../libs/jquery/jquery.d.ts"/>
 /// <reference path="../../libs/js-cookie.d.ts"/>
@@ -22,15 +27,11 @@ import {ActivityTreatment} from "./activity-treatment";
 export class ExercisesActivity{
     user_id;
 
-    @Output() loaded = new EventEmitter();
-
     constructor() {
         var self = this;
         self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
         ActivityTreatment.displayExerciseActivity(this.user_id, () => {
-            console.log("and there ?")
-            this.loaded.emit(true);
-            console.log("Event was sent!")
+            console.log("The activities were well loaded")
         });
     }
 }

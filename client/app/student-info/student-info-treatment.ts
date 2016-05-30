@@ -1,6 +1,9 @@
-/**
- * Created by parisse on 16.3.2016.
- */
+// Student Information Treatment File
+// Author : Alicia Parisse
+// Description :
+//		This file contains functions that are used to get the informations of the connected student and to render them.
+//		It's composed of two functions that are commented more in detail.
+// Last-comment date : 30/05/16
 
 
 /// <reference path="../../libs/js-cookie.d.ts"/>
@@ -9,6 +12,7 @@
 
 import {Tools} from "../global/tools";
 
+//This line lets us export the student info treatment as a class with static function that can be called outside here.
 export class StudentInfoTreatment{
     //Function getAllStudentCourses
     //@param :  callb, boolean. True if there's a need of calling a callback function, false otherwise

@@ -2,10 +2,14 @@
 // Author : Alicia Parisse
 // Description : 
 //  	This component is the principal component of the dashboard website
-// 		It is composed by a login component (only shown when user not connected),
-//		a general student information component and a courses component,
-//		containing all the user's courses.
-// Last-comment date : 02/03/16
+// 		It is composed by :
+// 			- a login component (only shown when user not connected),
+//			- a general student information component
+// 			- a courses component, containing all the user's courses,
+//			- an activity component, containing the activity of the user,
+//			- an option component, containing options that the user can change,
+// 			- a Navigation bar component so the user can go from a component to another.
+// Last-comment date : 30/05/16
 
 /// <reference path="../../libs/js-cookie.d.ts"/>
 
@@ -63,10 +67,12 @@ export class PersonalDashboard{
 		this.loggedIn = true;
 	}
 
+	//This function handles the logout success
 	unlogSuccess(event){
 		this.loggedIn = false;
 	}
 
+	//This function handles the changing of tab events
 	changingTab(event){
 		if(event == 'courses-tab'){
 			this.tabNumber = 0;

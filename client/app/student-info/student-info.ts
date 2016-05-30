@@ -1,9 +1,9 @@
 // Student Information Component
 // Author : Alicia Parisse
 // Description : 
-//		This component is the a component that is meant to stay visible 
-//		all the time, and give general information about the student.
-// Last-comment date : 03/03/16
+//		This component is the a component that is meant to stay visible all the time
+// 		(except in the options tab), and give general information about the student.
+// Last-comment date : 30/05/16
 
 import {Component,Input} from "angular2/core";
 import {StudentInfoTreatment} from "./student-info-treatment";

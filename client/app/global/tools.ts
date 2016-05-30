@@ -1,7 +1,11 @@
-/**
- * Created by parisse on 16.3.2016.
- */
+// Tools File
+// Author : Alicia Parisse
+// Description :
+//		This file contains multiple functions that are useful allover the application.
+//      There are exactly 5 functions that are more detailed later in this file.
+// Last-comment date : 30/05/16
 
+//This line lets us export the tools as a class with static function that can be called outside here.
 export class Tools {
     //Function getColors
     //@param :  nbColors, integer.
@@ -88,6 +92,12 @@ export class Tools {
         (<any>$("."+ courseName)).find("div.exerc.todo").css("background", colors[2]);
     }
 
+    //Function changeExercColor
+    //@param :  username, string.
+    //@param :  password, string.
+    //@param :  successCb, function. Function to call when the ajax call successes.
+    //@param :  errorCb, function. Function to call when there's an error in the ajax call.
+    //@desc :   This function is used to login the user and call callbacks functions depending on the success of the call.
     static login(username,password,successCb,errorCb){
         (<any>$).ajax({
             url: 'https://tmc.mooc.fi/oauth/token',

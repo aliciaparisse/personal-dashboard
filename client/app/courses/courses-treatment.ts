@@ -1,11 +1,14 @@
-/**
- * Created by parisse on 16.3.2016.
- */
-
+// Courses Treatment File
+// Author : Alicia Parisse
+// Description :
+//		This file contains functions that are used to format the courses and to change their rendering.
+//		It's composed of four functions that are commented more in detail.
+// Last-comment date : 30/05/16
 
 /// <reference path="../../libs/jquery/jquery.d.ts"/>
 /// <reference path="../../libs/highcharts/highcharts.d.ts"/>
 
+//This line lets us export the courses treatment as a class with static function that can be called outside here.
 export class CoursesTreatment {
 
     //Function createDisplayableData

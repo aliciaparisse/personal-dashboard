@@ -1,3 +1,11 @@
+// Activities Component
+// Author : Alicia Parisse
+// Description :
+//		This component is representing all the activities.
+//		For now it's only composed of exercises-acitivity component.
+//      However this file is the one in which other directives representing acitivities will be added
+// Last-comment date : 30/05/16
+
 import {Component} from "angular2/core";
 import {ExercisesActivity} from "./exercises-activity";
 
@@ -7,28 +15,12 @@ import {ExercisesActivity} from "./exercises-activity";
     selector:'activities',
     directives:[ExercisesActivity],
     template:`
-    <exercises-activity (loading) ="activitiesLoaded($event)"></exercises-activity>
-    <!--<div [hidden]="!loading" class="loading-message">
-		Please wait while the activities are being loaded...
-	</div>-->
+    <exercises-activity></exercises-activity>
+
 	`
 
 })
 
 export class Activities{
     user_id;
-    loading;
-
-    constructor(){
-        var self = this;
-        self.loading = true;
-        //self.user_id = JSON.parse(Cookies.get("oauth_token")).username;
-        //console.log(this.user_id);
-    }
-
-    activitiesLoaded(event){
-        console.log("coming Here ?")
-        this.loading = false;
-
-    }
 }

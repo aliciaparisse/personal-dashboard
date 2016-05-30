@@ -4,7 +4,7 @@
 //    This component is the navigation bar of the dashboard component
 //    It is composed of a collapsed version and of a normal version
 //    of the items in the navbar.
-// Last-comment date : 02/03/16
+// Last-comment date : 30/05/16
 
 /// <reference path="../../libs/jquery/jquery.d.ts"/>
 /// <reference path="../../libs/js-cookie.d.ts"/>
@@ -55,11 +55,14 @@ export class NavBar{
 	changingTab(tabName){
 		var self = this;
 		(<any>$("li.principal-navbar")).each(function(index){
+			//noinspection TypeScriptValidateTypes
 			if ((<any>$(this)).attr('id') == tabName){
+				//noinspection TypeScriptValidateTypes
 				(<any>$(this)).addClass("active");
 				self.changedTab.emit(tabName);
 			}
 			else{
+				//noinspection TypeScriptValidateTypes
 				(<any>$(this)).removeClass("active");
 			}
 		});

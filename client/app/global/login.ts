@@ -2,8 +2,8 @@
 // Author : Alicia Parisse
 // Description : 
 //		This component is used for a user to log in
-//		It's composed by an empty nav bar and a log in form
-// Last-comment date : 02/03/16
+//		It's composed by an empty nav bar and a login form
+// Last-comment date : 30/05/16
 
 /// <reference path="../../libs/js-cookie.d.ts"/>
 
@@ -61,6 +61,8 @@ export class Login{
 				self.loading = false;
 
 			},
+
+			//Here we manage the error message type, depending on the error we get back from the server
 			(response) => {
 				self.logError =true;
 				var form : HTMLFormElement;

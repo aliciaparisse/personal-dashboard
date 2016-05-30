@@ -1,11 +1,11 @@
 // Course Component
 // Author : Alicia Parisse
 // Description : 
-//		This component is representin a course. 
+//		This component is representing a course.
 //		It's composed of two things : 
 //			- a diagram showing the global progression of the student on the course
 //			- a list of exercises represented in weeks, with their status (completed,begun,todo)
-// Last-comment date : 03/03/16
+// Last-comment date : 30/05/16
 
 
 import {Component,Input, ChangeDetectorRef, Output, EventEmitter} from 'angular2/core';

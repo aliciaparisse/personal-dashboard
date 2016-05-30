@@ -1,21 +1,33 @@
+// Server.js file
+// Author : Alicia Parisse
+// Description :
+//		This file is the one that is meant to launch the server and create the different routes that can be reached.
+// Last-comment date : 30/05/16
+
+//Importing different modules
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 3000;
-var app = express();
 var MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 var activityTreatment = require('./pointsActivityTreatment')
 
+//Creating the app and adding the express part to it, and stating where the files can be found
+var app = express();
 app.use(express.static('dist'));
 app.use(bodyParser.json());
 
+//Function to render the index.html file
 var renderIndex = (req, res) => {
     res.sendFile('/index.html');
 }
 
+//When the user calls the root of the website, the index.html file is rendered
 app.get('/', renderIndex);
 
+
+//This launches the server and makes it listen for requests.
 var server = app.listen(port, function() {
     var host = server.address().address;
     var port = server.address().port;
@@ -24,7 +36,11 @@ var server = app.listen(port, function() {
 
 var mongodb_url = 'mongodb://alicia:aliciamongo@ds013579.mlab.com:13579/personal-dashboard';
 
+
 // Mongo DB Part -- Connecting to DB and handling the requests
+// In the following of the file, the code functions in pairs.
+// There is a route that is created to perform a certain action and that's added to the listened routes of the server,
+// then there's a function that states exactly what should be asked to the mongoDB.
 
 // GET requests -------------------------
 
@@ -53,6 +69,7 @@ var getArchivedCourses = function(db, user_id, callback) {
     });
 }
 
+//Route to get all the activities of a user
 app.get('/mongo/activity/userActivity', function(req, res){
     // Use connect method to connect to the Server
     MongoClient.connect(mongodb_url, function(err, db) {
@@ -81,6 +98,7 @@ var getUserActivity = function (db, user_id, callback){
 
 //PUT Requests ---------------------------
 
+//Route to send a new archived courses to the list of a user's archived courses
 app.put('/mongo/addArchivedCourse', function(req,res){
     // Use connect method to connect to the Server
     MongoClient.connect(mongodb_url, function(err, db) {
@@ -112,6 +130,7 @@ var upsertArchivedCourse = function(db, doc, callback) {
     );
 }
 
+//Route to remove one of the archived courses from the list of a user's archived courses
 app.put('/mongo/removeArchivedCourse', function(req, res){
     // Use connect method to connect to the Server
     console.log(req.body);
@@ -138,6 +157,7 @@ var removeArchivedCourse = function(db, doc, callback){
     );
 }
 
+//Route to send multiple activities for one user.
 app.put('/mongo/activity/upsertMultiple', function (req, res){
     // Use connect method to connect to the Server
     //console.log(req.body);
@@ -190,4 +210,7 @@ var upsertActivities =  function (db, docs, callback){
 
 }
 
+
+//This line calls the function mainfunc contained in the pointsActivityTreatment file every hour so that the
+//information that are on the MongoDB server are up to date.
 setInterval(()=>{activityTreatment.mainfunc()}, 3600000);

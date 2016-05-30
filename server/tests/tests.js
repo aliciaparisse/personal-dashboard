@@ -1,6 +1,10 @@
-/**
- * Created by parisse on 21.4.2016.
- */
+// tests file
+// Author : Alicia Parisse
+// Description :
+//		This file is meant to tests all the function contained in the pointsActivityTreatment file.
+//      It uses the modules mocha and chai.
+// Last-comment date : 30/05/16
+
 
 var fs = require('fs')
 var activityTreatment = require('./../pointsActivityTreatment')
@@ -12,6 +16,7 @@ var expect = chai.expect;
 
 describe("Test Points Activity Treatment", () => {
     var oauthToken;
+    //This is done before all of the tests
     before(() => {
         return new Promise((resolve, reject) =>
         {
@@ -41,7 +46,7 @@ describe("Test Points Activity Treatment", () => {
 
     describe("Testing formatting", () => {
         var course1, course2, mergedResult;
-
+        //This is done before all the tests contained in this item
         before(() => {
             return new Promise((resolve, reject) =>
             {
@@ -60,12 +65,14 @@ describe("Test Points Activity Treatment", () => {
             });
         });
 
+        //This tests the format function
         it("Testing the formating of a single course", (done) => {
             var expectedRes = JSON.parse(fs.readFileSync('./server/tests/output/formatSingleCourse.json'));
             expect(activityTreatment.format(course1)).to.eql(expectedRes);
             done();
         });
 
+        //This tests the mergeResults function
         it("Testing the merge of two courses", (done) => {
             request
                 .get("https://tmc.mooc.fi/org/hy/courses/68/points/week8.json?api_version=7&timestamps=1")
@@ -82,6 +89,7 @@ describe("Test Points Activity Treatment", () => {
                 });
         });
 
+        //This tests the mongoFormat function
         it("Testing the formatting for pushing to mongodb", (done) => {
             var mongoResults = []
             for (var user_id in mergedResult) {
@@ -92,6 +100,7 @@ describe("Test Points Activity Treatment", () => {
             done();
         });
 
+        //This tests the meanUser function
         it("Testing the formatting into average user", (done) => {
             var unmergedData = JSON.parse(fs.readFileSync('./server/tests/input/unmergedResult.json'));
             var expectedResult = JSON.parse(fs.readFileSync('./server/tests/output/averageUser.json'));
